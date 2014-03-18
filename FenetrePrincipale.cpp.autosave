@@ -188,6 +188,7 @@ void FenetrePrincipale::createBarreDeLancement(){
     viewGestionEquipe = new ViewGestionEquipe;
 
     QWidget::connect(gestionDesEquipe, SIGNAL(clicked()), viewGestionEquipe, SLOT(exec()));
+    
 
     barreLancement->setLayout(layout);
 }
