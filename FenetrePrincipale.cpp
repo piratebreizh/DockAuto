@@ -38,13 +38,18 @@
 **
 ****************************************************************************/
 
+
+
+
 #include <QtWidgets>
 
 #include "FenetrePrincipale.h"
-
 //! [0]
 FenetrePrincipale::FenetrePrincipale()
 {
+
+
+
     /*createMenu();
     createHorizontalGroupBox();
     createGridGroupBox();
@@ -176,8 +181,6 @@ void FenetrePrincipale::createBarreDeLancement(){
     demarrerSimulation->setFocusPolicy(Qt::NoFocus);
     pauseSimulation = new QPushButton(tr("&Stop"));
     pauseSimulation->setFocusPolicy(Qt::NoFocus);
-
-
 
     layout->addWidget(nouvelleSimulation);
     layout->addWidget(gestionDesEquipe);

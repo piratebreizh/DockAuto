@@ -22,14 +22,27 @@ QT_END_NAMESPACE
 
 class ViewCreationRobot : public QDialog
 {
+    //Q_OBJECT
 public:
     ViewCreationRobot(QWidget *parent = 0);
 
+
+signals:
+    void pseudoclick(QString& texte);
+    void s_clicked_texte(QString& texte);
+
+private slots:
+    void s_clicked();
+
 private:
 
-    QGroupBox * structureRobot;
-    QFormLayout * cargaisonRobot;
+    QGridLayout *layout;
+    QGridLayout *layout2;
 
+    QGroupBox * structureRobot;
+    QGroupBox * cargaisonRobot;
+
+    QLineEdit * champNom;
     QLineEdit * champLargeur;
     QLineEdit * champLongueur;
     QLineEdit * champVitesse;
@@ -39,6 +52,7 @@ private:
 
     QPushButton *sauvegarde;
     QPushButton *annuler;
+
 
 
 };

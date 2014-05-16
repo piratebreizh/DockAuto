@@ -10,6 +10,7 @@
 #include<qlineedit.h>
 #include<qtableview.h>
 #include<qformlayout.h>
+#include <ViewCreationRobot.h>
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -38,6 +39,7 @@ private:
     QTableView *resultView;
     QPushButton *sauvegarde;
     QPushButton *annuler;
+    ViewCreationRobot *creationRobot;
 };
 
 #endif // VIEWGESTIONEQUIPE_H

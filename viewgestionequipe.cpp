@@ -1,7 +1,5 @@
 #include "viewgestionequipe.h"
 
-
-
 #include <QtWidgets>
 
 
@@ -33,7 +31,8 @@ ViewGestionEquipe::ViewGestionEquipe(QWidget *parent) : QDialog(parent)
 void ViewGestionEquipe::creationTableauRobot(){
     resultView = new QTableView();
     ajouterRobot = new QPushButton(tr("Ajouter un robot"));
-    //QWidget::connect(ajouterRobot, SIGNAL(clicked()), viewGestionEquipe, SLOT(exec()));
+    creationRobot = new ViewCreationRobot();
+    QWidget::connect(ajouterRobot, SIGNAL(clicked()), creationRobot, SLOT(exec()));
 
     layoutSencondaire->addRow(new QLabel(tr("Liste des robots")));
     layoutSencondaire->addRow(resultView);
