@@ -7,7 +7,9 @@ HEADERS     = FenetrePrincipale.h \
     Cargaison.h \
     ViewCreationRobot.h \
     ViewGestionEquipe.h \
-    Entrepot.h
+    Entrepot.h \
+    viewcreationentrepot.h \
+    armoire.h
 SOURCES     = FenetrePrincipale.cpp \
               main.cpp \
     ViewMap.cpp \
@@ -16,7 +18,9 @@ SOURCES     = FenetrePrincipale.cpp \
     Cargaison.cpp \
     ViewCreationRobot.cpp \
     ViewGestionEquipe.cpp \
-    Entrepot.cpp
+    Entrepot.cpp \
+    viewcreationentrepot.cpp \
+    armoire.cpp
 
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/widgets/layouts/basiclayouts
