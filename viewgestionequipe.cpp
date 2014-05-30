@@ -31,8 +31,8 @@ ViewGestionEquipe::ViewGestionEquipe(QWidget *parent) : QDialog(parent)
 void ViewGestionEquipe::creationTableauRobot(){
     resultView = new QTableView();
     ajouterRobot = new QPushButton(tr("Ajouter un robot"));
-    creationRobot = new ViewCreationRobot();
-    QWidget::connect(ajouterRobot, SIGNAL(clicked()), creationRobot, SLOT(exec()));
+    //robotTemp = new Robot;
+    QWidget::connect(ajouterRobot, SIGNAL(clicked()), this, SLOT(appelAjoutRobot()));
 
     layoutSencondaire->addRow(new QLabel(tr("Liste des robots")));
     layoutSencondaire->addRow(resultView);
@@ -47,8 +47,15 @@ void ViewGestionEquipe::enregistrerEquipe(){
     layoutSencondaire->addRow(sauvegarde,annuler);
 }
 
-/*
+void ViewGestionEquipe::appelAjoutRobot(){
 
+    robotTemp = Robot();
+    robotTemp.nomRobot = "NomRobot";
+    creationRobot = new ViewCreationRobot(robotTemp);
+    creationRobot->exec();
+}
+
+/*
  *
  * */
 

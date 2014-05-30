@@ -1,6 +1,7 @@
 #ifndef VIEWCREATIONROBOT_H
 #define VIEWCREATIONROBOT_H
 
+#include <Robot.h>
 #include <QBasicTimer>
 #include <QFrame>
 #include <QPointer>
@@ -22,16 +23,12 @@ QT_END_NAMESPACE
 
 class ViewCreationRobot : public QDialog
 {
-    //Q_OBJECT
+    Q_OBJECT
 public:
-    ViewCreationRobot(QWidget *parent = 0);
+    ViewCreationRobot(Robot & tempRobot);
 
 
-signals:
-    void pseudoclick(QString& texte);
-    void s_clicked_texte(QString& texte);
-
-private slots:
+public slots:
     void s_clicked();
 
 private:
@@ -53,7 +50,7 @@ private:
     QPushButton *sauvegarde;
     QPushButton *annuler;
 
-
+    Robot robotTemp;
 
 };
 

@@ -17,11 +17,13 @@
  * @param parent
  * @param a
  */
-ViewCreationRobot::ViewCreationRobot(QWidget *parent) : QDialog(parent)
+ViewCreationRobot::ViewCreationRobot(Robot & tempRobot)
 {
-    //managerRobot = new managerRobot(this);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(parent);
+
+    //tempRobot.largeurRobot = 99f;
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     layout = new QGridLayout;
     layout2 = new QGridLayout;
@@ -33,8 +35,11 @@ ViewCreationRobot::ViewCreationRobot(QWidget *parent) : QDialog(parent)
     annuler = new QPushButton("Annuler");
     QWidget::connect(annuler, SIGNAL(clicked()), this, SLOT(close()));
 
-    ViewCreationRobot::connect(sauvegarde, SIGNAL(clicked()), this, SLOT(s_clicked()));
-    QWidget::connect(this, SIGNAL(pseudoclick(QString&)), this, SLOT(s_clicked_texte(QString&)));
+    QWidget::connect(sauvegarde, SIGNAL(clicked()), this, SLOT(s_clicked()));
+    //QWidget::connect(this, SIGNAL(pseudoclick(Robot&)), this, SLOT(miseAJoursRobot(Robot&)));
+
+
+    //connect(this, SIGNAL(pseudoclick(QString&)), this, SLOT(s_clicked_texte(QString&)));
 
     champNom = new QLineEdit;
     champLargeur = new QLineEdit;
@@ -84,17 +89,29 @@ ViewCreationRobot::ViewCreationRobot(QWidget *parent) : QDialog(parent)
 
 
 
+
+
+
+
 void ViewCreationRobot::s_clicked()
 {
-  QString texte = champNom->text();
-    std::cout << "deded" + texte.toStdString() << std::endl;
-     //emit pseudoclick(texte);
+
+    robotTemp.largeurRobot = champLargeur->text().toFloat();
+
+    //tempRobot.largeurRobot = champLargeur->text().toFloat();
+    //QString texte = champNom->text();
+    //std::cout << "deded" << tempRobot.largeurRobot << std::endl;
+
+    //std::cout << "Main" << mainLayout->   << std::endl;
 }
 
 
+
+/*
 void ViewCreationRobot::s_clicked_texte(QString& texte)
 {
   QMessageBox message(QMessageBox::Information, "Ceci est un test d'information", "Le texte\n" + texte + "\na été entréé");
   message.exec();
 }
+*/
 

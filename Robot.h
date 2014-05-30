@@ -7,8 +7,6 @@ class Robot
 public:
     Robot();
 
-private:
-
     int idRobot;
     std::string nomRobot;
 
@@ -24,6 +22,9 @@ private:
     float poidsCapaciteDeCharge;
     float longueurCapaciteDeCharge;
     float largeurCapactiteDeCharge;
+
+
+private:
 
 };
 

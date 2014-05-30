@@ -11,6 +11,7 @@
 #include<qtableview.h>
 #include<qformlayout.h>
 #include <ViewCreationRobot.h>
+#include <Robot.h>
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -22,6 +23,7 @@ QT_END_NAMESPACE
 
 class ViewGestionEquipe : public QDialog
 {
+    Q_OBJECT
 
 public:
 
@@ -29,6 +31,11 @@ public:
     ViewGestionEquipe(QWidget *parent = 0);
     void creationTableauRobot();
     void enregistrerEquipe();
+
+public slots:
+    void appelAjoutRobot();
+
+
 
 
 private:
@@ -40,6 +47,13 @@ private:
     QPushButton *sauvegarde;
     QPushButton *annuler;
     ViewCreationRobot *creationRobot;
+
+    Robot  robotTemp;
+    QList <Robot> tableRobot;
+
+
+
+
 };
 
 #endif // VIEWGESTIONEQUIPE_H
