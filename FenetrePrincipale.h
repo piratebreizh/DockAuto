@@ -41,6 +41,8 @@
 #ifndef TETRIXWINDOW_H
 #define TETRIXWINDOW_H
 
+
+
 #include <QFrame>
 #include <QWidget>
 #include <ViewMap.h>
@@ -98,6 +100,7 @@ private:
     QPushButton *pauseSimulation;
 
     ViewGestionEquipe *viewGestionEquipe;
+
 
     //ViewMap viewmap;
 
