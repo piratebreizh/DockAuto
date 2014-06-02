@@ -5,6 +5,11 @@ class Tile
 {
 public:
     Tile();
+    int getX();
+    int getY();
+    void setX(int);
+    void setY(int);
+
 private:
     int x;
     int y;

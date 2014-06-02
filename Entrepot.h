@@ -4,22 +4,20 @@
 #include <vector>
 #include "armoire.h"
 #include "Robot.h"
-
+#include "Map.h"
 #endif // ENTREPOT_H
 
-class Entrepot
+class Entrepot : public Map
 {
 public:
     Entrepot();
     ~Entrepot();
-    void AddArmoire(Armoire);
-    void RemoveArmoire(Armoire);
-    void AddRobot(Robot);
-    void RemoveRobot(Robot);
+    void AddArmoire(Armoire&);
+    void RemoveArmoire(Armoire&);
+    void AddRobot(Robot&);
+    void RemoveRobot(Robot&);
 
 private:
-    int IdEntrepot;
-    std::string NomEntrepot;
     std::vector<Armoire> lesArmoires;
     std::vector<Robot> lesRobots;
 

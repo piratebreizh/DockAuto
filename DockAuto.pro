@@ -10,7 +10,8 @@ HEADERS     = FenetrePrincipale.h \
     Entrepot.h \
     Armoire.h \
     Viewcreationentrepot.h \
-    Tile.h
+    Tile.h \
+    Map.h
 SOURCES     = FenetrePrincipale.cpp \
               main.cpp \
     ViewMap.cpp \
@@ -22,7 +23,8 @@ SOURCES     = FenetrePrincipale.cpp \
     Entrepot.cpp \
     Armoire.cpp \
     Viewcreationentrepot.cpp \
-    Tile.cpp
+    Tile.cpp \
+    Map.cpp
 
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/widgets/layouts/basiclayouts
