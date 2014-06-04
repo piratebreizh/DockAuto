@@ -4,13 +4,15 @@
 #ifndef EQUIPE_H
 #define EQUIPE_H
 
+using namespace std;
+
 class Equipe
 {
 public:
     Equipe();
 private:
     int idEquipe;
-    std::string nomEquipe;
+    string nomEquipe;
     QPointer<Robot> listeRobotEquipe;
 };
 

@@ -48,6 +48,8 @@
 #include <ViewMap.h>
 #include <viewgestionequipe.h>
 
+using namespace std;
+
 QT_BEGIN_NAMESPACE
 class QAction;
 class QDialogButtonBox;

@@ -3,6 +3,8 @@
 #include <QtWidgets>
 
 
+using namespace std;
+
 ViewGestionEquipe::ViewGestionEquipe(QWidget *parent) : QDialog(parent)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(parent);

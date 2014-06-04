@@ -1,15 +1,20 @@
 #ifndef MAP_H
 #define MAP_H
+#define LONGUEUR 30
+#define LARGEUR 30
 #include <string>
+
+using namespace std;
 
 class Map
 {
 public:
     Map();
-    int tab[30][30]={{0}};
+    int tab[LONGUEUR][LARGEUR]={{0}};
+    void AfficheMap();
 private :
     int idMap;
-    std::string nomMap;
+    string nomMap;
 };
 
 #endif // MAP_H

@@ -13,6 +13,8 @@
 #include <ViewCreationRobot.h>
 #include <Robot.h>
 
+using namespace std;
+
 QT_BEGIN_NAMESPACE
 class QLabel;
 class QDialogButtonBox;

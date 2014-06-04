@@ -13,6 +13,8 @@
 #include<qformlayout.h>
 #include<qgroupbox.h>
 
+using namespace std;
+
 QT_BEGIN_NAMESPACE
 class QLabel;
 class QDialogButtonBox;

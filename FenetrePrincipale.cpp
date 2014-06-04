@@ -44,6 +44,8 @@
 #include <QtWidgets>
 
 #include "FenetrePrincipale.h"
+using namespace std;
+
 //! [0]
 FenetrePrincipale::FenetrePrincipale()
 {

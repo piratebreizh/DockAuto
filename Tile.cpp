@@ -1,5 +1,7 @@
 #include "Tile.h"
 
+using namespace std;
+
 Tile::Tile()
 {
 }

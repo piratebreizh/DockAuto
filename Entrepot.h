@@ -2,10 +2,12 @@
 #define ENTREPOT_H
 #include <string>
 #include <vector>
-#include "armoire.h"
+#include "Armoire.h"
 #include "Robot.h"
 #include "Map.h"
 #endif // ENTREPOT_H
+
+using namespace std;
 
 class Entrepot : public Map
 {
@@ -18,8 +20,8 @@ public:
     void RemoveRobot(Robot&);
 
 private:
-    std::vector<Armoire> lesArmoires;
-    std::vector<Robot> lesRobots;
+    vector<Armoire> lesArmoires;
+    vector<Robot> lesRobots;
 
 };
 

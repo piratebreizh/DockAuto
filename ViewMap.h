@@ -5,6 +5,8 @@
 #include <QFrame>
 #include <QPointer>
 
+using namespace std;
+
 QT_BEGIN_NAMESPACE
 class QLabel;
 QT_END_NAMESPACE

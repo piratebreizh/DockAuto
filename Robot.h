@@ -2,20 +2,24 @@
 #define ROBOT_H
 #include<string>
 #include "Tile.h"
+#include "Entrepot.h"
+
+using namespace std;
 
 class Robot : public Tile
 {
 public:
     Robot();
-    std::string getNom();
-    void setNom(std::string);
+    string getNom();
+    void setNom(string);
     int getId();
     void setId(int);
+    void move(Entrepot&, int,int);
 
 private:
 
     int idRobot;
-    std::string nomRobot;
+    string nomRobot;
 
     //Position sur la map
     int xPositionRobot;

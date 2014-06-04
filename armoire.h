@@ -3,6 +3,8 @@
 #include "Tile.h"
 #include<string>
 
+using namespace std;
+
 class Armoire : public Tile
 {
 public:
@@ -11,7 +13,7 @@ public:
 
 private:
     int IdArmoire;
-    std::string NomArmoire;
+    string NomArmoire;
 };
 
 #endif // ARMOIRE_H

@@ -42,9 +42,18 @@
 
 #include <FenetrePrincipale.h>
 
+#include "Map.h"
+#include "Armoire.h"
+#include "Entrepot.h"
+#include "Robot.h"
+#include <iostream>
+
+using namespace std;
+
 
 int main(int argc, char *argv[])
 {
+    /*
     QApplication app(argc, argv);
 
     FenetrePrincipale premierVue;
@@ -52,4 +61,26 @@ int main(int argc, char *argv[])
     premierVue.show();
 
     return app.exec();
+    */
+
+    Entrepot e;
+    Armoire a;
+    Robot r;
+    e.AfficheMap();
+    cout<<"MAP 1"<<endl<<endl;
+    a.setX(1);
+    a.setY(1);
+    r.setX(3);
+    r.setY(3);
+    e.AddArmoire(a);
+    e.AddRobot(r);
+    e.AfficheMap();
+    cout<<"MAP 2"<<endl<<endl;
+    r.move(e,2,2);
+    e.AfficheMap();
+    cout<<"MAP 3"<<endl<<endl;
+    r.move(e,1,1);
+    e.AfficheMap();
+    cout<<"MAP 4"<<endl<<endl;
+    return 0;
 }
