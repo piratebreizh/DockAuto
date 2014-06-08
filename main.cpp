@@ -53,7 +53,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    /*
+
     QApplication app(argc, argv);
 
     FenetrePrincipale premierVue;
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     premierVue.show();
 
     return app.exec();
-    */
+
 
     /*TEST MAP*/
     /*Entrepot e;
