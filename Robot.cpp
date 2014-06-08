@@ -6,6 +6,15 @@ using namespace std;
 
 Robot::Robot()
 {
+    idRobot=1;
+    nomRobot="";
+    this->setX(0);
+    this->setY(0);
+}
+
+Robot::Robot(int _id, string _nom){
+    idRobot=_id;
+    nomRobot=_nom;
 }
 
 string Robot::getNom(){
@@ -31,11 +40,12 @@ void Robot::setId(int id){
  * @param y
  * Deplacement du robot si l'emplacement est libre
  */
-/*void Robot::move(Entrepot &e, int x, int y){
-    if(e!=null && e.tab[x][y]==0){
-        e.RemoveRobot(this);
+void Robot::move(Entrepot &e, int x, int y){
+    //if(e!=NULL && e.tab[x][y]==0){
+    if(e.tab[x][y]==0){
+        e.RemoveRobot(*this);
         this->setX(x);
         this->setY(y);
-        e.AddRobot(this);
+        e.AddRobot(*this);
     }
-}*/
+}

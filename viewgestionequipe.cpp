@@ -1,5 +1,5 @@
 #include "viewgestionequipe.h"
-
+#include "Equipe.h"
 #include <QtWidgets>
 
 

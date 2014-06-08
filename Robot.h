@@ -6,10 +6,13 @@
 
 using namespace std;
 
+class Entrepot;
+
 class Robot : public Tile
 {
 public:
     Robot();
+    Robot(int,string);
     string getNom();
     void setNom(string);
     int getId();

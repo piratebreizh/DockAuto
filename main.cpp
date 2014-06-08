@@ -63,7 +63,8 @@ int main(int argc, char *argv[])
     return app.exec();
     */
 
-    Entrepot e;
+    /*TEST MAP*/
+    /*Entrepot e;
     Armoire a;
     Robot r;
     e.AfficheMap();
@@ -82,5 +83,18 @@ int main(int argc, char *argv[])
     r.move(e,1,1);
     e.AfficheMap();
     cout<<"MAP 4"<<endl<<endl;
+    */
+
+    /*TEST EQUIPE*/
+    /*Robot r1(1,"bob");
+    Robot r2(2,"bob2");
+    Robot r3(3,"bob3");
+    Equipe e(1,"Equipe1");
+    e.AddEquipe(r1);
+    e.AddEquipe(r2);
+    e.AddEquipe(r3);
+    e.AfficheEquipe();
+    e.RemoveEquipe(r2);
+    e.AfficheEquipe();*/
     return 0;
 }
