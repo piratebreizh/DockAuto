@@ -1,7 +1,9 @@
 #include "viewgestionequipe.h"
-
+#include "Equipe.h"
 #include <QtWidgets>
 
+
+using namespace std;
 
 ViewGestionEquipe::ViewGestionEquipe(QWidget *parent) : QDialog(parent)
 {
@@ -50,7 +52,7 @@ void ViewGestionEquipe::enregistrerEquipe(){
 void ViewGestionEquipe::appelAjoutRobot(){
 
     robotTemp = Robot();
-    robotTemp.nomRobot = "NomRobot";
+    robotTemp.setNom("NomRobot");
     creationRobot = new ViewCreationRobot(robotTemp);
     creationRobot->exec();
 }

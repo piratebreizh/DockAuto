@@ -1,31 +1,41 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 #include<string>
+#include "Tile.h"
+#include "Entrepot.h"
 
-class Robot
+using namespace std;
+
+class Entrepot;
+
+class Robot : public Tile
 {
 public:
     Robot();
-
-    int idRobot;
-    std::string nomRobot;
-
-    //Position sur la map
-    float xPositionRobot;
-    float yPositionRobot;
-
-    float vitesseRobot;
-    float longueurRobot;
-    float largeurRobot;
-
-    //Afin de déterminer si le robit peut prendre une cargaison
-    float poidsCapaciteDeCharge;
-    float longueurCapaciteDeCharge;
-    float largeurCapactiteDeCharge;
-
+    Robot(int,string);
+    string getNom();
+    void setNom(string);
+    int getId();
+    void setId(int);
+    void move(Entrepot&, int,int);
 
 private:
 
+    int idRobot;
+    string nomRobot;
+
+    //Position sur la map
+    int xPositionRobot;
+    int yPositionRobot;
+
+    float vitesseRobot;
+    int longueurRobot;
+    int largeurRobot;
+
+    //Afin de déterminer si le robit peut prendre une cargaison
+    float poidsCapaciteDeCharge;
+    int longueurCapaciteDeCharge;
+    int largeurCapactiteDeCharge;
 };
 
 #endif // ROBOT_H

@@ -1,6 +1,8 @@
 #ifndef CARGAISON_H
 #define CARGAISON_H
 
+using namespace std;
+
 class Cargaison
 {
 public:

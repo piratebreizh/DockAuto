@@ -9,6 +9,8 @@
 #include <QMessageBox>
 
 
+using namespace std;
+
 
 
 /**
@@ -96,7 +98,7 @@ ViewCreationRobot::ViewCreationRobot(Robot & tempRobot)
 void ViewCreationRobot::s_clicked()
 {
 
-    robotTemp.largeurRobot = champLargeur->text().toFloat();
+    //robotTemp.largeurRobot = champLargeur->text().toFloat();
 
     //tempRobot.largeurRobot = champLargeur->text().toFloat();
     //QString texte = champNom->text();
