@@ -63,7 +63,7 @@ private:
 
 
 
-    void resetTousLesChamps();
+    //void resetTousLesChamps();
 };
 
 #endif // VIEWGESTIONEQUIPE_H

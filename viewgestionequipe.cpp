@@ -9,7 +9,7 @@ ViewGestionEquipe::ViewGestionEquipe(QWidget *parent) : QDialog(parent)
 
     QGroupBox *groupeBox = new QGroupBox;
 
-    resetTousLesChamps();
+    //resetTousLesChamps();
     layoutSencondaire = new QFormLayout;
 
     layoutSencondaire->addRow(new QLabel(tr("Nom de l'equipe")));
@@ -32,7 +32,7 @@ ViewGestionEquipe::ViewGestionEquipe(QWidget *parent) : QDialog(parent)
 void ViewGestionEquipe::creationTableauRobot(){
 
 
-    //model= new QStandardItemModel();
+    model= new QStandardItemModel();
 
     QStringList list;
     list.append("Nom");
@@ -77,11 +77,13 @@ void ViewGestionEquipe::enregistrerEquipe(){
     layoutSencondaire->addRow(sauvegarde,annuler);
 }
 
+
 void ViewGestionEquipe::appelAjoutRobot(){
     robotTemp = Robot();
     creationRobot = new ViewCreationRobot(this);
     creationRobot->exec();
 }
+
 
 void ViewGestionEquipe::ajouterRobotDansList(){
     //qDebug() << this->robotTemp.nomRobot ;
@@ -109,6 +111,7 @@ void ViewGestionEquipe::ajouterRobotDansList(){
 
 
 }
+
 
 
 /**
