@@ -1,27 +1,27 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 #include<string>
-
+#include <qstring.h>
 class Robot
 {
 public:
     Robot();
 
     int idRobot;
-    std::string nomRobot;
+    QString nomRobot;
 
     //Position sur la map
-    float xPositionRobot;
-    float yPositionRobot;
+    double xPositionRobot;
+    double yPositionRobot;
 
-    float vitesseRobot;
-    float longueurRobot;
-    float largeurRobot;
+    double vitesseRobot;
+    double longueurRobot;
+    double largeurRobot;
 
     //Afin de déterminer si le robit peut prendre une cargaison
-    float poidsCapaciteDeCharge;
-    float longueurCapaciteDeCharge;
-    float largeurCapactiteDeCharge;
+    double poidsCapaciteDeCharge;
+    double longueurCapaciteDeCharge;
+    double largeurCapactiteDeCharge;
 
 
 private:

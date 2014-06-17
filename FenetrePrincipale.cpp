@@ -39,11 +39,11 @@
 ****************************************************************************/
 
 
-
-
+#include "FenetrePrincipale.h"
 #include <QtWidgets>
 
-#include "FenetrePrincipale.h"
+
+
 //! [0]
 FenetrePrincipale::FenetrePrincipale()
 {

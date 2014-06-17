@@ -61,6 +61,8 @@ class QTextEdit;
 class QPushButton;
 QT_END_NAMESPACE
 
+
+
 //! [0]
 class FenetrePrincipale : public QWidget
 {
@@ -99,7 +101,7 @@ private:
     QPushButton *demarrerSimulation;
     QPushButton *pauseSimulation;
 
-    ViewGestionEquipe *viewGestionEquipe;
+    ViewGestionEquipe * viewGestionEquipe;
 
 
     //ViewMap viewmap;

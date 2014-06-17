@@ -9,6 +9,7 @@ ViewGestionEquipe::ViewGestionEquipe(QWidget *parent) : QDialog(parent)
 
     QGroupBox *groupeBox = new QGroupBox;
 
+    resetTousLesChamps();
     layoutSencondaire = new QFormLayout;
 
     layoutSencondaire->addRow(new QLabel(tr("Nom de l'equipe")));
@@ -29,7 +30,36 @@ ViewGestionEquipe::ViewGestionEquipe(QWidget *parent) : QDialog(parent)
 }
 
 void ViewGestionEquipe::creationTableauRobot(){
+
+
+    //model= new QStandardItemModel();
+
+    QStringList list;
+    list.append("Nom");
+    list.append("Largeur");
+    list.append("Longueur");
+    list.append("Vitesse");
+    list.append("Largeur Cargaison");
+    list.append("Longueur Cargaison");
+    list.append("Poids Cargaison");
+
+    model->setHorizontalHeaderLabels(list);
+
+/*    QStandardItem * newItem = new QStandardItem("dede");
+    model->setItem(1, 1, newItem);
+    QStandardItem * newItem2 = new QStandardItem("aaaa");
+
+    model->appendRow(newItem2);*/
+
+
     resultView = new QTableView();
+    resultView->setModel(model);
+
+
+    resultView->verticalHeader()->hide();
+    resultView->horizontalHeader()->setStretchLastSection(true);
+    resultView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    resultView->show();
     ajouterRobot = new QPushButton(tr("Ajouter un robot"));
     //robotTemp = new Robot;
     QWidget::connect(ajouterRobot, SIGNAL(clicked()), this, SLOT(appelAjoutRobot()));
@@ -48,12 +78,49 @@ void ViewGestionEquipe::enregistrerEquipe(){
 }
 
 void ViewGestionEquipe::appelAjoutRobot(){
-
     robotTemp = Robot();
-    robotTemp.nomRobot = "NomRobot";
-    creationRobot = new ViewCreationRobot(robotTemp);
+    creationRobot = new ViewCreationRobot(this);
     creationRobot->exec();
 }
+
+void ViewGestionEquipe::ajouterRobotDansList(){
+    //qDebug() << this->robotTemp.nomRobot ;
+    tableRobot.append(this->robotTemp);
+    QList <QStandardItem*> listItem;
+
+
+    if(this->robotTemp.nomRobot != NULL &&
+            this->robotTemp.largeurRobot != 0 &&
+            this->robotTemp.longueurRobot != 0 &&
+            this->robotTemp.vitesseRobot != 0 &&
+            this->robotTemp.largeurCapactiteDeCharge != 0 &&
+            this->robotTemp.longueurCapaciteDeCharge != 0 &&
+            this->robotTemp.poidsCapaciteDeCharge != 0){
+        listItem.append(new QStandardItem (this->robotTemp.nomRobot));
+        listItem.append(new QStandardItem (QString::number(this->robotTemp.largeurRobot)));
+        listItem.append(new QStandardItem (QString::number(this->robotTemp.longueurRobot)));
+        listItem.append(new QStandardItem (QString::number(this->robotTemp.vitesseRobot)));
+        listItem.append(new QStandardItem (QString::number(this->robotTemp.largeurCapactiteDeCharge)));
+        listItem.append(new QStandardItem (QString::number(this->robotTemp.longueurCapaciteDeCharge)));
+        listItem.append(new QStandardItem (QString::number(this->robotTemp.poidsCapaciteDeCharge)));
+
+        model->appendRow(listItem);
+    }
+
+
+}
+
+
+/**
+ * Vide tous les champs à l'initialisation de la fenetre création équipe
+**/
+/*
+void ViewGestionEquipe::resetTousLesChamps(){
+    this->tableRobot.removeAll();
+    delete model;
+    this->model = new QStandardItemModel();
+}
+*/
 
 /*
  *

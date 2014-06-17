@@ -12,6 +12,9 @@
 #include<qformlayout.h>
 #include <ViewCreationRobot.h>
 #include <Robot.h>
+#include <stdio.h>
+#include <stdio.h>
+#include <qstandarditemmodel.h>
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -20,6 +23,9 @@ class QPushButton;
 class QSqlTableModel;
 QT_END_NAMESPACE
 
+
+
+class ViewCreationRobot;
 
 class ViewGestionEquipe : public QDialog
 {
@@ -31,9 +37,11 @@ public:
     ViewGestionEquipe(QWidget *parent = 0);
     void creationTableauRobot();
     void enregistrerEquipe();
+    Robot  robotTemp;
 
 public slots:
     void appelAjoutRobot();
+    void ajouterRobotDansList();
 
 
 
@@ -43,17 +51,19 @@ private:
     QLineEdit * champNomEquipe;
     QFormLayout *layoutSencondaire;
     QPushButton *ajouterRobot;
+
     QTableView *resultView;
+    QStandardItemModel * model;
+
     QPushButton *sauvegarde;
     QPushButton *annuler;
     ViewCreationRobot *creationRobot;
 
-    Robot  robotTemp;
     QList <Robot> tableRobot;
 
 
 
-
+    void resetTousLesChamps();
 };
 
 #endif // VIEWGESTIONEQUIPE_H

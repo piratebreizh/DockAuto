@@ -17,16 +17,17 @@
  * @param parent
  * @param a
  */
-ViewCreationRobot::ViewCreationRobot(Robot & tempRobot)
+ViewCreationRobot::ViewCreationRobot(ViewGestionEquipe * _gestionEquipe)
 {
 
-
-    //tempRobot.largeurRobot = 99f;
+    gestionEquipe = &*_gestionEquipe;
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     layout = new QGridLayout;
     layout2 = new QGridLayout;
+
+    confirmationCreationRobot = new QLabel();
 
     structureRobot = new QGroupBox("Caractéristique du robot");
     cargaisonRobot = new QGroupBox("Valeurs maximales de la cargaison du robot");
@@ -36,6 +37,8 @@ ViewCreationRobot::ViewCreationRobot(Robot & tempRobot)
     QWidget::connect(annuler, SIGNAL(clicked()), this, SLOT(close()));
 
     QWidget::connect(sauvegarde, SIGNAL(clicked()), this, SLOT(s_clicked()));
+
+    QWidget::connect(sauvegarde,SIGNAL(clicked()),gestionEquipe,SLOT(ajouterRobotDansList()));
     //QWidget::connect(this, SIGNAL(pseudoclick(Robot&)), this, SLOT(miseAJoursRobot(Robot&)));
 
 
@@ -51,9 +54,9 @@ ViewCreationRobot::ViewCreationRobot(Robot & tempRobot)
     champCargaisonPoids = new QLineEdit;
 
 
-    champLargeur->setValidator(new QIntValidator(champLargeur));
-    champLongueur->setValidator(new QIntValidator(champLongueur));
-    champVitesse->setValidator(new QIntValidator(champVitesse));
+    champLargeur->setValidator(new QDoubleValidator(champLargeur));
+    champLongueur->setValidator(new QDoubleValidator(champLongueur));
+    champVitesse->setValidator(new QDoubleValidator(champVitesse));
     champCargaisonLargeur->setValidator(new QIntValidator(champCargaisonLargeur));
     champCargaisonLongueur->setValidator(new QIntValidator(champCargaisonLongueur));
     champCargaisonPoids->setValidator(new QIntValidator(champCargaisonPoids));
@@ -77,6 +80,8 @@ ViewCreationRobot::ViewCreationRobot(Robot & tempRobot)
     structureRobot->setLayout(layout);
     cargaisonRobot->setLayout(layout2);
 
+
+    mainLayout->addWidget(confirmationCreationRobot);
     mainLayout->addWidget(structureRobot);
     mainLayout->addWidget(cargaisonRobot);
 
@@ -84,7 +89,6 @@ ViewCreationRobot::ViewCreationRobot(Robot & tempRobot)
     mainLayout->addWidget(annuler);
 
     this->setLayout(mainLayout);
-
 }
 
 
@@ -95,18 +99,42 @@ ViewCreationRobot::ViewCreationRobot(Robot & tempRobot)
 
 void ViewCreationRobot::s_clicked()
 {
+    gestionEquipe->robotTemp.nomRobot = champNom->text();
+    gestionEquipe->robotTemp.largeurRobot = champLargeur->text().replace(',','.').toDouble();
+    gestionEquipe->robotTemp.longueurRobot = champLongueur->text().replace(',','.').toDouble();
+    gestionEquipe->robotTemp.vitesseRobot = champVitesse->text().replace(',','.').toDouble();
+    gestionEquipe->robotTemp.largeurCapactiteDeCharge = champCargaisonLargeur->text().replace(',','.').toDouble();
+    gestionEquipe->robotTemp.longueurCapaciteDeCharge = champCargaisonLongueur->text().replace(',','.').toDouble();
+    gestionEquipe->robotTemp.poidsCapaciteDeCharge = champCargaisonPoids->text().replace(',','.').toDouble();
 
-    robotTemp.largeurRobot = champLargeur->text().toFloat();
+    if(gestionEquipe->robotTemp.nomRobot != NULL &&
+            gestionEquipe->robotTemp.largeurRobot != 0 &&
+            gestionEquipe->robotTemp.longueurRobot != 0 &&
+            gestionEquipe->robotTemp.vitesseRobot != 0 &&
+            gestionEquipe->robotTemp.largeurCapactiteDeCharge != 0 &&
+            gestionEquipe->robotTemp.longueurCapaciteDeCharge != 0 &&
+            gestionEquipe->robotTemp.poidsCapaciteDeCharge != 0){
+        confirmationCreationRobot->setText("Le nouveau robot est dans l'équipe");
+        confirmationCreationRobot->setStyleSheet("QLabel { color : green; }");
+       // videTousLesChamps();
+    }else{
+        confirmationCreationRobot->setText("Tous les champs doivent être remplis et différents de 0");
+        confirmationCreationRobot->setStyleSheet("QLabel { color : red; }");
+    }
+    confirmationCreationRobot->setAlignment(Qt::AlignCenter);
 
-    //tempRobot.largeurRobot = champLargeur->text().toFloat();
-    //QString texte = champNom->text();
-    //std::cout << "deded" << tempRobot.largeurRobot << std::endl;
-
-    //std::cout << "Main" << mainLayout->   << std::endl;
 }
-
-
-
+/*
+void  ViewCreationRobot::videTousLesChamps(){
+    champNom->setText("");
+    champLargeur->setText("");
+    champLongueur->setText("");
+    champVitesse->setText("");
+    champCargaisonLargeur->setText("");
+    champCargaisonLongueur->setText("");
+    champCargaisonPoids->setText("");
+}
+*/
 /*
 void ViewCreationRobot::s_clicked_texte(QString& texte)
 {

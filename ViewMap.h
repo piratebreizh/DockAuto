@@ -1,4 +1,4 @@
-#ifndef VIEWMAP_H
+/*#ifndef VIEWMAP_H
 #define VIEWMAP_H
 
 #include <QBasicTimer>
@@ -20,3 +20,4 @@ public:
 };
 
 #endif // VIEWMAP_H
+*/

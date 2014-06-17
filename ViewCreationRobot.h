@@ -12,6 +12,7 @@
 #include<qtableview.h>
 #include<qformlayout.h>
 #include<qgroupbox.h>
+#include <ViewGestionEquipe.h>
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -20,12 +21,13 @@ class QPushButton;
 class QSqlTableModel;
 QT_END_NAMESPACE
 
+class ViewGestionEquipe;
 
 class ViewCreationRobot : public QDialog
 {
     Q_OBJECT
 public:
-    ViewCreationRobot(Robot & tempRobot);
+    ViewCreationRobot(ViewGestionEquipe * _gestionEquipe);
 
 
 public slots:
@@ -36,6 +38,7 @@ private:
     QGridLayout *layout;
     QGridLayout *layout2;
 
+    QLabel * confirmationCreationRobot;
     QGroupBox * structureRobot;
     QGroupBox * cargaisonRobot;
 
@@ -50,7 +53,11 @@ private:
     QPushButton *sauvegarde;
     QPushButton *annuler;
 
-    Robot robotTemp;
+
+    ViewGestionEquipe * gestionEquipe;
+
+
+  //  void  videTousLesChamps();
 
 };
 

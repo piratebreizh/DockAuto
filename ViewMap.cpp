@@ -1,4 +1,4 @@
-#include "viewmap.h"
+/*#include "viewmap.h"
 
 #include <QtWidgets>
 
@@ -8,3 +8,4 @@ ViewMap::ViewMap(QWidget *parent) : QFrame(parent)
     setFocusPolicy(Qt::StrongFocus);
 
 }
+*/
