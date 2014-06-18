@@ -194,7 +194,8 @@ void FenetrePrincipale::createBarreDeLancement(){
     layout->addWidget(demarrerSimulation);
     layout->addWidget(pauseSimulation);
 
-    //viewGestionEquipe = new ViewGestionEquipe;
+
+    viewGestionEquipe = new ViewGestionEquipe;
 
     //QWidget::connect(gestionDesEquipe, SIGNAL(clicked()), viewGestionEquipe, SLOT(exec()));
 

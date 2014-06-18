@@ -18,10 +18,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     test.cpp \
-    fenetreprincipale.cpp
+    fenetreprincipale.cpp \
+    viewgestionequipe.cpp
 
 HEADERS  += mainwindow.h \
     test.h \
-    fenetreprincipale.h
+    fenetreprincipale.h \
+    viewgestionequipe.h
 
 FORMS    += mainwindow.ui
