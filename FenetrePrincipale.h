@@ -44,9 +44,9 @@
 
 
 #include <QFrame>
-#include <QWidget>
-#include <ViewMap.h>
-#include <viewgestionequipe.h>
+#include <QMainWindow>
+//#include <ViewMap.h>
+//#include <viewgestionequipe.h>
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -59,19 +59,25 @@ class QMenuBar;
 class QPushButton;
 class QTextEdit;
 class QPushButton;
+
 QT_END_NAMESPACE
+
+namespace Ui {
+class MainWindow;
+}
 
 
 
 //! [0]
-class FenetrePrincipale : public QWidget
+class FenetrePrincipale : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    FenetrePrincipale();
+    FenetrePrincipale(QWidget *parent = 0);
 
 private:
+    Ui::MainWindow *ui;
     void createMenu();
     void createHorizontalGroupBox();
     void createGridGroupBox();
@@ -101,7 +107,7 @@ private:
     QPushButton *demarrerSimulation;
     QPushButton *pauseSimulation;
 
-    ViewGestionEquipe * viewGestionEquipe;
+   // ViewGestionEquipe * viewGestionEquipe;
 
 
     //ViewMap viewmap;

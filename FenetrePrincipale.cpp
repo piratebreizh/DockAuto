@@ -41,20 +41,22 @@
 
 #include "FenetrePrincipale.h"
 #include <QtWidgets>
+#include "ui_mainwindow.h"
 
 
 
 //! [0]
-FenetrePrincipale::FenetrePrincipale()
+FenetrePrincipale::FenetrePrincipale(QWidget *parent) : QMainWindow(parent)
 {
 
+    ui = new Ui::MainWindow;
+    ui->setupUi(this);
 
 
-
-    /*createMenu();
-    createHorizontalGroupBox();
-    createGridGroupBox();
-    createFormGroupBox();*/
+    //createMenu();
+   // createHorizontalGroupBox();
+    //createGridGroupBox();
+    //createFormGroupBox();
 
      createBarreDeLancement();
 
@@ -72,9 +74,11 @@ FenetrePrincipale::FenetrePrincipale()
 
 
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
 
-    mainLayout->setMenuBar(menuBar);
+
+    QHBoxLayout *mainLayout = new QHBoxLayout;
+
+ //   mainLayout->setMenuBar(menuBar);
 
 
     mainLayout->addWidget(barreLancement);
@@ -82,9 +86,10 @@ FenetrePrincipale::FenetrePrincipale()
 
 
 //! [4] //! [5]
-    setLayout(mainLayout);
+    setCentralWidget(new QWidget);
+    centralWidget()->setLayout(mainLayout);
 
-    setWindowTitle(tr("Basic Layouts"));
+    //setWindowTitle(tr("Basic Layouts"));*/
 }
 //! [5]
 
@@ -189,9 +194,9 @@ void FenetrePrincipale::createBarreDeLancement(){
     layout->addWidget(demarrerSimulation);
     layout->addWidget(pauseSimulation);
 
-    viewGestionEquipe = new ViewGestionEquipe;
+    //viewGestionEquipe = new ViewGestionEquipe;
 
-    QWidget::connect(gestionDesEquipe, SIGNAL(clicked()), viewGestionEquipe, SLOT(exec()));
+    //QWidget::connect(gestionDesEquipe, SIGNAL(clicked()), viewGestionEquipe, SLOT(exec()));
 
     barreLancement->setLayout(layout);
 }
