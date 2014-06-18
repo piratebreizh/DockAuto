@@ -71,6 +71,9 @@ class FenetrePrincipale : public QWidget
 public:
     FenetrePrincipale();
 
+public slots:
+    void creationNouvelleFenetreGestionEquipe();
+
 private:
     void createMenu();
     void createHorizontalGroupBox();

@@ -7,9 +7,13 @@ ViewGestionEquipe::ViewGestionEquipe(QWidget *parent) : QDialog(parent)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(parent);
 
-    QGroupBox *groupeBox = new QGroupBox;
 
-    //resetTousLesChamps();
+    QGroupBox *groupeBox = new QGroupBox;
+    tableRobot = new QList <Robot>;
+    resultView = new QTableView();
+    resultView->setFixedWidth(400);
+
+    resetTousLesChamps();
     layoutSencondaire = new QFormLayout;
 
     layoutSencondaire->addRow(new QLabel(tr("Nom de l'equipe")));
@@ -52,7 +56,6 @@ void ViewGestionEquipe::creationTableauRobot(){
     model->appendRow(newItem2);*/
 
 
-    resultView = new QTableView();
     resultView->setModel(model);
 
 
@@ -61,7 +64,6 @@ void ViewGestionEquipe::creationTableauRobot(){
     resultView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     resultView->show();
     ajouterRobot = new QPushButton(tr("Ajouter un robot"));
-    //robotTemp = new Robot;
     QWidget::connect(ajouterRobot, SIGNAL(clicked()), this, SLOT(appelAjoutRobot()));
 
     layoutSencondaire->addRow(new QLabel(tr("Liste des robots")));
@@ -73,7 +75,8 @@ void ViewGestionEquipe::creationTableauRobot(){
 void ViewGestionEquipe::enregistrerEquipe(){
     sauvegarde = new QPushButton(tr("Sauvegarder"));
     annuler = new QPushButton(tr("Annuler"));
-    connect(annuler, SIGNAL(clicked()), this, SLOT(close()));
+    connect(annuler, SIGNAL(clicked()), this, SLOT(deleteViewAjoutRobot()));
+    connect(sauvegarde, SIGNAL(clicked()), this, SLOT(sauvegardeEnBaseEquipe()));
     layoutSencondaire->addRow(sauvegarde,annuler);
 }
 
@@ -85,9 +88,15 @@ void ViewGestionEquipe::appelAjoutRobot(){
 }
 
 
+void ViewGestionEquipe::deleteViewAjoutRobot(){
+    delete creationRobot;
+    this->close();
+}
+
+
 void ViewGestionEquipe::ajouterRobotDansList(){
     //qDebug() << this->robotTemp.nomRobot ;
-    tableRobot.append(this->robotTemp);
+    tableRobot->append(this->robotTemp);
     QList <QStandardItem*> listItem;
 
 
@@ -117,79 +126,36 @@ void ViewGestionEquipe::ajouterRobotDansList(){
 /**
  * Vide tous les champs à l'initialisation de la fenetre création équipe
 **/
-/*
-void ViewGestionEquipe::resetTousLesChamps(){
-    this->tableRobot.removeAll();
-    delete model;
-    this->model = new QStandardItemModel();
-}
-*/
 
-/*
- *
+void ViewGestionEquipe::resetTousLesChamps(){
+
+    this->model = new QStandardItemModel();
+    this->resultView->setModel(model);
+    this->resultView->show();
+
+}
+
+
+/**
+ * Enregistrement de toutes l'équipe robot y compris dans la base de données
  * */
 
 
+void ViewGestionEquipe::sauvegardeEnBaseEquipe(){
 
-/*
- *
- *
- *
- * //setFrameStyle(QFrame::Panel | QFrame::Sunken);
-    //setFocusPolicy(Qt::StrongFocus);
-    QVBoxLayout *mainLayout = new QVBoxLayout(parent);
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("localhost");
+    db.setUserName("root");
+    db.setPassword("");
+    db.setDatabaseName("DockAuto");
+    if(db.open())
+    {
+        qDebug() << "Vous êtes maintenant connecté à " << db.hostName() ;
+        db.close();
+    }
+    else
+    {
+       qDebug() << "La connexion a échouée, désolé";
+    }
 
-    QGroupBox *groupeBox = new QGroupBox;
-
-    QFormLayout *layout = new QFormLayout;
-
-    QLabel *queryLabel = new QLabel(
-         QApplication::translate("nestedlayouts", "Nom de l'équipe"));
-
-    QLineEdit *queryEdit = new QLineEdit();
-
-    QTableView *resultView = new QTableView();
-
-
-    groupeBox->setLayout(layout);
-    layout->addWidget(queryLabel);
-    layout->addWidget(queryEdit);
-    layout->addWidget(resultView);
-
-     mainLayout->addWidget(groupeBox);
-
-
- //    resultView = creationTableauRobot(resultView);
-
-
-     QStandardItemModel model;
-     model.setHorizontalHeaderLabels(
-         QStringList() << QApplication::translate("nestedlayouts", "Name")
-                       << QApplication::translate("nestedlayouts", "Office"));
-
-     QList<QStringList> rows = QList<QStringList>()
-         << (QStringList() << "Verne Nilsen" << "123")
-         << (QStringList() << "Carlos Tang" << "77")
-         << (QStringList() << "Bronwyn Hawcroft" << "119")
-         << (QStringList() << "Alessandro Hanssen" << "32")
-         << (QStringList() << "Andrew John Bakken" << "54")
-         << (QStringList() << "Vanessa Weatherley" << "85")
-         << (QStringList() << "Rebecca Dickens" << "17")
-         << (QStringList() << "David Bradley" << "42")
-         << (QStringList() << "Knut Walters" << "25")
-         << (QStringList() << "Andrea Jones" << "34");
-
-     foreach (QStringList row, rows) {
-         QList<QStandardItem *> items;
-         foreach (QString text, row)
-             items.append(new QStandardItem(text));
-         model.appendRow(items);
-     }
-
-     resultView->setModel(&model);
-     resultView->verticalHeader()->hide();
-     resultView->horizontalHeader()->setStretchLastSection(true);
-
-
-
-    setLayout(mainLayout);*/
+}

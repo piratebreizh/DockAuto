@@ -116,7 +116,7 @@ void ViewCreationRobot::s_clicked()
             gestionEquipe->robotTemp.poidsCapaciteDeCharge != 0){
         confirmationCreationRobot->setText("Le nouveau robot est dans l'équipe");
         confirmationCreationRobot->setStyleSheet("QLabel { color : green; }");
-       // videTousLesChamps();
+        videTousLesChamps();
     }else{
         confirmationCreationRobot->setText("Tous les champs doivent être remplis et différents de 0");
         confirmationCreationRobot->setStyleSheet("QLabel { color : red; }");
@@ -124,7 +124,7 @@ void ViewCreationRobot::s_clicked()
     confirmationCreationRobot->setAlignment(Qt::AlignCenter);
 
 }
-/*
+
 void  ViewCreationRobot::videTousLesChamps(){
     champNom->setText("");
     champLargeur->setText("");
@@ -134,12 +134,6 @@ void  ViewCreationRobot::videTousLesChamps(){
     champCargaisonLongueur->setText("");
     champCargaisonPoids->setText("");
 }
-*/
-/*
-void ViewCreationRobot::s_clicked_texte(QString& texte)
-{
-  QMessageBox message(QMessageBox::Information, "Ceci est un test d'information", "Le texte\n" + texte + "\na été entréé");
-  message.exec();
-}
-*/
+
+
 

@@ -1,4 +1,6 @@
 QT += widgets
+QT += sql
+QT -= gui # On enlève la GUI
 
 HEADERS     = FenetrePrincipale.h \
     ViewMap.h \

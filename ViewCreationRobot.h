@@ -57,7 +57,7 @@ private:
     ViewGestionEquipe * gestionEquipe;
 
 
-  //  void  videTousLesChamps();
+  void  videTousLesChamps();
 
 };
 
