@@ -19,11 +19,17 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     test.cpp \
     fenetreprincipale.cpp \
-    viewgestionequipe.cpp
+    viewgestionequipe.cpp \
+    robot.cpp \
+    equipe.cpp \
+    viewcreationrobot.cpp
 
 HEADERS  += mainwindow.h \
     test.h \
     fenetreprincipale.h \
-    viewgestionequipe.h
+    viewgestionequipe.h \
+    robot.h \
+    equipe.h \
+    viewcreationrobot.h
 
 FORMS    += mainwindow.ui
