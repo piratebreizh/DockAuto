@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
 #include "Entrepot.h"
 #include "Robot.h"
 #include <iostream>
+#include <QSqlDatabase>
 
 using namespace std;
 
@@ -73,10 +74,23 @@ int main(int argc, char *argv[])
 
     FenetrePrincipale premierVue;
 
-    premierVue.show();
+    //premierVue.show();
 
-    return app.exec();
-
+    //return app.exec();
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("localhost");
+    db.setUserName("root");
+    db.setPassword("");
+    db.setDatabaseName("DockAutodb");
+    if(db.open())
+    {
+        cout<< "Vous êtes maintenant connecté à " << db.hostName().toStdString() << endl;
+        db.close();
+    }
+    else
+    {
+        cout << "La connexion a échouée, désolé" << endl;
+    }
 
     /*TEST MAP*/
     /*Entrepot e;
