@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 #include "mainwindow.h"
 #include <QApplication>
 #include <fenetreprincipale.h>
@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
-=======
+=======*/
 /****************************************************************************
 **
 ** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
@@ -113,4 +113,4 @@ int main(int argc, char *argv[])
     e.AfficheEquipe();*/
     return 0;
 }
->>>>>>> remotes/origin/antoine
+

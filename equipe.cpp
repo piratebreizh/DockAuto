@@ -1,10 +1,3 @@
-<<<<<<< HEAD:equipe.cpp
-#include "Equipe.h"
-
-Equipe::Equipe()
-{
-}
-=======
 #include "Equipe.h"
 #include <iostream>
 
@@ -35,4 +28,4 @@ void Equipe::AfficheEquipe(){
     for (it=listeRobotEquipe.begin(); it!=listeRobotEquipe.end(); ++it)
        cout << it->second.getNom()<<"\n";
 }
->>>>>>> remotes/origin/antoine:Equipe.cpp
+
