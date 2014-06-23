@@ -22,20 +22,20 @@ public:
 private:
 
     int idRobot;
-    QString nomRobot;
+    string nomRobot;
 
     //Position sur la map
     int xPositionRobot;
     int yPositionRobot;
 
-    double vitesseRobot;
-    double longueurRobot;
-    double largeurRobot;
+    float vitesseRobot;
+    int longueurRobot;
+    int largeurRobot;
 
     //Afin de déterminer si le robit peut prendre une cargaison
-    double poidsCapaciteDeCharge;
-    double longueurCapaciteDeCharge;
-    double largeurCapactiteDeCharge;
+    float poidsCapaciteDeCharge;
+    int longueurCapaciteDeCharge;
+    int largeurCapactiteDeCharge;
 };
 
 #endif // ROBOT_H
