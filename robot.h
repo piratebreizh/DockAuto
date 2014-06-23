@@ -10,10 +10,6 @@ public:
     int idRobot;
     QString nomRobot;
 
-    //Position sur la map
-    double xPositionRobot;
-    double yPositionRobot;
-
     double vitesseRobot;
     double longueurRobot;
     double largeurRobot;

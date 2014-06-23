@@ -195,11 +195,23 @@ void FenetrePrincipale::createBarreDeLancement(){
     layout->addWidget(pauseSimulation);
 
 
-    viewGestionEquipe = new ViewGestionEquipe;
+    //viewGestionEquipe = new ViewGestionEquipe;
 
-    QWidget::connect(gestionDesEquipe, SIGNAL(clicked()), viewGestionEquipe, SLOT(exec()));
+    QWidget::connect(gestionDesEquipe, SIGNAL(clicked()), this, SLOT(lancementViewCreationEquipe()));
+    QWidget::connect(gestionDesDepots, SIGNAL(clicked()), this, SLOT(lancementViewCreationDepot()));
 
     barreLancement->setLayout(layout);
 }
 
+
+void FenetrePrincipale::lancementViewCreationEquipe(){
+    viewGestionEquipe = new ViewGestionEquipe();
+    viewGestionEquipe->exec();
+}
+
+
+void FenetrePrincipale::lancementViewCreationDepot(){
+    viewCreationDepot = new ViewCreationDepot();
+    viewCreationDepot->exec();
+}
 

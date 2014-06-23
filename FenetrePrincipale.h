@@ -45,8 +45,8 @@
 
 #include <QFrame>
 #include <QMainWindow>
-//#include <ViewMap.h>
 #include <viewgestionequipe.h>
+#include <viewcreationdepot.h>
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -75,6 +75,10 @@ class FenetrePrincipale : public QMainWindow
 
 public:
     FenetrePrincipale(QWidget *parent = 0);
+
+public slots:
+    void lancementViewCreationDepot();
+    void lancementViewCreationEquipe();
 
 private:
     Ui::MainWindow *ui;
@@ -108,10 +112,7 @@ private:
     QPushButton *pauseSimulation;
 
     ViewGestionEquipe * viewGestionEquipe;
-
-
-    //ViewMap viewmap;
-
+    ViewCreationDepot * viewCreationDepot;
 
 };
 //! [0]

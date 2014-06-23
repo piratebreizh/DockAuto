@@ -14,6 +14,7 @@
 #include<qgroupbox.h>
 #include <ViewGestionEquipe.h>
 
+
 QT_BEGIN_NAMESPACE
 class QLabel;
 class QDialogButtonBox;
@@ -57,7 +58,7 @@ private:
     ViewGestionEquipe * gestionEquipe;
 
 
-  //  void  videTousLesChamps();
+  void  videTousLesChamps();
 
 };
 
