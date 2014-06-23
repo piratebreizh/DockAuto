@@ -1,18 +1,3 @@
-/*<<<<<<< HEAD
-#include "mainwindow.h"
-#include <QApplication>
-#include <fenetreprincipale.h>
-
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-
-    FenetrePrincipale w;
-    w.show();
-
-    return a.exec();
-}
-=======*/
 /****************************************************************************
 **
 ** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
@@ -65,7 +50,14 @@ int main(int argc, char *argv[])
 #include <QSqlDatabase>
 
 using namespace std;
-
+/*
+QSqlDatabase ConnexionDb(){
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("localhost");
+    db.setUserName("root");
+    db.setPassword("");
+    db.setDatabaseName("DockAutodb");
+}*/
 
 int main(int argc, char *argv[])
 {
@@ -74,23 +66,24 @@ int main(int argc, char *argv[])
 
     FenetrePrincipale premierVue;
 
-    //premierVue.show();
 
-    //return app.exec();
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("localhost");
-    db.setUserName("root");
-    db.setPassword("");
-    db.setDatabaseName("DockAutodb");
+    premierVue.show();
+
+    return app.exec();
+
+    /*//http://fr.openclassrooms.com/informatique/cours/maitrisez-les-bases-de-donnees-avec-qtsql
+    QSqlDatabase db = ConnexionDb();
     if(db.open())
     {
         cout<< "Vous êtes maintenant connecté à " << db.hostName().toStdString() << endl;
-        db.close();
     }
     else
     {
         cout << "La connexion a échouée, désolé" << endl;
     }
+    //db.close();
+
+
 
     /*TEST MAP*/
     /*Entrepot e;
@@ -127,4 +120,6 @@ int main(int argc, char *argv[])
     e.AfficheEquipe();*/
     return 0;
 }
+
+
 

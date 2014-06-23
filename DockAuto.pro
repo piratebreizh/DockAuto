@@ -27,7 +27,9 @@ SOURCES += main.cpp\
     Tile.cpp \
     Cargaison.cpp \
     Entrepot.cpp \
-    Map.cpp
+    Map.cpp \
+    viewentrepot.cpp \
+    gestiondb.cpp
 
 HEADERS  += mainwindow.h \
     test.h \
@@ -39,6 +41,8 @@ HEADERS  += mainwindow.h \
     Tile.h \
     Cargaison.h \
     Entrepot.h \
-    Map.h
+    Map.h \
+    viewentrepot.h \
+    gestiondb.h
 
 FORMS    += mainwindow.ui

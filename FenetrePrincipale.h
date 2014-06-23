@@ -47,6 +47,7 @@
 #include <QMainWindow>
 //#include <ViewMap.h>
 #include <viewgestionequipe.h>
+#include <viewentrepot.h>
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -108,7 +109,7 @@ private:
     QPushButton *pauseSimulation;
 
     ViewGestionEquipe * viewGestionEquipe;
-
+    ViewEntrepot * viewEntrepot;
 
     //ViewMap viewmap;
 
