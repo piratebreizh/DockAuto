@@ -11,6 +11,8 @@ using namespace std;
 
 class Robot;
 class Equipe;
+class Map;
+class Armoir;
 
 class Entrepot : public Map
 {

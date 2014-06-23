@@ -19,10 +19,8 @@ public:
     void setId(int);
     void move(Entrepot&, int,int);
 
-private:
-
     int idRobot;
-    QString nomRobot;
+    string nomRobot;
 
     //Position sur la map
     int xPositionRobot;
@@ -36,6 +34,10 @@ private:
     double poidsCapaciteDeCharge;
     double longueurCapaciteDeCharge;
     double largeurCapactiteDeCharge;
+
+private:
+
+
 };
 
 #endif // ROBOT_H

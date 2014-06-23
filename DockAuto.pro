@@ -18,7 +18,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    test.cpp \
     fenetreprincipale.cpp \
     viewgestionequipe.cpp \
     robot.cpp \
@@ -28,12 +27,10 @@ SOURCES += main.cpp\
     Cargaison.cpp \
     Entrepot.cpp \
     Map.cpp \
-    viewentrepot.cpp \
     gestiondb.cpp \
 	viewcreationdepot.cpp
 
 HEADERS  += mainwindow.h \
-    test.h \
     fenetreprincipale.h \
     viewgestionequipe.h \
     robot.h \
@@ -43,9 +40,7 @@ HEADERS  += mainwindow.h \
     Cargaison.h \
     Entrepot.h \
     Map.h \
-    viewentrepot.h \
     gestiondb.h \
-    viewcreationdepot.h
-
+	viewcreationdepot.h
 
 FORMS    += mainwindow.ui

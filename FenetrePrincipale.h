@@ -113,7 +113,6 @@ private:
 
     ViewGestionEquipe * viewGestionEquipe;
     ViewCreationDepot * viewCreationDepot;
-
 };
 //! [0]
 

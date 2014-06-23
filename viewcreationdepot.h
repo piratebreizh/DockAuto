@@ -7,6 +7,9 @@
 #include <QLabel>
 #include <qdialog.h>
 #include <QIntValidator>
+#include <QtWidgets>
+#include "Map.h"
+
 
 
 class ViewCreationDepot : public QDialog
@@ -19,6 +22,7 @@ public:
     void masquerLayout2();
     bool initialisationDeLaMap();
     bool controleTousChampsRempli();
+    void AfficherMap(int **tab, int size, QGraphicsScene *scene);
 
 
 public slots:
@@ -37,7 +41,6 @@ private :
     QLabel * labelLongueurDepot;
     QLabel * labelMessageErreur;
 
-
     QLineEdit * champNomDepot;
     QLineEdit * champLargeurDepot;
     QLineEdit * champLongueurDepot;
@@ -47,6 +50,11 @@ private :
 
 
     // CREATION MAP POUR DEPOT
+    QGraphicsScene *scene ;
+    QGraphicsView *vue;
 };
 
 #endif // VIEWCREATIONDEPOT_H
+
+
+

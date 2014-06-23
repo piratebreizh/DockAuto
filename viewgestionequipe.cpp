@@ -82,7 +82,10 @@ void ViewGestionEquipe::appelAjoutRobot(){
 
 
 void ViewGestionEquipe::deleteViewAjoutRobot(){
-    delete creationRobot;
+
+    /* A REVOIR CAR SI ON ANNULE DIRECTEMENT SA PLANTE
+         creationRobot->deleteLater();
+    */
     this->close();
 }
 
@@ -93,14 +96,14 @@ void ViewGestionEquipe::ajouterRobotDansList(){
     QList <QStandardItem*> listItem;
 
 
-    if(this->robotTemp.nomRobot != NULL &&
+    if(!this->robotTemp.nomRobot.empty() &&
             this->robotTemp.largeurRobot != 0 &&
             this->robotTemp.longueurRobot != 0 &&
             this->robotTemp.vitesseRobot != 0 &&
             this->robotTemp.largeurCapactiteDeCharge != 0 &&
             this->robotTemp.longueurCapaciteDeCharge != 0 &&
             this->robotTemp.poidsCapaciteDeCharge != 0){
-        listItem.append(new QStandardItem (this->robotTemp.nomRobot));
+        listItem.append(new QStandardItem (QString::fromUtf8(this->robotTemp.nomRobot.c_str())));
         listItem.append(new QStandardItem (QString::number(this->robotTemp.largeurRobot)));
         listItem.append(new QStandardItem (QString::number(this->robotTemp.longueurRobot)));
         listItem.append(new QStandardItem (QString::number(this->robotTemp.vitesseRobot)));

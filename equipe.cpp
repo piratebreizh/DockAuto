@@ -26,6 +26,7 @@ void Equipe::RemoveEquipe(Robot &r){
 void Equipe::AfficheEquipe(){
     std::map<int,Robot>::iterator it = listeRobotEquipe.begin();
     for (it=listeRobotEquipe.begin(); it!=listeRobotEquipe.end(); ++it)
-       cout << it->second.getNom()<<"\n";
+       std::cout << it->second.getNom()<<"\n";
+        //QDebug(it)
 }
 
