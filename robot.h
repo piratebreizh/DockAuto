@@ -23,8 +23,8 @@ public:
     string nomRobot;
 
     //Position sur la map
-    int xPositionRobot;
-    int yPositionRobot;
+    //int xPositionRobot;
+    //int yPositionRobot;
 
     double vitesseRobot;
     double longueurRobot;

@@ -48,42 +48,26 @@
 #include "Robot.h"
 #include <iostream>
 #include <QSqlDatabase>
+#include "gestiondb.h"
 
 using namespace std;
-/*
-QSqlDatabase ConnexionDb(){
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("localhost");
-    db.setUserName("root");
-    db.setPassword("");
-    db.setDatabaseName("DockAutodb");
-}*/
 
 int main(int argc, char *argv[])
 {
+    //TEST BDD
+    GestionDB db;
+    db.Requete("INSERT INTO Robot VALUES (1,1,1,1,1)");
+    db.Select("SELECT * FROM Robot WHERE ID_Robot=1");
+    db.AfficheResultatsSelect();
 
-    QApplication app(argc, argv);
+    /*QApplication app(argc, argv);
 
     FenetrePrincipale premierVue;
 
 
     premierVue.show();
 
-    return app.exec();
-
-    /*//http://fr.openclassrooms.com/informatique/cours/maitrisez-les-bases-de-donnees-avec-qtsql
-    QSqlDatabase db = ConnexionDb();
-    if(db.open())
-    {
-        cout<< "Vous êtes maintenant connecté à " << db.hostName().toStdString() << endl;
-    }
-    else
-    {
-        cout << "La connexion a échouée, désolé" << endl;
-    }
-    //db.close();
-
-
+    return app.exec();*/
 
     /*TEST MAP*/
     /*Entrepot e;

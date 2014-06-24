@@ -19,23 +19,25 @@ public:
     void setId(int);
     void move(Entrepot&, int,int);
 
-private:
-
     int idRobot;
     string nomRobot;
 
     //Position sur la map
-    int xPositionRobot;
-    int yPositionRobot;
+    //int xPositionRobot;
+    //int yPositionRobot;
 
-    float vitesseRobot;
-    int longueurRobot;
-    int largeurRobot;
+    double vitesseRobot;
+    double longueurRobot;
+    double largeurRobot;
 
     //Afin de déterminer si le robit peut prendre une cargaison
-    float poidsCapaciteDeCharge;
-    int longueurCapaciteDeCharge;
-    int largeurCapactiteDeCharge;
+    double poidsCapaciteDeCharge;
+    double longueurCapaciteDeCharge;
+    double largeurCapactiteDeCharge;
+
+private:
+
+
 };
 
 #endif // ROBOT_H
