@@ -14,13 +14,18 @@ public:
     GestionDB();
     GestionDB(const QString&,const QString&,const QString&,const QString&);
     ~GestionDB();
-    bool Requete(const QString&);
+    void Requete(const QString&);
     void Select(const QString&);
+    void AfficheResultatsSelect();
 
 private:
     QSqlDatabase db;
     vector<QVariant> ResultatRequete;
     int NbResultatRequete;
+    QString HostName="localhost";
+    QString UserName="root";
+    QString Password="";
+    QString DatabaseName="DockAutodb";
 };
 
 #endif // GESTIONDB_H
