@@ -54,20 +54,21 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    //TEST BDD
-    GestionDB db;
-    db.Requete("INSERT INTO Robot VALUES (1,1,1,1,1)");
-    db.Select("SELECT * FROM Robot WHERE ID_Robot=1");
-    db.AfficheResultatsSelect();
-
-    /*QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     FenetrePrincipale premierVue;
 
-
     premierVue.show();
 
-    return app.exec();*/
+    return app.exec();
+
+
+
+    //TEST BDD
+    /*GestionDB db;
+    db.Requete("INSERT INTO Robot VALUES (1,1,1,1,1)");
+    db.Select("SELECT * FROM Robot WHERE ID_Robot=1");
+    db.AfficheResultatsSelect();*/
 
     /*TEST MAP*/
     /*Entrepot e;
@@ -102,7 +103,8 @@ int main(int argc, char *argv[])
     e.AfficheEquipe();
     e.RemoveEquipe(r2);
     e.AfficheEquipe();*/
-    return 0;
+
+    //return 0;
 }
 
 

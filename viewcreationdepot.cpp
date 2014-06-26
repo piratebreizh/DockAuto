@@ -1,14 +1,21 @@
+//http://fr.openclassrooms.com/forum/sujet/jeu-2d-tile-mapping-qt-93098s
+//http://fr.openclassrooms.com/forum/sujet/quadrillage-sur-un-qgraphicsscene
+//http://fr.openclassrooms.com/forum/sujet/dragamp-drop-dans-une-qgraphicsscene-75520
+
 #include "viewcreationdepot.h"
+#include "gestiondb.h"
+#include "Entrepot.h"
+#include <QString>
 
 ViewCreationDepot::ViewCreationDepot()
 {
-    initialisationCoposantFenetreIdentificationDepot();
+    initialisationConposantFenetreIdentificationDepot();
 
     definitionMainLayout();
 }
 
 
-void ViewCreationDepot::initialisationCoposantFenetreIdentificationDepot(){
+void ViewCreationDepot::initialisationConposantFenetreIdentificationDepot(){
     mainLayout = new QVBoxLayout(this);
     layout2pourFenetreIdentification = new QGridLayout();
     layout3PourBoutonSauvegarderAnnuler = new QGridLayout();
@@ -60,8 +67,19 @@ void ViewCreationDepot::lancementFenetreCreationMap(){
         masquerLayout2();
     }
 
-   initialisationDeLaMap();
+    //initialisation du depot
+    e.setLargeur(champLargeurDepot->text().toInt());
+    e.setLongueur(champLongueurDepot->text().toInt());
+    e.setNom(champNomDepot->text());
 
+    //Sauvegarde en bdd
+    //SaveDepotDb();
+
+    //Gestion de l'affichage de la map
+    initialisationDeLaMap();
+
+    //Affichage des éléments de la map
+    AfficherMap(e.getLongueur(),e.getLargeur());
 
     //this->sauvegardeEtEdi     terMap->
     //mainLayout->removeItem(layout2pourFenetreIdentification);
@@ -94,13 +112,31 @@ void ViewCreationDepot::masquerLayout2(){
  */
 bool ViewCreationDepot::initialisationDeLaMap(){
 
-    scene = new QGraphicsScene();
-    vue = new QGraphicsView(scene);
-    //Map m;
-    //vue.setFixedSize(100,100);
-    //mainLayout->addWidget(&vue);
+    layoutpourLaVisualisationMap = new QGridLayout();
+    layoutpourLesImages = new QGridLayout();
 
-    //this->setLayout(mainLayout);
+    scene = new QGraphicsScene();
+    scene->setSceneRect(0, 0, 300, 300);
+    scene->setBackgroundBrush(QBrush(Qt::lightGray, Qt::CrossPattern));
+    //Affichage des éléments de la map
+    AfficherMap(champLongueurDepot->text().toInt(),champLargeurDepot->text().toInt());
+
+    vue = new QGraphicsView(scene);
+    vue->show();
+    labelImageArmoire = new QLabel("Armoire");
+    labelImageZoneDep = new QLabel("Zone de départ");
+    imageArmoire = new QPixmap();
+    imageZoneDep = new QPixmap();
+
+    layoutpourLesImages->addWidget(labelImageArmoire,1,0);
+    //layoutpourLesImages->addWidget(imageArmoire,1,1);
+    layoutpourLesImages->addWidget(labelImageZoneDep,2,0);
+    //layoutpourLesImages->addWidget(imageZoneDep,2,1);
+    layoutpourLaVisualisationMap->addWidget(vue);
+
+
+    mainLayout->addLayout(layoutpourLesImages);
+    mainLayout->addLayout(layoutpourLaVisualisationMap);
 }
 
 /**
@@ -121,40 +157,39 @@ bool ViewCreationDepot::controleTousChampsRempli(){
 
 }
 
+/**
+ * @brief ViewCreationDepot::SaveDepotDb
+ * Sauvegarde du depot dans la base de donnée
+ */
+void ViewCreationDepot::SaveDepotDb(){
+    GestionDB db;
+    db.Requete("INSERT INTO entrepot (nom,longueur,largeur) VALUES ('" + e.getNom() +
+               "','" + e.getLargeur() + "','" + e.getLongueur() + "')");
+}
 
-
-//http://fr.openclassrooms.com/forum/sujet/jeu-2d-tile-mapping-qt-93098s
-/*void viewEntrepot::initWindow()
-{
-  setWidth(520);
-  setHeigth(520);
-  setApple(0);
-  setTete(0);
-  setCorps(0);
-  setQueue(0);
-  setMur(0);
-  scene = new QGraphicsScene;
-}*/
-
-void ViewCreationDepot::AfficherMap(int **tab, int size, QGraphicsScene *scene)
+void ViewCreationDepot::AfficherMap(int lon, int larg )
 {
   QGraphicsItem *item;
   QPixmap image;
   int   width = 0;
   int   heigth = 0;
 
-  /*for (int i = 0; i < size; i++)
+  //définition limites de la map
+  e.RedefTab(lon,larg);
+
+  //Gestion de l'affichage
+  for (int i = 0; i < 29; i++)
     {
-      for (int j = 0; j < size; j++)
+      for (int j = 0; j < 29; j++)
         {
-          if (tab[i][j] == 1)
+          if (e.tab[i][j] == -1)
             {
-              image.load("./res/mur.png", 0, Qt::AutoColor);
+              image.load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\mur.png", 0, Qt::AutoColor);
               item = scene->addPixmap(image);
-              item->setPos(width, heigth);
-              width += 20;
+              item->setPos(i*10, j*10);
+              //width += 20;
             }
-          if (tab[i][j] == 4)
+          /*if (tab[i][j] == 4)
             {
               image.load("./res/tete.png", 0, Qt::AutoColor);
               item = scene->addPixmap(image);
@@ -183,16 +218,10 @@ void ViewCreationDepot::AfficherMap(int **tab, int size, QGraphicsScene *scene)
               width += 20;
             }
           if (tab[i][j] == 0)
-            width += 20;
+            width += 20;*/
         }
-      heigth += 20;
-      width = 0;
-    }*/
+      /*heigth += 20;
+      width = 0;*/
+    }
 }
-
-
-
-
-
-
 

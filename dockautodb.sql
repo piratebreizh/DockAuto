@@ -19,8 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données: `dockautodb`
 --
-CREATE DATABASE IF NOT EXISTS `dockautodb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `dockautodb`;
+CREATE DATABASE IF NOT EXISTS `dockautodb2` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `dockautodb2`;
 
 -- --------------------------------------------------------
 
@@ -29,7 +29,7 @@ USE `dockautodb`;
 --
 
 CREATE TABLE IF NOT EXISTS `armoire` (
-  `ID_Armoire` int(11) NOT NULL COMMENT 'Clé de la table',
+  `ID_Armoire` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
   `Nom` varchar(50) NOT NULL COMMENT 'Nom de l''armoire',
   `ID_Entrepot` int(11) NOT NULL COMMENT 'Clé de l''entrepôt',
   PRIMARY KEY (`ID_Armoire`),
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `armoire` (
 --
 
 CREATE TABLE IF NOT EXISTS `cargaison` (
-  `ID_Cargaison` int(11) NOT NULL COMMENT 'Clé de la table',
+  `ID_Cargaison` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
   `Nom` varchar(45) NOT NULL COMMENT 'Nom de la cargaison',
   `ID_Armoire` int(11) NOT NULL COMMENT 'Clé de l''armoire',
   PRIMARY KEY (`ID_Cargaison`),
@@ -59,8 +59,10 @@ CREATE TABLE IF NOT EXISTS `cargaison` (
 --
 
 CREATE TABLE IF NOT EXISTS `entrepot` (
-  `ID_Entrepot` int(11) NOT NULL COMMENT 'Clé de la table',
+  `ID_Entrepot` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
   `Nom` varchar(100) NOT NULL COMMENT 'Nom de l''entrepôt',
+  `Longueur` int(11) NOT NULL COMMENT 'Longueur de l''entrepot',
+  `Largeur` int(11) NOT NULL COMMENT 'Largeur de l''entrepot',
   PRIMARY KEY (`ID_Entrepot`),
   UNIQUE KEY `ID_Entrepot` (`ID_Entrepot`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Entrepôt gérer par un tableau en 2d';
@@ -72,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `entrepot` (
 --
 
 CREATE TABLE IF NOT EXISTS `liste_taches` (
-  `ID_Liste_Taches` int(11) NOT NULL COMMENT 'Clé de la table',
+  `ID_Liste_Taches` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
   `ID_Simulation` int(11) NOT NULL COMMENT 'Clé de la simulation',
   PRIMARY KEY (`ID_Liste_Taches`),
   UNIQUE KEY `ID_Liste_Taches` (`ID_Liste_Taches`),
@@ -101,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `liste_taches_robot` (
 --
 
 CREATE TABLE IF NOT EXISTS `mappe` (
-  `ID_Mappe` int(11) NOT NULL COMMENT 'Clé de la table',
+  `ID_Mappe` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
   `Longueur` int(11) NOT NULL COMMENT 'Longeur de la Mappe (nb de lignes du tableau)',
   `Largeur` int(11) NOT NULL COMMENT 'Largeur de la Mappe (nb de colonnes du tableau)',
   `ID_Entrepot` int(11) NOT NULL COMMENT 'Clé de l''entrepôt',
@@ -117,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `mappe` (
 --
 
 CREATE TABLE IF NOT EXISTS `robot` (
-  `ID_Robot` int(11) NOT NULL COMMENT 'Clé de la table',
+  `ID_Robot` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
   `Longueur` int(11) NOT NULL COMMENT 'Longueur d''un robot',
   `Largeur` int(11) NOT NULL COMMENT 'Largeur d''un robot',
   `Capacite` int(11) NOT NULL COMMENT 'Capacité de transport d''un robot',
@@ -133,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `robot` (
 --
 
 CREATE TABLE IF NOT EXISTS `simulation` (
-  `ID_Simulation` int(11) NOT NULL COMMENT 'Clé de la table',
+  `ID_Simulation` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
   `ID_Entrepot` int(11) NOT NULL COMMENT 'Clé de l''entrepôt',
   PRIMARY KEY (`ID_Simulation`),
   UNIQUE KEY `ID_Simulation` (`ID_Simulation`),
@@ -147,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `simulation` (
 --
 
 CREATE TABLE IF NOT EXISTS `tache` (
-  `ID_Tache` int(11) NOT NULL COMMENT 'Clé de la table',
+  `ID_Tache` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
   `Statut` int(11) NOT NULL COMMENT 'Statut de la tâche',
   `ID_Cargaison` int(11) NOT NULL COMMENT 'Clé de la cargaison',
   `ID_Armoire` int(11) NOT NULL COMMENT 'Clé de l''armoire',
@@ -164,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `tache` (
 --
 
 CREATE TABLE IF NOT EXISTS `tile` (
-  `ID_Tile` int(11) NOT NULL COMMENT 'Clé de la table',
+  `ID_Tile` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
   `X` int(11) NOT NULL COMMENT 'Position en abcisse de la Tile sur la Mappe',
   `Y` int(11) NOT NULL COMMENT 'Position en ordonnée de la Tile sur la Mappe',
   `ID_Type` int(11) NOT NULL COMMENT 'Type de Tile (0=vide,1=Armoire,Id=Id objet)',
