@@ -23,8 +23,8 @@ Entrepot MapScene::getEntrepot(){
 
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *e){
 
-    qWarning("x : %f", qRound(e->scenePos().x()));
-    qWarning("y : %f", qRound(e->scenePos().y()));
+    qWarning("x : %d", (int)(e->scenePos().x()/20));
+    qWarning("y : %d", (int)(e->scenePos().y()/20));
 
 }
 /*
