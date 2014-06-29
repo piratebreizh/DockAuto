@@ -1,11 +1,13 @@
 #include "viewgestionequipe.h"
 
 #include <QtWidgets>
+#include <QDebug>
 
 
 ViewGestionEquipe::ViewGestionEquipe(QWidget *parent) : QDialog(parent)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(parent);
+
 
     QGroupBox *groupeBox = new QGroupBox;
     tableRobot = new QList <Robot>;
@@ -66,7 +68,7 @@ void ViewGestionEquipe::enregistrerEquipe(){
     sauvegarde = new QPushButton(tr("Sauvegarder"));
     annuler = new QPushButton(tr("Annuler"));
     connect(annuler, SIGNAL(clicked()), this, SLOT(deleteViewAjoutRobot()));
-    connect(sauvegarde, SIGNAL(clicked()), this, SLOT(sauvegardeEnBaseEquipe()));
+    connect(sauvegarde, SIGNAL(clicked()), this, SLOT(declanchementSauvegardeCompleteEquipe()));
     QGridLayout *layoutBottom = new QGridLayout();
     layoutBottom->addWidget(sauvegarde,0,0);
     layoutBottom->addWidget(annuler,0,1);
@@ -135,23 +137,86 @@ void ViewGestionEquipe::resetTousLesChamps(){
 /**
  * Enregistrement de toutes l'équipe robot y compris dans la base de données
  * */
+void ViewGestionEquipe::declanchementSauvegardeCompleteEquipe(){
 
+   // gestionDB = new GestionDB("localhost","root","","dockautodb");
 
-void ViewGestionEquipe::sauvegardeEnBaseEquipe(){
-
-    QSqlDatabase db = QSqlDatabase::addDatabase("QODBC","ODB-MYSQL-CONNECTOR");
-    db.setHostName("localhost");
-    db.setUserName("root");
-    db.setPassword("");
-    db.setDatabaseName("dockauto");
-    if(db.open())
-    {
-        qDebug() << "Vous êtes maintenant connecté à " << db.hostName() ;
-        db.close();
-    }
-    else
-    {
-       qDebug() << "La connexion a échouée, désolé";
-    }
+    sauvegardEquipeEnBase();
+    sauvegardListeRobotEnBase();
 
 }
+
+
+/**
+ * Construction de l'équipe grâce à tout les parramétres de l'IHM
+ * */
+void ViewGestionEquipe::recuperationAttributEquipe(){
+    equipe = new Equipe();
+    equipe->nomEquipe = champNomEquipe->text().toStdString();
+    equipe->idEquipe = dernierIDEquipeEnBase();
+}
+
+ /**
+   *Récupere le dernier ID d'équipe pour la création d'une nouvelle équipe
+   * */
+int ViewGestionEquipe::dernierIDEquipeEnBase(){
+     /* ALEXNADRE : A FINIR CAR MA CONNEXION A LA BASE NE FONCTIONNE PAS */
+    // gestionDB.Select("SELECT MAX(ID_Equipe) FROM equipe;");
+     //POUR TEST
+     return 3;
+}
+
+
+/**
+  Sauvegarde en base d'une nouvelle équipe
+**/
+bool ViewGestionEquipe::sauvegardEquipeEnBase(){
+recuperationAttributEquipe();
+   // gestionDB->Requete("INSERT INTO EQUIPE (ID_Equipe,Nom_Equipe) VALUES (" + equipe->idEquipe + " , '" + equipe->nomEquipe+"';");
+    return true ;
+}
+
+/**
+  Sauvegarde en base d'une nouvelle liste de robot
+**/
+bool ViewGestionEquipe::sauvegardListeRobotEnBase(){
+
+    if(tableRobot->size()>0){
+        qDebug() << tableRobot->size();
+        for (int i = 0; i<tableRobot->size();i++) {
+            Robot robotTemp  = tableRobot->at(i);
+           QString requeteSQLInsert = " INSERT INTO ROBOT (`Nom_Robot` , `Longueur_Robot`, `Largeur_Robot`, `Vitesse`, `Longueur_Capacite_De_Charge_Robot`, `Largeur_Capactite_De_Charge_Robot`, `Poids_Capacite_De_Charge_Robot`, `ID_Equipe) VALUES (" ;
+           requeteSQLInsert.append(QString::fromUtf8(robotTemp.nomRobot.c_str()));
+           //requeteSQLInsert .append( " , ");
+           requeteSQLInsert.append(QString::number(robotTemp.longueurRobot));
+            requeteSQLInsert .append( " , ");
+            requeteSQLInsert .append(QString::number( robotTemp.largeurRobot));
+            requeteSQLInsert .append(" , ");
+            requeteSQLInsert .append(QString::number(robotTemp.vitesseRobot));
+            requeteSQLInsert .append( " , ");
+            requeteSQLInsert .append(QString::number( robotTemp.longueurCapaciteDeCharge));
+            requeteSQLInsert .append(" , ");
+            requeteSQLInsert .append(QString::number( robotTemp.largeurCapactiteDeCharge));
+            requeteSQLInsert .append( " , ");
+            requeteSQLInsert .append(QString::number( robotTemp.poidsCapaciteDeCharge));
+            requeteSQLInsert .append( " , ");
+            requeteSQLInsert .append(QString::number(  equipe->idEquipe));
+            requeteSQLInsert .append( ")");
+            qDebug()<<requeteSQLInsert;
+        }
+    }
+    //requeteSQLInsert += ";";
+
+    return true ;
+}
+
+
+
+
+
+
+
+
+
+
+

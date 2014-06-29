@@ -16,9 +16,12 @@ public:
     void AddEquipe(Robot &);
     void RemoveEquipe(Robot&);
     void AfficheEquipe();
-private:
     int idEquipe;
     string nomEquipe;
+
+
+private:
+
     map<int,Robot> listeRobotEquipe;
 };
 

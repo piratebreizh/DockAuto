@@ -55,19 +55,19 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     //TEST BDD
-    GestionDB db;
+    /*GestionDB db("localhost","root","","dockautodb");
     db.Requete("INSERT INTO Robot VALUES (1,1,1,1,1)");
     db.Select("SELECT * FROM Robot WHERE ID_Robot=1");
-    db.AfficheResultatsSelect();
+    db.AfficheResultatsSelect();*/
 
-    /*QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     FenetrePrincipale premierVue;
 
 
     premierVue.show();
 
-    return app.exec();*/
+    return app.exec();
 
     /*TEST MAP*/
     /*Entrepot e;

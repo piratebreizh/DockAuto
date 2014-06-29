@@ -18,6 +18,7 @@
 #include <qdebug.h>
 #include <QCoreApplication>
 #include <QtSql>
+#include <gestiondb.h>
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -46,10 +47,10 @@ public slots:
     void appelAjoutRobot();
     void ajouterRobotDansList();
     void deleteViewAjoutRobot();
-    void sauvegardeEnBaseEquipe();
+    void declanchementSauvegardeCompleteEquipe();
 
 private:
-    Equipe equipe;
+    Equipe *equipe;
     QLineEdit * champNomEquipe;
     QFormLayout *layoutSencondaire;
     QPushButton *ajouterRobot;
@@ -63,9 +64,14 @@ private:
 
     QList <Robot> * tableRobot;
 
-
+    GestionDB * gestionDB;
 
     void resetTousLesChamps();
+    int dernierIDEquipeEnBase();
+    void recuperationAttributEquipe();
+    bool sauvegardEquipeEnBase();
+    bool sauvegardListeRobotEnBase();
+    bool sauvegardLienEquipeRobot();
 };
 
 #endif // VIEWGESTIONEQUIPE_H
