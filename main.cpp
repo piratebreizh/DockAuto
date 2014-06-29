@@ -89,8 +89,8 @@ int main(int argc, char *argv[])
     cout<<"MAP 3"<<endl<<endl;
     r.move(e,1,1);
     e.AfficheMap();
-    cout<<"MAP 4"<<endl<<endl;
-    */
+    cout<<"MAP 4"<<endl<<endl;*/
+
 
     /*TEST EQUIPE*/
     /*Robot r1(1,"bob");

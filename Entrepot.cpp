@@ -36,17 +36,17 @@ void Entrepot::RemoveRobot(Robot &rob){
 }
 
 void Entrepot::RedefTab(int _lon, int _lar){
-    for (int i = _lon+1; i < 29; i++)
+    for (int i = _lon+1; i < LONGUEUR; i++)
       {
-        for (int j = 0; j < 29; j++)
+        for (int j = 0; j < LARGEUR; j++)
           {
             tab[i][j]=-1;
           }
       }
 
-    for (int i = 0; i < 29; i++)
+    for (int i = 0; i < LONGUEUR; i++)
       {
-        for (int j = _larg+1; j < 29; j++)
+        for (int j = _lar+1; j < LARGEUR; j++)
           {
             tab[i][j]=-1;
           }
