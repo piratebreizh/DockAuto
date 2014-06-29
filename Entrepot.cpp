@@ -1,4 +1,5 @@
 #include "Entrepot.h"
+#include <QString>
 
 using namespace std;
 
@@ -33,3 +34,46 @@ void Entrepot::RemoveRobot(Robot &rob){
     if(tab[rob.getX()][rob.getY()]>0)
         tab[rob.getX()][rob.getY()]=0;
 }
+
+void Entrepot::RedefTab(int _lon, int _lar){
+    for (int i = _lon+1; i < LONGUEUR; i++)
+      {
+        for (int j = 0; j < LARGEUR; j++)
+          {
+            tab[i][j]=-1;
+          }
+      }
+
+    for (int i = 0; i < LONGUEUR; i++)
+      {
+        for (int j = _lar+1; j < LARGEUR; j++)
+          {
+            tab[i][j]=-1;
+          }
+      }
+}
+
+void Entrepot::setLargeur(int _larg){
+    largeur=_larg;
+}
+
+void Entrepot::setLongueur(int _long){
+    longueur=_long;
+}
+
+int Entrepot::getLargeur(){
+    return largeur;
+}
+
+int Entrepot::getLongueur(){
+    return longueur;
+}
+
+void Entrepot::setNom(QString _nom){
+    nom=_nom;
+}
+
+QString Entrepot::getNom(){
+    return nom;
+}
+

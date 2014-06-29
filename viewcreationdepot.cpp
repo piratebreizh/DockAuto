@@ -1,14 +1,21 @@
+//http://fr.openclassrooms.com/forum/sujet/jeu-2d-tile-mapping-qt-93098s
+//http://fr.openclassrooms.com/forum/sujet/quadrillage-sur-un-qgraphicsscene
+//http://fr.openclassrooms.com/forum/sujet/dragamp-drop-dans-une-qgraphicsscene-75520
+
 #include "viewcreationdepot.h"
+#include "gestiondb.h"
+#include "Entrepot.h"
+#include <QString>
 
 ViewCreationDepot::ViewCreationDepot()
 {
-    initialisationCoposantFenetreIdentificationDepot();
+    initialisationConposantFenetreIdentificationDepot();
 
     definitionMainLayout();
 }
 
 
-void ViewCreationDepot::initialisationCoposantFenetreIdentificationDepot(){
+void ViewCreationDepot::initialisationConposantFenetreIdentificationDepot(){
     mainLayout = new QVBoxLayout(this);
     layout2pourFenetreIdentification = new QGridLayout();
     layout3PourBoutonSauvegarderAnnuler = new QGridLayout();
@@ -60,8 +67,20 @@ void ViewCreationDepot::lancementFenetreCreationMap(){
         masquerLayout2();
     }
 
-   initialisationDeLaMap();
+    scene = new QGraphicsScene();
+    lamap = new MapScene(scene);
 
+    //initialisation du depot
+    lamap->setInfoDepot(champLargeurDepot->text().toInt(),champLongueurDepot->text().toInt(),champNomDepot->text());
+
+    //Sauvegarde en bdd
+    //lamap->SaveDepotDb();
+
+    //Gestion de l'affichage de la map
+    initialisationDeLaMap();
+
+    //Affichage des éléments de la map
+    AfficherMap(champLargeurDepot->text().toInt(),champLongueurDepot->text().toInt());
 
     //this->sauvegardeEtEdi     terMap->
     //mainLayout->removeItem(layout2pourFenetreIdentification);
@@ -94,13 +113,40 @@ void ViewCreationDepot::masquerLayout2(){
  */
 bool ViewCreationDepot::initialisationDeLaMap(){
 
-    scene = new QGraphicsScene();
-    vue = new QGraphicsView(scene);
-    //Map m;
-    //vue.setFixedSize(100,100);
-    //mainLayout->addWidget(&vue);
+    layoutpourLaVisualisationMap = new QGridLayout();
+    layoutpourLesImages = new QGridLayout();
 
-    //this->setLayout(mainLayout);
+    lamap->setBackgroundBrush(QBrush(Qt::lightGray, Qt::CrossPattern));
+    vue = new QGraphicsView(lamap);
+    vue->show();
+
+
+    //LabelLesImages
+    labelImageArmoire = new QLabel("Armoire");
+    labelImageZoneDep = new QLabel("Zone de départ");
+    imageArmoire = new QPixmap();
+    imageArmoire->load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\arm.png");
+    imageZoneDep = new QPixmap();
+    imageZoneDep->load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\rob.png");
+    sceneArmoire = new QGraphicsScene();
+    sceneArmoire->setSceneRect(0,0,20,20);
+    sceneArmoire->addPixmap(*(imageArmoire));
+    sceneDep = new QGraphicsScene();
+    sceneDep->setSceneRect(0,0,20,20);
+    sceneDep->addPixmap(*(imageZoneDep));
+    vueArmoire = new QGraphicsView(sceneArmoire);
+    vueArmoire->show();
+    vueDep = new QGraphicsView(sceneDep);
+    vueDep->show();
+
+    layoutpourLesImages->addWidget(labelImageArmoire,1,0);
+    layoutpourLesImages->addWidget(vueArmoire,1,1);
+    layoutpourLesImages->addWidget(labelImageZoneDep,2,0);
+    layoutpourLesImages->addWidget(vueDep,2,1);
+    layoutpourLaVisualisationMap->addWidget(vue);
+
+    mainLayout->addLayout(layoutpourLesImages);
+    mainLayout->addLayout(layoutpourLaVisualisationMap);
 }
 
 /**
@@ -121,78 +167,39 @@ bool ViewCreationDepot::controleTousChampsRempli(){
 
 }
 
-
-
-//http://fr.openclassrooms.com/forum/sujet/jeu-2d-tile-mapping-qt-93098s
-/*void viewEntrepot::initWindow()
-{
-  setWidth(520);
-  setHeigth(520);
-  setApple(0);
-  setTete(0);
-  setCorps(0);
-  setQueue(0);
-  setMur(0);
-  scene = new QGraphicsScene;
-}*/
-
-void ViewCreationDepot::AfficherMap(int **tab, int size, QGraphicsScene *scene)
+void ViewCreationDepot::AfficherMap(int lon, int larg )
 {
   QGraphicsItem *item;
   QPixmap image;
-  int   width = 0;
-  int   heigth = 0;
+  Entrepot e = lamap->getEntrepot();
 
-  /*for (int i = 0; i < size; i++)
+  //Gestion de l'affichage
+  for (int i = 0; i < LONGUEUR; i++)
     {
-      for (int j = 0; j < size; j++)
+      for (int j = 0; j < LARGEUR; j++)
         {
-          if (tab[i][j] == 1)
+          if (e.tab[i][j] == -1)
             {
-              image.load("./res/mur.png", 0, Qt::AutoColor);
-              item = scene->addPixmap(image);
-              item->setPos(width, heigth);
-              width += 20;
+              image.load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\mur.png", 0, Qt::AutoColor);
+              item = lamap->addPixmap(image);
+              item->setPos(i*20, j*20);
             }
-          if (tab[i][j] == 4)
+          if (e.tab[i][j] == 1)
             {
-              image.load("./res/tete.png", 0, Qt::AutoColor);
-              item = scene->addPixmap(image);
-              item->setPos(width, heigth);
-              width += 20;
+              image.load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\arm.png", 0, Qt::AutoColor);
+              item = lamap->addPixmap(image);
+              item->setPos(i*20, j*20);
             }
-          if (tab[i][j] == 2)
+          if (e.tab[i][j] > 1)
             {
-              image.load("./res/queue.png", 0, Qt::AutoColor);
-              item = scene->addPixmap(image);
-              item->setPos(width, heigth);
-              width += 20;
+              image.load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\rob.png", 0, Qt::AutoColor);
+              item = lamap->addPixmap(image);
+              item->setPos(i*20, j*20);
             }
-          if (tab[i][j] == 3)
-            {
-              image.load("./res/corps.png", 0, Qt::AutoColor);
-              item = scene->addPixmap(image);
-              item->setPos(width, heigth);
-              width += 20;
-            }
-          if (tab[i][j] == 7)
-            {
-              image.load("./res/apple.jpg", 0, Qt::AutoColor);
-              item = scene->addPixmap(image);
-              item->setPos(width, heigth);
-              width += 20;
-            }
-          if (tab[i][j] == 0)
-            width += 20;
         }
-      heigth += 20;
-      width = 0;
-    }*/
+    }
 }
 
-
-
-
-
-
-
+void ViewCreationDepot::mousePressEvent(){
+    AfficherMap(LONGUEUR,LARGEUR);
+}

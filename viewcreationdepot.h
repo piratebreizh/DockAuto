@@ -9,6 +9,8 @@
 #include <QIntValidator>
 #include <QtWidgets>
 #include "Map.h"
+#include "Entrepot.h"
+#include "mapscene.h"
 
 
 
@@ -17,18 +19,25 @@ class ViewCreationDepot : public QDialog
     Q_OBJECT
 public:
     ViewCreationDepot();
-    void initialisationCoposantFenetreIdentificationDepot();
+    void initialisationConposantFenetreIdentificationDepot();
     void definitionMainLayout();
     void masquerLayout2();
     bool initialisationDeLaMap();
     bool controleTousChampsRempli();
-    void AfficherMap(int **tab, int size, QGraphicsScene *scene);
+    void mousePressEvent();
+    void AfficherMap(int lon, int larg);
+    //GESTION DU DRAG AND DROP
+    /*void dragEnterEvent(QDragEnterEvent *event);
+    void dragMoveEvent(QDragMoveEvent *event);
+    void dropEvent(QDropEvent *event);*/
 
 
 public slots:
     void lancementFenetreCreationMap();
 
 private :
+    MapScene *lamap;
+    QGraphicsView *vue;
 
     QVBoxLayout *mainLayout;
 
@@ -51,7 +60,23 @@ private :
 
     // CREATION MAP POUR DEPOT
     QGraphicsScene *scene ;
-    QGraphicsView *vue;
+
+    QGridLayout *layoutpourLesImages;
+    QGridLayout *layoutpourLaVisualisationMap;
+
+    QLabel *labelImageArmoire;
+    QLabel *labelImageZoneDep;
+
+    QGraphicsScene *sceneArmoire ;
+    QGraphicsScene *sceneDep ;
+
+    QGraphicsView *vueArmoire;
+    QGraphicsView *vueDep;
+
+    QPixmap *imageArmoire;
+    QPixmap *imageZoneDep;
+
+
 };
 
 #endif // VIEWCREATIONDEPOT_H

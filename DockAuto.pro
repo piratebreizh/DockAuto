@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     Entrepot.cpp \
     Map.cpp \
     gestiondb.cpp \
-	viewcreationdepot.cpp
+	viewcreationdepot.cpp \
+    mapscene.cpp
 
 HEADERS  += mainwindow.h \
     fenetreprincipale.h \
@@ -41,6 +42,7 @@ HEADERS  += mainwindow.h \
     Entrepot.h \
     Map.h \
     gestiondb.h \
-	viewcreationdepot.h
+	viewcreationdepot.h \
+    mapscene.h
 
 FORMS    += mainwindow.ui
