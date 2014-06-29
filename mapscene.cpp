@@ -1,7 +1,9 @@
 #include "mapscene.h"
 #include "gestiondb.h"
+#include "armoire.h"
 #include "QGraphicsItem"
 #include<QGraphicsSceneMouseEvent>
+#include<QGraphicsView>
 
 MapScene::MapScene(QObject* parent)
     : QGraphicsScene(parent)
@@ -21,10 +23,28 @@ Entrepot MapScene::getEntrepot(){
     return e;
 }
 
-void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *e){
+void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
 
-    qWarning("x : %d", (int)(e->scenePos().x()/20));
-    qWarning("y : %d", (int)(e->scenePos().y()/20));
+    int x =(int)(ev->scenePos().x()/20);
+    int y =(int)(ev->scenePos().y()/20);
+
+    switch (e.tab[x][y]){
+
+    case -1:
+        break;
+    case 0:
+        //Armoire a;
+        //e.AddArmoire(a);
+        e.tab[x][y]=1;
+        break;
+    case 1:
+        e.tab[x][y]=2;
+        break;
+    default:
+        e.tab[x][y]=0;
+        break;
+
+    }
 
 }
 /*

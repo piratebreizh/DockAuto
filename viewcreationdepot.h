@@ -24,8 +24,8 @@ public:
     void masquerLayout2();
     bool initialisationDeLaMap();
     bool controleTousChampsRempli();
-
-        void AfficherMap(int lon, int larg);
+    void mousePressEvent();
+    void AfficherMap(int lon, int larg);
     //GESTION DU DRAG AND DROP
     /*void dragEnterEvent(QDragEnterEvent *event);
     void dragMoveEvent(QDragMoveEvent *event);

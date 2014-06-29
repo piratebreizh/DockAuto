@@ -199,3 +199,7 @@ void ViewCreationDepot::AfficherMap(int lon, int larg )
         }
     }
 }
+
+void ViewCreationDepot::mousePressEvent(){
+    AfficherMap(LONGUEUR,LARGEUR);
+}
