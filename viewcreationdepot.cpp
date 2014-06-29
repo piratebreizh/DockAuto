@@ -67,8 +67,8 @@ void ViewCreationDepot::lancementFenetreCreationMap(){
         masquerLayout2();
     }
 
-
-    lamap = new MapScene();
+    scene = new QGraphicsScene();
+    lamap = new MapScene(scene);
 
     //initialisation du depot
     lamap->setInfoDepot(champLargeurDepot->text().toInt(),champLongueurDepot->text().toInt(),champNomDepot->text());
@@ -116,11 +116,9 @@ bool ViewCreationDepot::initialisationDeLaMap(){
     layoutpourLaVisualisationMap = new QGridLayout();
     layoutpourLesImages = new QGridLayout();
 
-    scene = new QGraphicsScene();
-    scene->setSceneRect(0, 0, 600, 600);
-    scene->setBackgroundBrush(QBrush(Qt::lightGray, Qt::CrossPattern));
-    lamap->setScene(scene);
-    lamap->show();
+    lamap->setBackgroundBrush(QBrush(Qt::lightGray, Qt::CrossPattern));
+    vue = new QGraphicsView(lamap);
+    vue->show();
 
 
     //LabelLesImages
@@ -145,7 +143,7 @@ bool ViewCreationDepot::initialisationDeLaMap(){
     layoutpourLesImages->addWidget(vueArmoire,1,1);
     layoutpourLesImages->addWidget(labelImageZoneDep,2,0);
     layoutpourLesImages->addWidget(vueDep,2,1);
-    layoutpourLaVisualisationMap->addWidget(lamap);
+    layoutpourLaVisualisationMap->addWidget(vue);
 
     mainLayout->addLayout(layoutpourLesImages);
     mainLayout->addLayout(layoutpourLaVisualisationMap);
@@ -173,9 +171,7 @@ void ViewCreationDepot::AfficherMap(int lon, int larg )
 {
   QGraphicsItem *item;
   QPixmap image;
-
-  //définition limites de la map
-  e.RedefTab(lon,larg);
+  Entrepot e = lamap->getEntrepot();
 
   //Gestion de l'affichage
   for (int i = 0; i < LONGUEUR; i++)
@@ -185,19 +181,19 @@ void ViewCreationDepot::AfficherMap(int lon, int larg )
           if (e.tab[i][j] == -1)
             {
               image.load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\mur.png", 0, Qt::AutoColor);
-              item = scene->addPixmap(image);
+              item = lamap->addPixmap(image);
               item->setPos(i*20, j*20);
             }
           if (e.tab[i][j] == 1)
             {
               image.load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\arm.png", 0, Qt::AutoColor);
-              item = scene->addPixmap(image);
+              item = lamap->addPixmap(image);
               item->setPos(i*20, j*20);
             }
           if (e.tab[i][j] > 1)
             {
               image.load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\rob.png", 0, Qt::AutoColor);
-              item = scene->addPixmap(image);
+              item = lamap->addPixmap(image);
               item->setPos(i*20, j*20);
             }
         }

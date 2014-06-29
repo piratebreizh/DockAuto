@@ -36,8 +36,8 @@ public slots:
     void lancementFenetreCreationMap();
 
 private :
-    Entrepot e;
     MapScene *lamap;
+    QGraphicsView *vue;
 
     QVBoxLayout *mainLayout;
 

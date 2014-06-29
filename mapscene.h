@@ -1,18 +1,20 @@
 #ifndef MAPSCENE_H
 #define MAPSCENE_H
-#include <QGraphicsView>
+#include <QGraphicsScene>
 #include <QString>
 #include "Entrepot.h"
 
-class MapScene : public QGraphicsView
+class MapScene : public QGraphicsScene
 {
 public:
     MapScene();
+    MapScene(QObject* parent);
     void AfficherMap(int lon, int larg);
     void setInfoDepot(int lon, int larg, QString nom);
     void SaveDepotDb();
+    Entrepot getEntrepot();
+    void mousePressEvent(QGraphicsSceneMouseEvent *e);
 private:
-    QGraphicsScene *scene ;
     Entrepot e;
 };
 

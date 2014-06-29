@@ -1,10 +1,11 @@
 #include "mapscene.h"
 #include "gestiondb.h"
 #include "QGraphicsItem"
+#include<QGraphicsSceneMouseEvent>
 
-MapScene::MapScene()
+MapScene::MapScene(QObject* parent)
+    : QGraphicsScene(parent)
 {
-    scene = new QGraphicsScene();
 }
 
 void MapScene::setInfoDepot(int lon, int larg, QString nom){
@@ -12,15 +13,25 @@ void MapScene::setInfoDepot(int lon, int larg, QString nom){
     e.setLargeur(larg);
     e.setLongueur(lon);
     e.setNom(nom);
+    //définition limites de la map
+    e.RedefTab(lon,larg);
 }
 
+Entrepot MapScene::getEntrepot(){
+    return e;
+}
+
+void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *e){
+
+    qWarning("x : %f", qRound(e->scenePos().x()));
+    qWarning("y : %f", qRound(e->scenePos().y()));
+
+}
+/*
 void MapScene::AfficherMap(int lon, int larg )
 {
   QGraphicsItem *item;
   QPixmap image;
-
-  //définition limites de la map
-  e.RedefTab(lon,larg);
 
   //Gestion de l'affichage
   for (int i = 0; i < LONGUEUR; i++)
@@ -48,7 +59,7 @@ void MapScene::AfficherMap(int lon, int larg )
         }
     }
 }
-
+*/
 
 /**
  * @brief ViewCreationDepot::SaveDepotDb
