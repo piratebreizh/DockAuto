@@ -63,13 +63,13 @@ void ViewDefinirTache::chargerListeDeroulanteDesRobot(){
     }
 
 
-    if(listeEquipe->size()>0){
+    /*if(listeEquipe->size()>0){
         qDebug() << listeEquipe->size();
         for (int i = 0; i<listeEquipe->size();i++) {
             Equipe equipeTemp  = listeEquipe->at(i);
             listeDeroulanteChoixEquipe->addItem(equipeTemp.nomEquipe2,equipeTemp.idEquipe);
         }
-    }
+    }*/
 
 
 
