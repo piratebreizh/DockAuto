@@ -20,10 +20,11 @@ class ViewMenuListeDesTaches: public QDialog
 {
     Q_OBJECT
 public:
-    ViewMenuListeDesTaches();
+    ViewMenuListeDesTaches(ViewMenuSimulation * _viewMenuSimulation);
     void initialisationComposant();
     void definitonLayout();
     ViewDefinirTache * viewDefinirTache;
+    ViewMenuSimulation * viewMenuSimulation;
 
 
 public slots :

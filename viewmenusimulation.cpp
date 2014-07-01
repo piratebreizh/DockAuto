@@ -13,6 +13,10 @@ ViewMenuSimulation::ViewMenuSimulation()
 void ViewMenuSimulation::initialisationComposantFenetreMenuSimulation(){
     mainLayout = new QVBoxLayout(this);
     layoutMenuChoixSauvegardCharger = new QGridLayout();
+    LayoutEquipe = new QGridLayout();
+    layoutNomSimulation= new QGridLayout();
+    LayoutTache = new QGridLayout();
+    LayoutSauvegarderAnnuler = new QGridLayout();
 
    nouvelleSimulation = new QPushButton("Nouvelle simulation");
    chargerSimulation = new QPushButton("Charger simulation");
@@ -21,6 +25,7 @@ void ViewMenuSimulation::initialisationComposantFenetreMenuSimulation(){
     champNomSimulation = new QLineEdit();
     labelChoixEquipe = new QLabel("Choix équipe");
     listeDeroulanteChoixEquipe = new QComboBox();
+    pushBloquerChoixEquipe = new QPushButton("Définir");
     labelTache = new QLabel ("Définir tâche");
     boutonDefinirTache = new QPushButton("Définir");
     labelConfirmationEquipe = new QLabel();
@@ -38,26 +43,40 @@ void ViewMenuSimulation::initialisationComposantFenetreMenuSimulation(){
 }
 
 void ViewMenuSimulation::definitionMainLayout(){
+
+
     layoutMenuChoixSauvegardCharger->addWidget(nouvelleSimulation);
     layoutMenuChoixSauvegardCharger->addWidget(chargerSimulation);
-    layoutMenuChoixSauvegardCharger->addWidget(labelNomSimulation);
-    layoutMenuChoixSauvegardCharger->addWidget(champNomSimulation);
-    layoutMenuChoixSauvegardCharger->addWidget(labelChoixEquipe);
-    layoutMenuChoixSauvegardCharger->addWidget(listeDeroulanteChoixEquipe);
-    layoutMenuChoixSauvegardCharger->addWidget(labelConfirmationEquipe);
-    layoutMenuChoixSauvegardCharger->addWidget(labelTache);
-    layoutMenuChoixSauvegardCharger->addWidget(boutonDefinirTache);
-    layoutMenuChoixSauvegardCharger->addWidget(labelConfirmationTache);
-    layoutMenuChoixSauvegardCharger->addWidget(sauvegarderSimulation);
-    layoutMenuChoixSauvegardCharger->addWidget(definirCommeSimulation);
+
+    layoutNomSimulation->addWidget(labelNomSimulation);
+    layoutNomSimulation->addWidget(champNomSimulation);
+
+    LayoutEquipe->addWidget(labelChoixEquipe,0,0,1,2);
+    LayoutEquipe->addWidget(listeDeroulanteChoixEquipe,1,0,1,2);
+    LayoutEquipe->addWidget(pushBloquerChoixEquipe,2,0);
+    LayoutEquipe->addWidget(labelConfirmationEquipe,2,1);
+
+    LayoutTache->addWidget(labelTache,0,0,1,2);
+    LayoutTache->addWidget(boutonDefinirTache,1,0);
+    LayoutTache->addWidget(labelConfirmationTache,1,1);
+
+    LayoutSauvegarderAnnuler->addWidget(sauvegarderSimulation);
+    LayoutSauvegarderAnnuler->addWidget(definirCommeSimulation);
 
 
 
+
+    QWidget::connect(pushBloquerChoixEquipe,SIGNAL(clicked()),this,SLOT(bloquerSelectionEquipe()));
     QWidget::connect(nouvelleSimulation,SIGNAL(clicked()),this,SLOT(layoutNouvelleSimulation()));
     QWidget::connect(boutonDefinirTache,SIGNAL(clicked()),this,SLOT(executionViewMenuListeDesTaches()));
 
 
     mainLayout->addLayout(layoutMenuChoixSauvegardCharger);
+    mainLayout->addLayout(layoutNomSimulation);
+    mainLayout->addLayout(LayoutEquipe);
+    mainLayout->addLayout(LayoutTache);
+    mainLayout->addLayout(LayoutSauvegarderAnnuler);
+
 
     this->setLayout(mainLayout);
 }
@@ -69,7 +88,7 @@ void ViewMenuSimulation::definitionMainLayout(){
     labelChoixEquipe->hide();
     listeDeroulanteChoixEquipe->hide();
     labelConfirmationEquipe->hide();
-
+    pushBloquerChoixEquipe->hide();
     labelTache->hide();
     boutonDefinirTache->hide();
     labelConfirmationTache->hide();
@@ -81,7 +100,6 @@ void ViewMenuSimulation::definitionMainLayout(){
 void ViewMenuSimulation::layoutNouvelleSimulation(){
     nouvelleSimulation->hide();
     chargerSimulation->hide();
-
     labelNomSimulation->show();
     champNomSimulation->show();
     labelChoixEquipe->show();
@@ -92,6 +110,7 @@ void ViewMenuSimulation::layoutNouvelleSimulation(){
     labelConfirmationTache->show();
     sauvegarderSimulation->show();
     definirCommeSimulation->show();
+    pushBloquerChoixEquipe->show();
     initialisationDeLaListeDeroulanteEquipe();
 }
 
@@ -118,8 +137,7 @@ void ViewMenuSimulation::verificationlabelConfirmation(){
 
 void ViewMenuSimulation::executionViewMenuListeDesTaches(){
 
-    qDebug() << listeDeroulanteChoixEquipe->currentText();
-    viewMenuListeDesTaches = new ViewMenuListeDesTaches();
+    viewMenuListeDesTaches = new ViewMenuListeDesTaches(this);
     viewMenuListeDesTaches->exec();
 }
 
@@ -130,7 +148,10 @@ void ViewMenuSimulation::executionViewMenuListeDesTaches(){
  */
 void ViewMenuSimulation::initialisationDeLaListeDeroulanteEquipe(){
 
-    /* POUR TESTER A SUPPRIMER */
+    /* POUR TESTER A SUPPRIMER A remplacer par la fonction SQL ci dessou*/
+
+
+    //chargeToutesLesEquipesDeLaBase();
 
     QString p = "equpe 1";
     QString o = "equpe 2";
@@ -151,8 +172,38 @@ void ViewMenuSimulation::initialisationDeLaListeDeroulanteEquipe(){
             listeDeroulanteChoixEquipe->addItem(equipeTemp.nomEquipe2,equipeTemp.idEquipe);
         }
     }
+}
+
+
+/**
+  * @brief ViewMenuSimulation::chargeToutesLesEquipesDeLaBase
+  * recupertion de toutes les équipe de la base de données
+  * */
+void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase(){
+
+    /*A COMPLETER PAR ANTOINE POUR LA BASE DE DONNE */
+    QString requeteSelect = "SELECT ID_Equipe, Nom_Equipe FROM EQUIPE";
+}
+
+/**
+ * @brief ViewMenuSimulation::bloquerSelectionEquipe
+ * Permet de valider une équipe selectionné dans la liste déroulante
+ */
+void ViewMenuSimulation::bloquerSelectionEquipe(){
+    confirmationEquipe = true;
+
+   /* qDebug() << listeDeroulanteChoixEquipe->currentText();
+    qDebug() << listeDeroulanteChoixEquipe->currentData().toInt();*/
+
+    equipeSelectionne = new Equipe( listeDeroulanteChoixEquipe->currentData().toInt(),listeDeroulanteChoixEquipe->currentText() );
+
+    verificationlabelConfirmation();
 
 }
+
+
+
+
 
 
 

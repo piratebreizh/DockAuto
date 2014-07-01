@@ -2,6 +2,7 @@
 
 ViewDefinirTache::ViewDefinirTache(ViewMenuListeDesTaches * _menuListeDesTaches)
 {
+    menuListeDesTaches =  &*_menuListeDesTaches;
     initialisationComposant();
     definitonLayout();
 }
@@ -21,6 +22,10 @@ void ViewDefinirTache::initialisationComposant(){
     champArrive = new QLabel();
     sauvegarder = new QPushButton("Sauvegarder");
     annuler = new QPushButton("Annuler");
+
+    chargerListeDeroulanteDesRobot();
+
+
 }
 
 
@@ -38,5 +43,64 @@ void ViewDefinirTache::definitonLayout(){
     layoutMenuDroiteSelection->addWidget(annuler,5,1);
     mainLayout->addLayout(layoutMenuDroiteSelection,1,1);
 
+
     this->setLayout(mainLayout);
 }
+
+/**
+ * @brief ViewDefinirTache::chargerListeDeroulanteDesRobot
+ * Charge toutes les robot présent dans l'équipe définit dans l'IHM ViewMenuSimulation
+ */
+void ViewDefinirTache::chargerListeDeroulanteDesRobot(){
+    if(menuListeDesTaches->viewMenuSimulation->equipeSelectionne != NULL && menuListeDesTaches->viewMenuSimulation->equipeSelectionne->nomEquipe2 != NULL ){
+
+        int ID_Equipe = menuListeDesTaches->viewMenuSimulation->equipeSelectionne->idEquipe;
+        // A DECOMENTER
+        //chargerListeRobotEnBase(ID_Equipe);
+        //qDebug() << ID_Equipe;
+    }else{
+        //qDebug() << "Equipe NULL";
+    }
+
+
+    if(listeEquipe->size()>0){
+        qDebug() << listeEquipe->size();
+        for (int i = 0; i<listeEquipe->size();i++) {
+            Equipe equipeTemp  = listeEquipe->at(i);
+            listeDeroulanteChoixEquipe->addItem(equipeTemp.nomEquipe2,equipeTemp.idEquipe);
+        }
+    }
+
+
+
+}
+
+/**
+ * @brief ViewDefinirTache::chargerListeRobotEnBase
+ *  Charge à partir d'une ID_EQUIPE la liste des robots
+ */
+void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe){
+    /* A COMPLETER ET SUPPRIMER LES TESTS */
+    QString requetteSelect = "SELECT ID_Robot, Nom_Robot FROM robot WHERE ID_Equipe = " + ID_Equipe + " ;";
+
+    listeRobot = new QList<Robot>;
+    //TEST !!! en attente de connexion a la base de donnée
+    QString p = "Robot 1";
+    QString o = "Robot 2";
+    QString i = "Robot 3";
+
+    Robot a (1,p);
+    Robot b (2,o);
+    Robot c (3,i);
+
+    listeRobot->append(a);
+    listeRobot->append(b);
+    listeRobot->append(c);
+
+}
+
+
+
+
+
+

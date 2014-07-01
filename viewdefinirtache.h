@@ -21,9 +21,10 @@ class ViewDefinirTache : public QDialog
     Q_OBJECT
 public:
     ViewDefinirTache(ViewMenuListeDesTaches * _menuListeDesTaches);
+    ViewMenuListeDesTaches * menuListeDesTaches;
+
 
 private :
-    ViewMenuListeDesTaches * menuListeDesTaches;
 
     QGridLayout * mainLayout;
     QGridLayout * layoutMenuDroiteSelection;
@@ -41,8 +42,13 @@ private :
     QPushButton * sauvegarder;
     QPushButton * annuler;
 
+    QList<Robot> * listeRobot;
+
     void initialisationComposant();
     void definitonLayout();
+    void chargerListeDeroulanteDesRobot();
+    void chargerListeRobotEnBase(int ID_Equipe);
+
 
 };
 

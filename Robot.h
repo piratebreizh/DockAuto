@@ -13,14 +13,18 @@ class Robot : public Tile
 public:
     Robot();
     Robot(int,string);
+    Robot(int,QString);
     string getNom();
     void setNom(string);
     int getId();
     void setId(int);
     void move(Entrepot&, int,int);
 
+
+
     int idRobot;
     string nomRobot;
+    QString nomRobot2;
 
     //Position sur la map
     //int xPositionRobot;

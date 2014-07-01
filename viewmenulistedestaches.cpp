@@ -1,7 +1,8 @@
 #include "viewmenulistedestaches.h"
 
-ViewMenuListeDesTaches::ViewMenuListeDesTaches()
+ViewMenuListeDesTaches::ViewMenuListeDesTaches(ViewMenuSimulation * _viewMenuSimulation)
 {
+    viewMenuSimulation = &* _viewMenuSimulation;
     initialisationComposant();
     definitonLayout();
 }
@@ -10,7 +11,6 @@ ViewMenuListeDesTaches::ViewMenuListeDesTaches()
 void ViewMenuListeDesTaches::initialisationComposant(){
     mainLayout = new QVBoxLayout(this);
     layout1 = new QGridLayout();
-    //layoutBasBouton = new QGridLayout();
 
     labelNomTacheListe = new QLabel("Nom liste");
     champNomTacheListe = new QLineEdit();
