@@ -4,6 +4,7 @@
 #include "QGraphicsItem"
 #include<QGraphicsSceneMouseEvent>
 #include<QGraphicsView>
+#include"viewcreationdepot.h"
 
 MapScene::MapScene(QObject* parent)
     : QGraphicsScene(parent)
@@ -45,7 +46,6 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
         break;
 
     }
-
 }
 /*
 void MapScene::AfficherMap(int lon, int larg )

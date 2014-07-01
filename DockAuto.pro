@@ -29,7 +29,9 @@ SOURCES += main.cpp\
     Map.cpp \
     gestiondb.cpp \
 	viewcreationdepot.cpp \
-    mapscene.cpp
+    mapscene.cpp \
+    simulation.cpp \
+    tache.cpp
 
 HEADERS  += mainwindow.h \
     fenetreprincipale.h \
@@ -43,6 +45,8 @@ HEADERS  += mainwindow.h \
     Map.h \
     gestiondb.h \
 	viewcreationdepot.h \
-    mapscene.h
+    mapscene.h \
+    simulation.h \
+    tache.h
 
 FORMS    += mainwindow.ui

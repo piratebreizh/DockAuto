@@ -67,7 +67,6 @@ void ViewCreationDepot::lancementFenetreCreationMap(){
         masquerLayout2();
     }
 
-    scene = new QGraphicsScene();
     lamap = new MapScene(scene);
 
     //initialisation du depot
