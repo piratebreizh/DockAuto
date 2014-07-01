@@ -1,6 +1,7 @@
 #include <string>
 #include "Robot.h"
 #include <map>
+#include <QString>
 #ifndef EQUIPE_H
 #define EQUIPE_H
 
@@ -13,12 +14,17 @@ class Equipe
 public:
     Equipe();
     Equipe(int,string);
+    Equipe(int,QString);
     void AddEquipe(Robot &);
     void RemoveEquipe(Robot&);
     void AfficheEquipe();
-private:
     int idEquipe;
     string nomEquipe;
+    QString nomEquipe2;
+
+
+private:
+
     map<int,Robot> listeRobotEquipe;
 };
 

@@ -47,6 +47,7 @@
 #include <QMainWindow>
 #include <viewgestionequipe.h>
 #include <viewcreationdepot.h>
+#include <viewmenusimulation.h>
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -79,6 +80,7 @@ public:
 public slots:
     void lancementViewCreationDepot();
     void lancementViewCreationEquipe();
+    void lancementViewMenuSimulation();
 
 private:
     Ui::MainWindow *ui;
@@ -113,6 +115,7 @@ private:
 
     ViewGestionEquipe * viewGestionEquipe;
     ViewCreationDepot * viewCreationDepot;
+    ViewMenuSimulation * viewMenuSimulation;
 };
 //! [0]
 

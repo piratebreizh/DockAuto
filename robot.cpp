@@ -17,6 +17,11 @@ Robot::Robot(int _id, string _nom){
     nomRobot=_nom;
 }
 
+Robot::Robot(int _id, QString _nom){
+    idRobot=_id;
+    nomRobot2 = _nom;
+}
+
 string Robot::getNom(){
     return nomRobot;
 }

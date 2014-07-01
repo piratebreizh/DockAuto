@@ -124,6 +124,7 @@ CREATE TABLE IF NOT EXISTS `robot` (
   `Largeur` int(11) NOT NULL COMMENT 'Largeur d''un robot',
   `Capacite` int(11) NOT NULL COMMENT 'Capacité de transport d''un robot',
   `Vitesse` float NOT NULL COMMENT 'Vitesse de déplacement d''un robot',
+  `ID_Equipe` int(11) NOT NULL COMMENT 'Clé étrangère de l ID equipe',
   PRIMARY KEY (`ID_Robot`),
   UNIQUE KEY `ID_Robot` (`ID_Robot`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Robot';
@@ -175,6 +176,20 @@ CREATE TABLE IF NOT EXISTS `tile` (
   UNIQUE KEY `ID_Tile` (`ID_Tile`),
   KEY `ID_Mappe` (`ID_Mappe`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tile de la Mappe';
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `equipe`
+--
+
+CREATE TABLE IF NOT EXISTS `equipe` (
+  `ID_Equipe` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
+  `Nom_Equipe` varchar(100) COMMENT 'Nom d une équipe',
+  PRIMARY KEY (`ID_Equipe`),
+  UNIQUE KEY `ID_Equipe` (`ID_Equipe`),
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Une équipe';
+
 
 --
 -- Contraintes pour les tables exportées

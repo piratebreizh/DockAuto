@@ -200,6 +200,7 @@ void FenetrePrincipale::createBarreDeLancement(){
 
     QWidget::connect(gestionDesEquipe, SIGNAL(clicked()), this, SLOT(lancementViewCreationEquipe()));
     QWidget::connect(gestionDesDepots, SIGNAL(clicked()), this, SLOT(lancementViewCreationDepot()));
+    QWidget::connect(nouvelleSimulation, SIGNAL(clicked()), this, SLOT(lancementViewMenuSimulation()));
 
     barreLancement->setLayout(layout);
 }
@@ -216,3 +217,7 @@ void FenetrePrincipale::lancementViewCreationDepot(){
     viewCreationDepot->exec();
 }
 
+void FenetrePrincipale::lancementViewMenuSimulation(){
+    viewMenuSimulation = new ViewMenuSimulation();
+    viewMenuSimulation->exec();
+}

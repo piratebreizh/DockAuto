@@ -15,6 +15,13 @@ Equipe::Equipe(int _id, string _nom)
     nomEquipe=_nom;
 }
 
+
+Equipe::Equipe(int _id, QString _nom)
+{
+    idEquipe=_id;
+    nomEquipe2=_nom;
+}
+
 void Equipe::AddEquipe(Robot &r){
     listeRobotEquipe.insert(std::pair<int,Robot>(r.getId(),r));
 }

@@ -30,8 +30,12 @@ SOURCES += main.cpp\
     gestiondb.cpp \
 	viewcreationdepot.cpp \
     mapscene.cpp \
+    viewmenusimulation.cpp \
+    viewmenulistedestaches.cpp \
+    tache.cpp \
+    listetache.cpp \
     simulation.cpp \
-    tache.cpp
+    viewdefinirtache.cpp
 
 HEADERS  += mainwindow.h \
     fenetreprincipale.h \
@@ -46,7 +50,11 @@ HEADERS  += mainwindow.h \
     gestiondb.h \
 	viewcreationdepot.h \
     mapscene.h \
+    viewmenusimulation.h \
+    viewmenulistedestaches.h \
+    tache.h \
+    listetache.h \
     simulation.h \
-    tache.h
+    viewdefinirtache.h
 
 FORMS    += mainwindow.ui

@@ -1,11 +1,16 @@
 #ifndef TACHE_H
 #define TACHE_H
+#include <Tile.h>
 
-class Tache
+class Tache : Tile
 {
 public:
     Tache();
-private:
+    double getPoids();
+    void setPoids();
+
+private :
+    double poids;
 
 };
 
