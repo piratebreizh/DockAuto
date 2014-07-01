@@ -12,7 +12,7 @@
 #include <tache.h>
 #include <listetache.h>
 #include <QComboBox>
-#include"robot.h"
+#include <robot.h>
 
 class ViewMenuListeDesTaches;
 class ViewMenuSimulation;

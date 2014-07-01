@@ -23,7 +23,7 @@ void ViewDefinirTache::initialisationComposant(){
     sauvegarder = new QPushButton("Sauvegarder");
     annuler = new QPushButton("Annuler");
 
-    chargerListeDeroulanteDesRobot();
+    //chargerListeDeroulanteDesRobot();
 
 
 }
@@ -62,14 +62,13 @@ void ViewDefinirTache::chargerListeDeroulanteDesRobot(){
         //qDebug() << "Equipe NULL";
     }
 
-
-    /*if(listeEquipe->size()>0){
-        qDebug() << listeEquipe->size();
-        for (int i = 0; i<listeEquipe->size();i++) {
-            Equipe equipeTemp  = listeEquipe->at(i);
-            listeDeroulanteChoixEquipe->addItem(equipeTemp.nomEquipe2,equipeTemp.idEquipe);
+    if(listeRobot->size()>0){
+        qDebug() << listeRobot->size();
+        for (int i = 0; i<listeRobot->size();i++) {
+            Robot robotTemp  = listeRobot->at(i);
+            listeDeroulanteRobot->addItem(robotTemp.nomRobot2,robotTemp.getId());
         }
-    }*/
+    }
 
 
 
@@ -81,7 +80,9 @@ void ViewDefinirTache::chargerListeDeroulanteDesRobot(){
  */
 void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe){
     /* A COMPLETER ET SUPPRIMER LES TESTS */
-    QString requetteSelect = "SELECT ID_Robot, Nom_Robot FROM robot WHERE ID_Equipe = " + ID_Equipe + " ;";
+    QString requetteSelect = "SELECT ID_Robot, Nom_Robot FROM robot WHERE ID_Equipe = ";
+    requetteSelect.append(ID_Equipe);
+    requetteSelect.append( " ;");
 
     listeRobot = new QList<Robot>;
     //TEST !!! en attente de connexion a la base de donnée

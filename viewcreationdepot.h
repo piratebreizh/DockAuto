@@ -13,7 +13,6 @@
 #include "mapscene.h"
 
 
-
 class ViewCreationDepot : public QDialog
 {
     Q_OBJECT
