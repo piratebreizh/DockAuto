@@ -36,7 +36,7 @@ public slots:
     void lancementFenetreCreationMap();
 
 private :
-    MapScene *lamap;
+    //MapScene *lamap;
     QGraphicsView *vue;
 
     QVBoxLayout *mainLayout;

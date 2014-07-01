@@ -63,7 +63,7 @@ void ViewCreationDepot::definitionMainLayout(){
 
 void ViewCreationDepot::lancementFenetreCreationMap(){
 
-    if(controleTousChampsRempli() == true){
+   /* if(controleTousChampsRempli() == true){
         masquerLayout2();
     }
 
@@ -84,7 +84,7 @@ void ViewCreationDepot::lancementFenetreCreationMap(){
     //this->sauvegardeEtEdi     terMap->
     //mainLayout->removeItem(layout2pourFenetreIdentification);
     //mainLayout->removeItem(layout3PourBoutonSauvegarderAnnuler);
-    //this->setLayout(mainLayout);
+    //this->setLayout(mainLayout);*/
 }
 /**
  * @brief ViewCreationDepot::masquerLayout2
@@ -112,7 +112,7 @@ void ViewCreationDepot::masquerLayout2(){
  */
 bool ViewCreationDepot::initialisationDeLaMap(){
 
-    layoutpourLaVisualisationMap = new QGridLayout();
+   /* layoutpourLaVisualisationMap = new QGridLayout();
     layoutpourLesImages = new QGridLayout();
 
     lamap->setBackgroundBrush(QBrush(Qt::lightGray, Qt::CrossPattern));
@@ -145,7 +145,7 @@ bool ViewCreationDepot::initialisationDeLaMap(){
     layoutpourLaVisualisationMap->addWidget(vue);
 
     mainLayout->addLayout(layoutpourLesImages);
-    mainLayout->addLayout(layoutpourLaVisualisationMap);
+    mainLayout->addLayout(layoutpourLaVisualisationMap);*/
 }
 
 /**
@@ -168,7 +168,7 @@ bool ViewCreationDepot::controleTousChampsRempli(){
 
 void ViewCreationDepot::AfficherMap(int lon, int larg )
 {
-  QGraphicsItem *item;
+  /*QGraphicsItem *item;
   QPixmap image;
   Entrepot e = lamap->getEntrepot();
 
@@ -196,7 +196,7 @@ void ViewCreationDepot::AfficherMap(int lon, int larg )
               item->setPos(i*20, j*20);
             }
         }
-    }
+    }*/
 }
 
 void ViewCreationDepot::mousePressEvent(){
