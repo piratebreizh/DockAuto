@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `dockautodb`
+-- Base de données: `DockAutodb`
 --
-CREATE DATABASE IF NOT EXISTS `dockautodb2` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `dockautodb2`;
+CREATE DATABASE IF NOT EXISTS `DockAutodb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `DockAutodb`;
 
 -- --------------------------------------------------------
 
@@ -87,13 +87,11 @@ CREATE TABLE IF NOT EXISTS `liste_taches` (
 -- Structure de la table `liste_taches_robot`
 --
 
-CREATE TABLE IF NOT EXISTS `liste_taches_robot` (
+CREATE TABLE IF NOT EXISTS `liste_taches` (
   `ID_Liste_Taches` int(11) NOT NULL COMMENT 'Clé de la liste de tâches',
-  `ID_Robot` int(11) NOT NULL COMMENT 'Clé du robot',
-  `ID_Tache` int(11) NOT NULL COMMENT 'Clé de la tâche',
-  KEY `ID_Liste_Taches` (`ID_Liste_Taches`),
-  KEY `ID_Robot` (`ID_Robot`),
-  KEY `ID_Tache` (`ID_Tache`)
+  `ID_Tache` int(11) NOT NULL COMMENT 'Clé de la liste de tâches',
+   PRIMARY KEY (`ID_Liste_Taches`),
+  KEY `ID_Liste_Taches` (`ID_Liste_Taches`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Liste des tâches d''un robot';
 
 -- --------------------------------------------------------
@@ -138,6 +136,8 @@ CREATE TABLE IF NOT EXISTS `robot` (
 CREATE TABLE IF NOT EXISTS `simulation` (
   `ID_Simulation` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
   `ID_Entrepot` int(11) NOT NULL COMMENT 'Clé de l''entrepôt',
+  `ID_Equipe` int(11) NOT NULL COMMENT 'Clé de l''équipe',
+  `ID_Liste_Taches` int(11) NOT NULL COMMENT 'Clé de l''équipe',
   PRIMARY KEY (`ID_Simulation`),
   UNIQUE KEY `ID_Simulation` (`ID_Simulation`),
   KEY `ID_Entrepot` (`ID_Entrepot`)
@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `equipe` (
   `ID_Equipe` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
   `Nom_Equipe` varchar(100) COMMENT 'Nom d une équipe',
   PRIMARY KEY (`ID_Equipe`),
-  UNIQUE KEY `ID_Equipe` (`ID_Equipe`),
+  UNIQUE KEY `ID_Equipe` (`ID_Equipe`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Une équipe';
 
 
@@ -216,10 +216,8 @@ ALTER TABLE `liste_taches`
 --
 -- Contraintes pour la table `liste_taches_robot`
 --
-ALTER TABLE `liste_taches_robot`
-  ADD CONSTRAINT `liste_taches_robot_ibfk_3` FOREIGN KEY (`ID_Tache`) REFERENCES `tache` (`ID_Tache`),
-  ADD CONSTRAINT `liste_taches_robot_ibfk_1` FOREIGN KEY (`ID_Liste_Taches`) REFERENCES `liste_taches` (`ID_Liste_Taches`),
-  ADD CONSTRAINT `liste_taches_robot_ibfk_2` FOREIGN KEY (`ID_Robot`) REFERENCES `robot` (`ID_Robot`);
+ALTER TABLE `liste_taches`
+  ADD CONSTRAINT `liste_taches_ibfk_1` FOREIGN KEY (`ID_Tache`) REFERENCES `tache` (`ID_Tache`),
 
 --
 -- Contraintes pour la table `mappe`
@@ -231,8 +229,16 @@ ALTER TABLE `mappe`
 -- Contraintes pour la table `simulation`
 --
 ALTER TABLE `simulation`
-  ADD CONSTRAINT `simulation_ibfk_1` FOREIGN KEY (`ID_Entrepot`) REFERENCES `entrepot` (`ID_Entrepot`);
+  ADD CONSTRAINT `simulation_ibfk_1` FOREIGN KEY (`ID_Entrepot`) REFERENCES `entrepot` (`ID_Entrepot`),
+  ADD CONSTRAINT `simulation_ibfk_2` FOREIGN KEY (`ID_Equipe`) REFERENCES `equipe` (`ID_Equipe`),
+  ADD CONSTRAINT `simulation_ibfk_3` FOREIGN KEY (`ID_Liste_Taches`) REFERENCES `liste_taches` (`ID_Liste_Taches`);
 
+
+  
+  
+    `ID_Entrepot` int(11) NOT NULL COMMENT 'Clé de l''entrepôt',
+  `ID_Equipe` int(11) NOT NULL COMMENT 'Clé de l''équipe',
+  `ID_Liste_Taches` int(11) NOT NULL COMMENT 'Clé de l''équipe',
 --
 -- Contraintes pour la table `tache`
 --
@@ -245,6 +251,13 @@ ALTER TABLE `tache`
 --
 ALTER TABLE `tile`
   ADD CONSTRAINT `tile_ibfk_1` FOREIGN KEY (`ID_Mappe`) REFERENCES `mappe` (`ID_Mappe`);
+  
+--
+-- Contraintes pour la table `robot`
+--
+ALTER TABLE `robot`
+  ADD CONSTRAINT `robot_ibfk_1` FOREIGN KEY (`ID_EQUIPE`) REFERENCES `equipe` (`ID_Equipe`);
+  
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

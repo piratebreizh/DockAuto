@@ -25,6 +25,14 @@ public:
     ViewMenuListeDesTaches * menuListeDesTaches;
 
 
+public slots :
+    void cliqueAjouterDepart();
+    void cliqueAjouterArrive();
+    void ajouterNouvelleTacheALaListeDeTache();
+    void switchBoutonLabelDefinir();
+
+
+
 private :
 
     QGridLayout * mainLayout;
@@ -33,12 +41,23 @@ private :
     QLabel * labelRobot;
     QComboBox * listeDeroulanteRobot;
 
+
+    QLabel * messageConfirmationAjout;
+
     QLabel * labelPoids;
     QLineEdit * champPoids;
+
     QLabel * labelDepart;
     QLabel * champDepart;
+    QPushButton * pushDefinirDepart;
+    double valeurDepart;
+    bool estDefinitDepart;
+
     QLabel * labelArrive;
     QLabel * champArrive;
+    QPushButton * pushDefinirArrive;
+    double valeurArrive;
+    bool estDefiniArrive;
 
     QPushButton * sauvegarder;
     QPushButton * annuler;
@@ -49,6 +68,8 @@ private :
     void definitonLayout();
     void chargerListeDeroulanteDesRobot();
     void chargerListeRobotEnBase(int ID_Equipe);
+    void  viderTousLesChamps();
+
 
 
 };

@@ -1,5 +1,11 @@
 #ifndef VIEWCREATIONDEPOT_H
 #define VIEWCREATIONDEPOT_H
+#define LONGUEURPIX 20
+#define LARGEURPIX 20
+#define VIDE 0
+#define ARMOIREVIDE 1
+#define ARMOIREPLEINE 2
+#define ZONEDEP 3
 
 #include <qlineedit.h>
 #include <qpushbutton.h>
@@ -12,8 +18,10 @@
 #include "Entrepot.h"
 #include "mapscene.h"
 
+#include"gestionmapdepot.h"
 
-class ViewCreationDepot : public QDialog
+
+class ViewCreationDepot : public QDialog//, public GestionMapDepot
 {
     Q_OBJECT
 public:
@@ -25,10 +33,6 @@ public:
     bool controleTousChampsRempli();
     void mousePressEvent();
     void AfficherMap(int lon, int larg);
-    //GESTION DU DRAG AND DROP
-    /*void dragEnterEvent(QDragEnterEvent *event);
-    void dragMoveEvent(QDragMoveEvent *event);
-    void dropEvent(QDropEvent *event);*/
 
 
 public slots:
@@ -63,18 +67,15 @@ private :
     QGridLayout *layoutpourLesImages;
     QGridLayout *layoutpourLaVisualisationMap;
 
+    QLabel *labelArmoire;
+    QLabel *labelZoneDep;
+    QLabel *labelMur;
+    QLabel *labelRobot;
+
     QLabel *labelImageArmoire;
     QLabel *labelImageZoneDep;
-
-    QGraphicsScene *sceneArmoire ;
-    QGraphicsScene *sceneDep ;
-
-    QGraphicsView *vueArmoire;
-    QGraphicsView *vueDep;
-
-    QPixmap *imageArmoire;
-    QPixmap *imageZoneDep;
-
+    QLabel *labelImageMur;
+    QLabel *labelImageRobot;
 
 };
 

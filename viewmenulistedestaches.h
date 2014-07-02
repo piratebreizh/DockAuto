@@ -11,10 +11,12 @@
 #include <tache.h>
 #include <listetache.h>
 #include <viewdefinirtache.h>
+#include <Robot.h>
 
 class ViewMenuSimulation;
 class ViewDefinirTache;
-
+class Robot;
+class Listetache;
 
 class ViewMenuListeDesTaches: public QDialog
 {
@@ -25,11 +27,12 @@ public:
     void definitonLayout();
     ViewDefinirTache * viewDefinirTache;
     ViewMenuSimulation * viewMenuSimulation;
-
+    Tache * nouvelleTacheTemp;
+    Robot * nouveauRobotTemp;
 
 public slots :
     void executerViewDefinirTache();
-
+    void ajouterTacheDansListe();
 
 private :
 

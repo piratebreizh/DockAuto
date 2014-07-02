@@ -11,6 +11,12 @@ Entrepot::~Entrepot(){
 
 }
 
+
+Entrepot::Entrepot(int _IDMap,QString _nom){
+    this->setIDMap(_IDMap);
+    this->nom = _nom;
+}
+
 void Entrepot::AddArmoire(Armoire &arm){
     //if(arm!=NULL && tab[arm.getX()][arm.getY()]==0)
     if(tab[arm.getX()][arm.getY()]==0)

@@ -4,8 +4,11 @@
 #include <QString>
 #include "Entrepot.h"
 
+#include "gestionmapdepot.h"
 
-class MapScene : public QGraphicsScene
+//class GestionMapDepot;
+
+class MapScene : public QGraphicsScene, public GestionMapDepot
 {
 public:
     MapScene();
@@ -14,6 +17,7 @@ public:
     void SaveDepotDb();
     Entrepot getEntrepot();
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
+    void AfficherMap();
 
 private:
     Entrepot e;
