@@ -32,8 +32,6 @@ public:
     bool initialisationDeLaMap();
     bool controleTousChampsRempli();
     void mousePressEvent();
-    void AfficherMap(int lon, int larg);
-
 
 public slots:
     void lancementFenetreCreationMap();
