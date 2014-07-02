@@ -21,7 +21,7 @@
 #include"gestionmapdepot.h"
 
 
-class ViewCreationDepot : public QDialog//, public GestionMapDepot
+class ViewCreationDepot : public QDialog, public GestionMapDepot
 {
     Q_OBJECT
 public:

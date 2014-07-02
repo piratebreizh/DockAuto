@@ -7,6 +7,7 @@
 #include "gestionmapdepot.h"
 #include <QGraphicsItem>
 #include "Entrepot.h"
+#include "mapscene.h"
 
 GestionMapDepot::GestionMapDepot()
 {

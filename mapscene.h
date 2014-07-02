@@ -6,8 +6,6 @@
 
 #include "gestionmapdepot.h"
 
-//class GestionMapDepot;
-
 class MapScene : public QGraphicsScene, public GestionMapDepot
 {
 public:
