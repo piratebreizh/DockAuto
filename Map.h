@@ -10,6 +10,8 @@ class Map
 {
 public:
     Map();
+    Map(int, string );
+
     int tab[LONGUEUR][LARGEUR]={{0}};
     void AfficheMap();
     int getIDMap();

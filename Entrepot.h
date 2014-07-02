@@ -18,6 +18,7 @@ class Entrepot : public Map
 {
 public:
     Entrepot();
+    Entrepot(int,QString);
     ~Entrepot();
     void AddArmoire(Armoire&);
     void RemoveArmoire(Armoire&);

@@ -36,7 +36,9 @@ SOURCES += main.cpp\
     tache.cpp \
     listetache.cpp \
     simulation.cpp \
-    viewdefinirtache.cpp
+    viewdefinirtache.cpp \
+    Depart.cpp \
+    arrive.cpp
 
 HEADERS  += mainwindow.h \
     fenetreprincipale.h \
@@ -57,6 +59,8 @@ HEADERS  += mainwindow.h \
     tache.h \
     listetache.h \
     simulation.h \
-    viewdefinirtache.h
+    viewdefinirtache.h \
+    Depart.h \
+    arrive.h
 
 FORMS    += mainwindow.ui

@@ -9,9 +9,13 @@
 #include <QGridLayout>
 #include<viewmenulistedestaches.h>
 #include <equipe.h>
+#include <Entrepot.h>
+
+
 
 class ViewMenuListeDesTaches;
 class Equipe;
+class Entrepot;
 
 class ViewMenuSimulation : public QDialog
 {
@@ -21,6 +25,7 @@ public:
     ViewMenuSimulation();
     void initialisationComposantFenetreMenuSimulation();
     Equipe * equipeSelectionne;
+    Entrepot * depotSelectionne;
     ViewMenuListeDesTaches * viewMenuListeDesTaches;
 
 
@@ -45,6 +50,12 @@ private:
     QLabel * labelNomSimulation;
     QLineEdit * champNomSimulation;
 
+    QGridLayout * layoutDepot;
+    QLabel * labelDepot;
+    bool confirmationDepot;
+    QLabel * labelConfirmationDepot;
+    QPushButton * boutonDefinirDepot;
+    QComboBox * listeDeroulanteChoixDepot;
 
     QGridLayout * LayoutEquipe;
     QLabel * labelChoixEquipe;
@@ -53,12 +64,7 @@ private:
     QLabel * labelConfirmationEquipe;
     QComboBox * listeDeroulanteChoixEquipe;
 
-    QGridLayout * layoutDepot;
-    QLabel * labelDepot;
-    bool confirmationDepot;
-    QLabel * labelConfirmationDepot;
-    QPushButton * boutonDefinirDepot;
-    QComboBox * listeDeroulanteChoixDepot;
+
 
     QGridLayout * LayoutTache;
     QLabel * labelTache;
@@ -83,6 +89,7 @@ private:
 
 
     QList <Equipe> * listeEquipe;
+    QList <Entrepot> * listeDepot;
 };
 
 #endif // VIEWMENUSIMULATION_H

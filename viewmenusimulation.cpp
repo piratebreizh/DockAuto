@@ -47,6 +47,7 @@ void ViewMenuSimulation::initialisationComposantFenetreMenuSimulation(){
     definirCommeSimulation =  new QPushButton("Définir comme simulation courante");
 
    listeEquipe = new  QList<Equipe>;
+   listeDepot = new QList<Entrepot>;
 
 
 
@@ -81,7 +82,7 @@ void ViewMenuSimulation::definitionMainLayout(){
 
 
 
-
+    QWidget::connect(boutonDefinirDepot,SIGNAL(clicked()),this,SLOT(bloquerSelectionDepot()));
     QWidget::connect(pushBloquerChoixEquipe,SIGNAL(clicked()),this,SLOT(bloquerSelectionEquipe()));
     QWidget::connect(nouvelleSimulation,SIGNAL(clicked()),this,SLOT(layoutNouvelleSimulation()));
     QWidget::connect(boutonDefinirTache,SIGNAL(clicked()),this,SLOT(executionViewMenuListeDesTaches()));
@@ -101,12 +102,20 @@ void ViewMenuSimulation::definitionMainLayout(){
  void ViewMenuSimulation::definitionLayoutMenuChoixSauvegardeCharger(){
     labelNomSimulation->hide();
     champNomSimulation->hide();
+
+    labelDepot->hide();
+    labelConfirmationDepot->hide();
+    boutonDefinirDepot->hide();
+    listeDeroulanteChoixDepot->hide();
+
     labelChoixEquipe->hide();
     listeDeroulanteChoixEquipe->hide();
     labelConfirmationEquipe->hide();
     pushBloquerChoixEquipe->hide();
+
     labelTache->hide();
     boutonDefinirTache->hide();
+
     labelConfirmationTache->hide();
     sauvegarderSimulation->hide();
     definirCommeSimulation->hide();
@@ -116,48 +125,63 @@ void ViewMenuSimulation::definitionMainLayout(){
 void ViewMenuSimulation::layoutNouvelleSimulation(){
     nouvelleSimulation->hide();
     chargerSimulation->hide();
+
     labelNomSimulation->show();
     champNomSimulation->show();
+
+    labelDepot->show();
+    labelConfirmationDepot->show();
+    boutonDefinirDepot->show();
+    listeDeroulanteChoixDepot->show();
+
     labelChoixEquipe->show();
     listeDeroulanteChoixEquipe->show();
     labelConfirmationEquipe->show();
+
     labelTache->show();
     boutonDefinirTache->show();
     labelConfirmationTache->show();
+
     sauvegarderSimulation->show();
     definirCommeSimulation->show();
     pushBloquerChoixEquipe->show();
+
     initialisationDeLaListeDeroulanteDepot();
     initialisationDeLaListeDeroulanteEquipe();
 }
 
 
 void ViewMenuSimulation::verificationlabelConfirmation(){
+
+
+    if(confirmationDepot){
+        labelConfirmationDepot->setText("Dépôt selectionné");
+        labelConfirmationDepot->setStyleSheet("QLabel { color : green; }");
+        pushBloquerChoixEquipe->setEnabled(true);
+    }else{
+        labelConfirmationDepot->setText("Aucune dépôt selectionné");
+        labelConfirmationDepot->setStyleSheet("QLabel { color : red; }");
+        pushBloquerChoixEquipe->setEnabled(false);
+    }
+
     if(confirmationEquipe){
         labelConfirmationEquipe->setText("Equipe selectionnée");
         labelConfirmationEquipe->setStyleSheet("QLabel { color : green; }");
+        boutonDefinirTache->setEnabled(true);
     }else{
         labelConfirmationEquipe->setText("Aucune équipe selectionnée");
         labelConfirmationEquipe->setStyleSheet("QLabel { color : red; }");
+        boutonDefinirTache->setEnabled(false);
     }
 
     if(confirmationTache){
         labelConfirmationTache->setText("Liste de tâches créée");
         labelConfirmationTache->setStyleSheet("QLabel { color : green; }");
-
     }else{
         labelConfirmationTache->setText("Aucune list de tâche");
         labelConfirmationTache->setStyleSheet("QLabel { color : red; }");
     }
 
-    if(confirmationDepot){
-        labelConfirmationDepot->setText("Liste de tâches créée");
-        labelConfirmationDepot->setStyleSheet("QLabel { color : green; }");
-
-    }else{
-        labelConfirmationDepot->setText("Aucune dépôt selectionné");
-        labelConfirmationDepot->setStyleSheet("QLabel { color : red; }");
-    }
 }
 
 
@@ -216,6 +240,8 @@ void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase(){
  * Permet de valider une équipe selectionné dans la liste déroulante et d'initilaser l'équipe selectionné
  */
 void ViewMenuSimulation::bloquerSelectionEquipe(){
+
+    // A COMPLETER RAJOUTER ICI DU CODE POUR VOIRS SI IL Y A PLUS OU MOINS DE ZONE DE DEPART QUE DE ROBOT DANS L EQUIPE
     confirmationEquipe = true;
    /* qDebug() << listeDeroulanteChoixEquipe->currentText();
     qDebug() << listeDeroulanteChoixEquipe->currentData().toInt();*/
@@ -242,25 +268,29 @@ void ViewMenuSimulation::initialisationDeLaListeDeroulanteDepot(){
     QString o = "equpe 2";
     QString i = "equpe 3";
 
-    Entrepot a ();
-    Entrepot b ();
-    Entrepot c ();
+    Entrepot a;
+    Entrepot b;
+    Entrepot c;
 
-    /*a.setIDMap(1);
+    a.setIDMap(1);
     b.setIDMap(2);
     c.setIDMap(3);
 
-    listeEquipe->append(a);
-    listeEquipe->append(b);
-    listeEquipe->append(c);
+    a.setNomMap("entrepot 1");
+    b.setNomMap("entrepot 2");
+    c.setNomMap("entrepot 3");
 
-    if(listeEquipe->size()>0){
-        qDebug() << listeEquipe->size();
-        for (int i = 0; i<listeEquipe->size();i++) {
-            Equipe equipeTemp  = listeEquipe->at(i);
-            listeDeroulanteChoixEquipe->addItem(equipeTemp.nomEquipe2,equipeTemp.idEquipe);
+    listeDepot->append(a);
+    listeDepot->append(b);
+    listeDepot->append(c);
+
+    if(listeDepot->size()>0){
+        qDebug() << listeDepot->size();
+        for (int i = 0; i<listeDepot->size();i++) {
+            Entrepot depotTemp  = listeDepot->at(i);
+            listeDeroulanteChoixDepot->addItem(QString::fromStdString(depotTemp.getNomMap()),depotTemp.getIDMap());
         }
-    }*/
+    }
 }
 
 
@@ -271,7 +301,7 @@ void ViewMenuSimulation::initialisationDeLaListeDeroulanteDepot(){
 void ViewMenuSimulation::chargeToutesLesDepotsDeLaBase(){
 
     /*A COMPLETER PAR ANTOINE POUR LA BASE DE DONNE */
-    QString requeteSelect = "SELECT ID_Equipe, Nom_Equipe FROM EQUIPE ;";
+    QString requeteSelect = "SELECT ID_Entrepot, Nom FROM ENTREPOT ;";
 }
 
 /**
@@ -279,12 +309,9 @@ void ViewMenuSimulation::chargeToutesLesDepotsDeLaBase(){
  * Permet de valider un depot selectionné dans la liste déroulante et d'initilaser le depot selectionné
  */
 void ViewMenuSimulation::bloquerSelectionDepot(){
-    confirmationEquipe = true;
-   /* qDebug() << listeDeroulanteChoixEquipe->currentText();
-    qDebug() << listeDeroulanteChoixEquipe->currentData().toInt();*/
-    equipeSelectionne = new Equipe( listeDeroulanteChoixEquipe->currentData().toInt(),listeDeroulanteChoixEquipe->currentText() );
+    confirmationDepot = true;
+    depotSelectionne = new Entrepot(listeDeroulanteChoixEquipe->currentData().toInt(),listeDeroulanteChoixEquipe->currentText() );
     verificationlabelConfirmation();
-
 }
 
 

@@ -53,9 +53,31 @@ void ViewMenuListeDesTaches::definitonLayout(){
 
 
 void ViewMenuListeDesTaches::executerViewDefinirTache(){
+    nouvelleTacheTemp = new Tache();
+    nouveauRobotTemp = new Robot();
     viewDefinirTache = new ViewDefinirTache(this);
     viewDefinirTache->exec();
 }
+
+
+
+void ViewMenuListeDesTaches::ajouterTacheDansListe(){
+
+    qDebug()<<this->nouvelleTacheTemp->getPoids();
+
+
+    QList <QStandardItem*> listItem;
+
+    listItem.append(new QStandardItem (QString::fromUtf8(this->nouveauRobotTemp->nomRobot.c_str())));
+    listItem.append(new QStandardItem (QString::number(this->nouvelleTacheTemp->getPoids())));
+    listItem.append(new QStandardItem (QString::number(this->nouvelleTacheTemp->getDepart().getX())));
+    listItem.append(new QStandardItem (QString::number(this->nouvelleTacheTemp->getArrive().getY())));
+
+
+    model->appendRow(listItem);
+
+}
+
 
 
 
