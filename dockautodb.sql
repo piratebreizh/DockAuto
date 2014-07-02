@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `equipe` (
   `ID_Equipe` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
   `Nom_Equipe` varchar(100) COMMENT 'Nom d une équipe',
   PRIMARY KEY (`ID_Equipe`),
-  UNIQUE KEY `ID_Equipe` (`ID_Equipe`),
+  UNIQUE KEY `ID_Equipe` (`ID_Equipe`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Une équipe';
 
 

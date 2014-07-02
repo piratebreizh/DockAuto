@@ -20,3 +20,21 @@ void Map::AfficheMap(){
         cout<<endl;
     }
 }
+
+
+void Map::setIDMap(int _ID){
+    this->idMap=_ID;
+}
+
+int Map::getIDMap(){
+    return this->idMap;
+}
+
+
+string Map::getNomMap(){
+    return this->nomMap;
+}
+
+void Map::setNomMap(string _nom){
+    this->nomMap = _nom;
+}

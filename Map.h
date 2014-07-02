@@ -12,6 +12,11 @@ public:
     Map();
     int tab[LONGUEUR][LARGEUR]={{0}};
     void AfficheMap();
+    int getIDMap();
+    void setIDMap(int);
+    string getNomMap();
+    void setNomMap(string);
+
 private :
     int idMap;
     string nomMap;

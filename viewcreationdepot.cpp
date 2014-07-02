@@ -6,6 +6,7 @@
 #include "gestiondb.h"
 #include "Entrepot.h"
 #include <QString>
+#include"mapscene.h"
 
 ViewCreationDepot::ViewCreationDepot()
 {
@@ -67,7 +68,6 @@ void ViewCreationDepot::lancementFenetreCreationMap(){
         masquerLayout2();
     }
 
-    scene = new QGraphicsScene();
     lamap = new MapScene(scene);
 
     //initialisation du depot
@@ -85,7 +85,7 @@ void ViewCreationDepot::lancementFenetreCreationMap(){
     //this->sauvegardeEtEdi     terMap->
     //mainLayout->removeItem(layout2pourFenetreIdentification);
     //mainLayout->removeItem(layout3PourBoutonSauvegarderAnnuler);
-    //this->setLayout(mainLayout);
+    //this->setLayout(mainLayout);*/
 }
 /**
  * @brief ViewCreationDepot::masquerLayout2

@@ -18,17 +18,27 @@ void ViewMenuSimulation::initialisationComposantFenetreMenuSimulation(){
     LayoutTache = new QGridLayout();
     LayoutSauvegarderAnnuler = new QGridLayout();
 
-   nouvelleSimulation = new QPushButton("Nouvelle simulation");
-   chargerSimulation = new QPushButton("Charger simulation");
+    nouvelleSimulation = new QPushButton("Nouvelle simulation");
+    chargerSimulation = new QPushButton("Charger simulation");
 
     labelNomSimulation = new QLabel("Nom simulation");
     champNomSimulation = new QLineEdit();
+
+    layoutDepot = new QGridLayout();
+    labelDepot = new QLabel("Choix du dépôt");
+    confirmationDepot = false;
+    labelConfirmationDepot = new QLabel();
+    boutonDefinirDepot = new QPushButton("Définir");
+    listeDeroulanteChoixDepot = new QComboBox();
+
     labelChoixEquipe = new QLabel("Choix équipe");
     listeDeroulanteChoixEquipe = new QComboBox();
     pushBloquerChoixEquipe = new QPushButton("Définir");
+
     labelTache = new QLabel ("Définir tâche");
     boutonDefinirTache = new QPushButton("Définir");
     labelConfirmationEquipe = new QLabel();
+
     confirmationEquipe = false;
     labelConfirmationTache = new QLabel();
     confirmationTache = false;
@@ -50,6 +60,12 @@ void ViewMenuSimulation::definitionMainLayout(){
 
     layoutNomSimulation->addWidget(labelNomSimulation);
     layoutNomSimulation->addWidget(champNomSimulation);
+
+
+    layoutDepot->addWidget(labelDepot,0,0,1,2);
+    layoutDepot->addWidget(listeDeroulanteChoixDepot,1,0,1,2);
+    layoutDepot->addWidget(boutonDefinirDepot,2,0);
+    layoutDepot->addWidget(labelConfirmationDepot,2,1);
 
     LayoutEquipe->addWidget(labelChoixEquipe,0,0,1,2);
     LayoutEquipe->addWidget(listeDeroulanteChoixEquipe,1,0,1,2);
@@ -73,10 +89,10 @@ void ViewMenuSimulation::definitionMainLayout(){
 
     mainLayout->addLayout(layoutMenuChoixSauvegardCharger);
     mainLayout->addLayout(layoutNomSimulation);
+    mainLayout->addLayout(layoutDepot);
     mainLayout->addLayout(LayoutEquipe);
     mainLayout->addLayout(LayoutTache);
     mainLayout->addLayout(LayoutSauvegarderAnnuler);
-
 
     this->setLayout(mainLayout);
 }
@@ -111,6 +127,7 @@ void ViewMenuSimulation::layoutNouvelleSimulation(){
     sauvegarderSimulation->show();
     definirCommeSimulation->show();
     pushBloquerChoixEquipe->show();
+    initialisationDeLaListeDeroulanteDepot();
     initialisationDeLaListeDeroulanteEquipe();
 }
 
@@ -131,6 +148,15 @@ void ViewMenuSimulation::verificationlabelConfirmation(){
     }else{
         labelConfirmationTache->setText("Aucune list de tâche");
         labelConfirmationTache->setStyleSheet("QLabel { color : red; }");
+    }
+
+    if(confirmationDepot){
+        labelConfirmationDepot->setText("Liste de tâches créée");
+        labelConfirmationDepot->setStyleSheet("QLabel { color : green; }");
+
+    }else{
+        labelConfirmationDepot->setText("Aucune dépôt selectionné");
+        labelConfirmationDepot->setStyleSheet("QLabel { color : red; }");
     }
 }
 
@@ -182,28 +208,84 @@ void ViewMenuSimulation::initialisationDeLaListeDeroulanteEquipe(){
 void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase(){
 
     /*A COMPLETER PAR ANTOINE POUR LA BASE DE DONNE */
-    QString requeteSelect = "SELECT ID_Equipe, Nom_Equipe FROM EQUIPE";
+    QString requeteSelect = "SELECT ID_Equipe, Nom_Equipe FROM EQUIPE ;";
 }
 
 /**
  * @brief ViewMenuSimulation::bloquerSelectionEquipe
- * Permet de valider une équipe selectionné dans la liste déroulante
+ * Permet de valider une équipe selectionné dans la liste déroulante et d'initilaser l'équipe selectionné
  */
 void ViewMenuSimulation::bloquerSelectionEquipe(){
     confirmationEquipe = true;
-
    /* qDebug() << listeDeroulanteChoixEquipe->currentText();
     qDebug() << listeDeroulanteChoixEquipe->currentData().toInt();*/
-
     equipeSelectionne = new Equipe( listeDeroulanteChoixEquipe->currentData().toInt(),listeDeroulanteChoixEquipe->currentText() );
-
     verificationlabelConfirmation();
-
 }
 
 
 
 
+
+/**
+ * @brief ViewMenuSimulation::initialisationDeLaListeDeroulanteDepot
+ * Initialise tous les dépôt dans la liste déroulante pour le choix du dépôt
+ */
+void ViewMenuSimulation::initialisationDeLaListeDeroulanteDepot(){
+
+    /* POUR TESTER A SUPPRIMER A remplacer par la fonction SQL ci dessou*/
+
+
+    //chargeToutesLesEquipesDeLaBase();
+
+    QString p = "equpe 1";
+    QString o = "equpe 2";
+    QString i = "equpe 3";
+
+    Entrepot a ();
+    Entrepot b ();
+    Entrepot c ();
+
+    /*a.setIDMap(1);
+    b.setIDMap(2);
+    c.setIDMap(3);
+
+    listeEquipe->append(a);
+    listeEquipe->append(b);
+    listeEquipe->append(c);
+
+    if(listeEquipe->size()>0){
+        qDebug() << listeEquipe->size();
+        for (int i = 0; i<listeEquipe->size();i++) {
+            Equipe equipeTemp  = listeEquipe->at(i);
+            listeDeroulanteChoixEquipe->addItem(equipeTemp.nomEquipe2,equipeTemp.idEquipe);
+        }
+    }*/
+}
+
+
+/**
+  * @brief ViewMenuSimulation::chargeTousLesDepotDeLaBase
+  * recupertion de tous les dépôt de la base de données
+  * */
+void ViewMenuSimulation::chargeToutesLesDepotsDeLaBase(){
+
+    /*A COMPLETER PAR ANTOINE POUR LA BASE DE DONNE */
+    QString requeteSelect = "SELECT ID_Equipe, Nom_Equipe FROM EQUIPE ;";
+}
+
+/**
+ * @brief ViewMenuSimulation::bloquerSelectionDepot
+ * Permet de valider un depot selectionné dans la liste déroulante et d'initilaser le depot selectionné
+ */
+void ViewMenuSimulation::bloquerSelectionDepot(){
+    confirmationEquipe = true;
+   /* qDebug() << listeDeroulanteChoixEquipe->currentText();
+    qDebug() << listeDeroulanteChoixEquipe->currentData().toInt();*/
+    equipeSelectionne = new Equipe( listeDeroulanteChoixEquipe->currentData().toInt(),listeDeroulanteChoixEquipe->currentText() );
+    verificationlabelConfirmation();
+
+}
 
 
 

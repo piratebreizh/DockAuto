@@ -28,7 +28,7 @@ public slots:
     void layoutNouvelleSimulation();
     void executionViewMenuListeDesTaches();
     void bloquerSelectionEquipe();
-
+    void bloquerSelectionDepot();
 
 private:
 
@@ -53,6 +53,12 @@ private:
     QLabel * labelConfirmationEquipe;
     QComboBox * listeDeroulanteChoixEquipe;
 
+    QGridLayout * layoutDepot;
+    QLabel * labelDepot;
+    bool confirmationDepot;
+    QLabel * labelConfirmationDepot;
+    QPushButton * boutonDefinirDepot;
+    QComboBox * listeDeroulanteChoixDepot;
 
     QGridLayout * LayoutTache;
     QLabel * labelTache;
@@ -71,6 +77,10 @@ private:
     void verificationlabelConfirmation();
     void initialisationDeLaListeDeroulanteEquipe();
     void chargeToutesLesEquipesDeLaBase();
+
+    void initialisationDeLaListeDeroulanteDepot();
+    void chargeToutesLesDepotsDeLaBase();
+
 
     QList <Equipe> * listeEquipe;
 };

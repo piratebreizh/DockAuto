@@ -31,6 +31,7 @@ public:
     void setNom(QString);
     void RedefTab(int, int);
 
+
 private:
     map<int,Armoire> lesArmoires;
     map<int,Equipe> lesEquipes;

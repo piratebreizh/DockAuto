@@ -4,6 +4,7 @@
 #include <QString>
 #include "Entrepot.h"
 
+
 class MapScene : public QGraphicsScene
 {
 public:
@@ -13,6 +14,7 @@ public:
     void SaveDepotDb();
     Entrepot getEntrepot();
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
+
 private:
     Entrepot e;
 };

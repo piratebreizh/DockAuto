@@ -24,11 +24,12 @@ SOURCES += main.cpp\
     equipe.cpp \
     viewcreationrobot.cpp \
     Tile.cpp \
+    Armoire.cpp \
     Cargaison.cpp \
     Entrepot.cpp \
     Map.cpp \
     gestiondb.cpp \
-	viewcreationdepot.cpp \
+    viewcreationdepot.cpp \
     mapscene.cpp \
     viewmenusimulation.cpp \
     viewmenulistedestaches.cpp \
@@ -44,11 +45,12 @@ HEADERS  += mainwindow.h \
     equipe.h \
     viewcreationrobot.h \
     Tile.h \
+    Armoire.h \
     Cargaison.h \
     Entrepot.h \
     Map.h \
     gestiondb.h \
-	viewcreationdepot.h \
+    viewcreationdepot.h \
     mapscene.h \
     viewmenusimulation.h \
     viewmenulistedestaches.h \
