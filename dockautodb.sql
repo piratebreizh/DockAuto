@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `dockautodb`
+-- Base de données: `DockAutodb`
 --
-CREATE DATABASE IF NOT EXISTS `dockautodb2` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `dockautodb2`;
+CREATE DATABASE IF NOT EXISTS `DockAutodb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `DockAutodb`;
 
 -- --------------------------------------------------------
 
