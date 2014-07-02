@@ -62,7 +62,6 @@ void ViewDefinirTache::chargerListeDeroulanteDesRobot(){
         //qDebug() << "Equipe NULL";
     }
 
-
     if(listeEquipe->size()>0){
         qDebug() << listeEquipe->size();
         for (int i = 0; i<listeEquipe->size();i++) {
@@ -70,9 +69,6 @@ void ViewDefinirTache::chargerListeDeroulanteDesRobot(){
             listeDeroulanteChoixEquipe->addItem(equipeTemp.nomEquipe2,equipeTemp.idEquipe);
         }
     }
-
-
-
 }
 
 /**

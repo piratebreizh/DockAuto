@@ -245,6 +245,13 @@ ALTER TABLE `tache`
 --
 ALTER TABLE `tile`
   ADD CONSTRAINT `tile_ibfk_1` FOREIGN KEY (`ID_Mappe`) REFERENCES `mappe` (`ID_Mappe`);
+  
+  --
+-- Contraintes pour la table `robot`
+--
+ALTER TABLE `robot`
+  ADD CONSTRAINT `robot_ibfk_1` FOREIGN KEY (`ID_EQUIPE`) REFERENCES `equipe` (`ID_Equipe`),
+  
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
