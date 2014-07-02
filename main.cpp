@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 
 
     //TEST BDD
-    /*GestionDB db;
+    /*GestionDB db("localhost","root","","dockautodb");
     db.Requete("INSERT INTO Robot VALUES (1,1,1,1,1)");
     db.Select("SELECT * FROM Robot WHERE ID_Robot=1");
     db.AfficheResultatsSelect();*/
