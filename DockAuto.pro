@@ -37,8 +37,7 @@ SOURCES += main.cpp\
     tache.cpp \
     listetache.cpp \
     simulation.cpp \
-    viewdefinirtache.cpp \
-    gestionmapdepot.cpp
+    viewdefinirtache.cpp
 
 HEADERS  += mainwindow.h \
     fenetreprincipale.h \
@@ -59,8 +58,7 @@ HEADERS  += mainwindow.h \
     tache.h \
     listetache.h \
     simulation.h \
-    viewdefinirtache.h \
-    gestionmapdepot.h
+    viewdefinirtache.h
 
 FORMS    += mainwindow.ui
 

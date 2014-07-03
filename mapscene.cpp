@@ -31,18 +31,18 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
 
     switch (e.tab[x][y]){
 
-    case -1:
+    case MUR:
         break;
-    case 0:
+    case VIDE:
         //Armoire a;
         //e.AddArmoire(a);
-        e.tab[x][y]=1;
+        e.tab[x][y]=ARMOIREVIDE;
         break;
-    case 1:
-        e.tab[x][y]=2;
+    case ARMOIREVIDE:
+        e.tab[x][y]=ZONEDEP;
         break;
     default:
-        e.tab[x][y]=0;
+        e.tab[x][y]=VIDE;
         break;
 
     }
@@ -60,35 +60,42 @@ void MapScene::AfficherMap()
       for (int j = 0; j < LARGEUR; j++)
         {
           //Mur
-          if (e.tab[i][j] == -1)
+          if (e.tab[i][j] == MUR)
             {
               image.load(":/res/images/mur.png", 0, Qt::AutoColor);
               item = this->addPixmap(image);
               item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
             }
           //Vide
-          if (e.tab[i][j] == 0)
+          if (e.tab[i][j] == VIDE)
             {
               image.load(":/res/images/vide.png", 0, Qt::AutoColor);
               item = this->addPixmap(image);
               item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
             }
-          //Armoire
-          if (e.tab[i][j] == 1)
+          //Armoire vide
+          if (e.tab[i][j] == ARMOIREVIDE)
+            {
+              image.load(":/res/images/arm.png", 0, Qt::AutoColor);
+              item = this->addPixmap(image);
+              item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
+            }
+          //Armoire pleine
+          if (e.tab[i][j] == ARMOIREPLEINE)
             {
               image.load(":/res/images/arm.png", 0, Qt::AutoColor);
               item = this->addPixmap(image);
               item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
             }
           //ZoneDepart
-          if (e.tab[i][j] == 2)
+          if (e.tab[i][j] == ZONEDEP)
             {
               image.load(":/res/images/dep.png", 0, Qt::AutoColor);
               item = this->addPixmap(image);
               item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
             }
           //Robot
-          if (e.tab[i][j] > 2)
+          if (e.tab[i][j] > ZONEDEP)
             {
               image.load(":/res/images/rob.png", 0, Qt::AutoColor);
               item = this->addPixmap(image);
