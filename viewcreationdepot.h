@@ -1,11 +1,5 @@
 #ifndef VIEWCREATIONDEPOT_H
 #define VIEWCREATIONDEPOT_H
-#define LONGUEURPIX 20
-#define LARGEURPIX 20
-#define VIDE 0
-#define ARMOIREVIDE 1
-#define ARMOIREPLEINE 2
-#define ZONEDEP 3
 
 #include <qlineedit.h>
 #include <qpushbutton.h>
@@ -18,10 +12,8 @@
 #include "Entrepot.h"
 #include "mapscene.h"
 
-#include"gestionmapdepot.h"
 
-
-class ViewCreationDepot : public QDialog, public GestionMapDepot
+class ViewCreationDepot : public QDialog
 {
     Q_OBJECT
 public:
