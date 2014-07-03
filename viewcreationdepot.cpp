@@ -147,6 +147,8 @@ bool ViewCreationDepot::initialisationDeLaMap(){
 
     mainLayout->addLayout(layoutpourLesImages);
     mainLayout->addLayout(layoutpourLaVisualisationMap);
+
+    return true;
 }
 
 /**
