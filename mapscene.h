@@ -4,7 +4,9 @@
 #include <QString>
 #include "Entrepot.h"
 
-class MapScene : public QGraphicsScene
+#include "gestionmapdepot.h"
+
+class MapScene : public QGraphicsScene, public GestionMapDepot
 {
 public:
     MapScene();
