@@ -10,6 +10,7 @@
 #include<viewmenulistedestaches.h>
 #include <equipe.h>
 #include <Entrepot.h>
+#include <simulation.h>
 
 
 
@@ -27,7 +28,7 @@ public:
     Equipe * equipeSelectionne;
     Entrepot * depotSelectionne;
     ViewMenuListeDesTaches * viewMenuListeDesTaches;
-
+    Simulation * simulation;
 
 public slots:
     void layoutNouvelleSimulation();

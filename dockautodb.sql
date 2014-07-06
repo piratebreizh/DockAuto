@@ -81,18 +81,6 @@ CREATE TABLE IF NOT EXISTS `liste_taches` (
   KEY `ID_Simulation` (`ID_Simulation`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Liste des tâches d''une simulation';
 
--- --------------------------------------------------------
-
---
--- Structure de la table `liste_taches_robot`
---
-
-CREATE TABLE IF NOT EXISTS `liste_taches` (
-  `ID_Liste_Taches` int(11) NOT NULL COMMENT 'Clé de la liste de tâches',
-  `ID_Tache` int(11) NOT NULL COMMENT 'Clé de la liste de tâches',
-   PRIMARY KEY (`ID_Liste_Taches`),
-  KEY `ID_Liste_Taches` (`ID_Liste_Taches`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Liste des tâches d''un robot';
 
 -- --------------------------------------------------------
 
@@ -148,16 +136,16 @@ CREATE TABLE IF NOT EXISTS `simulation` (
 --
 -- Structure de la table `tache`
 --
-
 CREATE TABLE IF NOT EXISTS `tache` (
   `ID_Tache` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
-  `Statut` int(11) NOT NULL COMMENT 'Statut de la tâche',
-  `ID_Cargaison` int(11) NOT NULL COMMENT 'Clé de la cargaison',
-  `ID_Armoire` int(11) NOT NULL COMMENT 'Clé de l''armoire',
+  `poids_Tache` float  'Poids d une cargaison',
+  `depart_X` int(11)  'départ X',
+  `depart_Y` int(11) 'départ Y',
+  `arrive_X` int(11) 'arrivé X',
+  `arrive_Y` int(11) 'arrivée Y',
+  `ID_Liste_Taches` int(11) 'clé étrangère de la table liste_taches',
   PRIMARY KEY (`ID_Tache`),
   UNIQUE KEY `ID_Tache` (`ID_Tache`),
-  KEY `ID_Cargaison` (`ID_Cargaison`),
-  KEY `ID_Armoire` (`ID_Armoire`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tâche avec une cargaison et une armoire';
 
 -- --------------------------------------------------------

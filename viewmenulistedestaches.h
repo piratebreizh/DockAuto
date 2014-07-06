@@ -29,10 +29,13 @@ public:
     ViewMenuSimulation * viewMenuSimulation;
     Tache * nouvelleTacheTemp;
     Robot * nouveauRobotTemp;
+    Listetache * listeTache;
+
 
 public slots :
     void executerViewDefinirTache();
     void ajouterTacheDansListe();
+    void CliqueSauvegarder();
 
 private :
 
@@ -50,8 +53,10 @@ private :
     QPushButton * pushSauvegarder;
     QPushButton * pushAnnuler;
 
-    Listetache * listeTache;
 
+    void enregistrementDansLaTableListetache();
+    void initialisationIDListeTache();
+    void enregistrementDansLaTableTache();
 
 };
 
