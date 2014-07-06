@@ -8,10 +8,16 @@ class Listetache
 {
 public:
     Listetache();
+
     void setListDesTaches(QList<Tache> listeDesTache);
     QList<Tache> getListDesTaches;
+
+    void ajoutNouvelleTacheDansListe(Tache _tache);
+
     void setNomListeTache(QString nomListeTache);
     QString getNomListeTache();
+
+    int IDListeTache;
 
 private :
     QList<Tache> * listDesTache;

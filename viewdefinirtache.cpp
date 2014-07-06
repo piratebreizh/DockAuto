@@ -1,4 +1,5 @@
 #include "viewdefinirtache.h"
+#include<Arrive.h>
 
 ViewDefinirTache::ViewDefinirTache(ViewMenuListeDesTaches * _menuListeDesTaches)
 {
@@ -159,17 +160,22 @@ void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe){
  */
 void ViewDefinirTache::ajouterNouvelleTacheALaListeDeTache(){
 
+    Tache tacheTemp (champPoids->text().replace(',','.').toDouble(),champDepart->text().toInt(),champDepart->text().toInt(),champArrive->text().toInt(),champArrive->text().toInt());
+
     menuListeDesTaches->nouveauRobotTemp->setId(listeDeroulanteRobot->currentData().toInt());
     menuListeDesTaches->nouveauRobotTemp->setNom(listeDeroulanteRobot->currentText().toStdString());
 
     menuListeDesTaches->nouvelleTacheTemp->setPoids(champPoids->text().replace(',','.').toDouble());
 
     // A MODIFIER
-    //menuListeDesTaches->nouvelleTacheTemp->setDepart(champDepart->text().toInt(),champDepart->text().toInt());
+    menuListeDesTaches->nouvelleTacheTemp->depart->setX(champDepart->text().toInt());
+    menuListeDesTaches->nouvelleTacheTemp->depart->setY(champDepart->text().toInt());
 
-    // A MODIFIER
-    //menuListeDesTaches->nouvelleTacheTemp->setArrive(champDepart->text().toInt(),champDepart->text().toInt());
+    // A MODIFER
+    menuListeDesTaches->nouvelleTacheTemp->arrive->setX(champArrive->text().toInt());
+    menuListeDesTaches->nouvelleTacheTemp->arrive->setY(champArrive->text().toInt());
 
+    menuListeDesTaches->listeTache->ajoutNouvelleTacheDansListe(tacheTemp);
 
     messageConfirmationAjout->show();
     messageConfirmationAjout->setText("La nouvelle tâche a été rajouté");

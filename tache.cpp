@@ -2,8 +2,20 @@
 
 Tache::Tache()
 {
-    //this->depart;
-    //this->arrive;
+    this->depart = new Tile();
+    this->arrive = new Tile();
+
+}
+
+Tache::Tache(double _poids, int _departX, int _departY, int _arriveX, int _arriveY){
+    this->depart = new Tile();
+    this->arrive = new Tile();
+
+    this->poids = _poids;
+    this->depart->setX(_departX);
+    this->depart->setY(_departY);
+    this->arrive->setX(_arriveX);
+    this->arrive->setY(_arriveY);
 }
 
 void Tache::setPoids(double _poids){
@@ -33,4 +45,5 @@ void Tache::setArrive(int _x, int _y){
 Arrive Tache::getArrive(){
     //return arrive;
 }
+
 */
