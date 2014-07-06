@@ -26,7 +26,7 @@ void ViewMenuSimulation::initialisationComposantFenetreMenuSimulation(){
     labelChoixEquipe = new QLabel("Choix équipe");
     listeDeroulanteChoixEquipe = new QComboBox();
     pushBloquerChoixEquipe = new QPushButton("Définir");
-    labelTache = new QLabel ("Définir tâche");
+    labelTache = new QLabel ("Définir liste de tâches");
     boutonDefinirTache = new QPushButton("Définir");
     labelConfirmationEquipe = new QLabel();
     confirmationEquipe = false;
