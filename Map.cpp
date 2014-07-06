@@ -12,6 +12,13 @@ Map::Map()
     }*/
 }
 
+
+Map::Map(int _ID, string _nom)
+{
+    this->idMap = _ID;
+    this->nomMap = _nom;
+}
+
 void Map::AfficheMap(){
     for(int i=0;i<LONGUEUR;i++){
         for(int j=0;j<LARGEUR;j++){
@@ -19,4 +26,22 @@ void Map::AfficheMap(){
         }
         cout<<endl;
     }
+}
+
+
+void Map::setIDMap(int _ID){
+    this->idMap=_ID;
+}
+
+int Map::getIDMap(){
+    return this->idMap;
+}
+
+
+string Map::getNomMap(){
+    return this->nomMap;
+}
+
+void Map::setNomMap(string _nom){
+    this->nomMap = _nom;
 }

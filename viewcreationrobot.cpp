@@ -33,7 +33,7 @@ ViewCreationRobot::ViewCreationRobot(ViewGestionEquipe * _gestionEquipe)
     cargaisonRobot = new QGroupBox("Valeurs maximales de la cargaison du robot");
 
     sauvegarde = new QPushButton("Ajouter le robot");
-    annuler = new QPushButton("Annuler");
+    annuler = new QPushButton("Retour");
     QWidget::connect(annuler, SIGNAL(clicked()), this, SLOT(close()));
 
     QWidget::connect(sauvegarde, SIGNAL(clicked()), this, SLOT(s_clicked()));

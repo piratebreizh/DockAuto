@@ -54,6 +54,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+    
     QApplication app(argc, argv);
 
     FenetrePrincipale premierVue;
@@ -66,7 +67,7 @@ int main(int argc, char *argv[])
 
     //TEST BDD
     /*GestionDB db;
-    db.Requete("INSERT INTO Robot VALUES (1,1,1,1,1)");
+    db.Requete("INSERT INTO Robot (Longueur, Largeur, Capacite, Vitesse, ID_Equipe) VALUES (1,1,1,1,1)");
     db.Select("SELECT * FROM Robot WHERE ID_Robot=1");
     db.AfficheResultatsSelect();*/
 

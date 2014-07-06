@@ -80,7 +80,7 @@ void ViewCreationDepot::lancementFenetreCreationMap(){
     initialisationDeLaMap();
 
     //Affichage des éléments de la map
-    AfficherMap(champLargeurDepot->text().toInt(),champLongueurDepot->text().toInt());
+    lamap->AfficherMap();
 
     //this->sauvegardeEtEdi     terMap->
     //mainLayout->removeItem(layout2pourFenetreIdentification);
@@ -115,38 +115,40 @@ bool ViewCreationDepot::initialisationDeLaMap(){
 
     layoutpourLaVisualisationMap = new QGridLayout();
     layoutpourLesImages = new QGridLayout();
-
-    lamap->setBackgroundBrush(QBrush(Qt::lightGray, Qt::CrossPattern));
     vue = new QGraphicsView(lamap);
+    vue->setMinimumSize(600,600);
+    vue->setMaximumSize(600,600);
     vue->show();
 
 
     //LabelLesImages
-    labelImageArmoire = new QLabel("Armoire");
-    labelImageZoneDep = new QLabel("Zone de départ");
-    imageArmoire = new QPixmap();
-    imageArmoire->load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\arm.png");
-    imageZoneDep = new QPixmap();
-    imageZoneDep->load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\rob.png");
-    sceneArmoire = new QGraphicsScene();
-    sceneArmoire->setSceneRect(0,0,20,20);
-    sceneArmoire->addPixmap(*(imageArmoire));
-    sceneDep = new QGraphicsScene();
-    sceneDep->setSceneRect(0,0,20,20);
-    sceneDep->addPixmap(*(imageZoneDep));
-    vueArmoire = new QGraphicsView(sceneArmoire);
-    vueArmoire->show();
-    vueDep = new QGraphicsView(sceneDep);
-    vueDep->show();
+    labelMur = new QLabel("Mur");
+    labelRobot = new QLabel("Robot");
+    labelArmoire = new QLabel("Armoire");
+    labelZoneDep = new QLabel("Zone de départ");
+    labelImageArmoire = new QLabel("");
+    labelImageMur = new QLabel("");
+    labelImageRobot = new QLabel("");
+    labelImageZoneDep = new QLabel("");
+    labelImageArmoire->setPixmap(QPixmap(":/res/images/arm.png", 0, Qt::AutoColor));
+    labelImageZoneDep->setPixmap(QPixmap(":/res/images/dep.png", 0, Qt::AutoColor));
+    labelImageMur->setPixmap(QPixmap(":/res/images/mur.png", 0, Qt::AutoColor));
+    labelImageRobot->setPixmap(QPixmap(":/res/images/rob.png", 0, Qt::AutoColor));
 
-    layoutpourLesImages->addWidget(labelImageArmoire,1,0);
-    layoutpourLesImages->addWidget(vueArmoire,1,1);
-    layoutpourLesImages->addWidget(labelImageZoneDep,2,0);
-    layoutpourLesImages->addWidget(vueDep,2,1);
+    layoutpourLesImages->addWidget(labelArmoire,1,0);
+    layoutpourLesImages->addWidget(labelImageArmoire,1,1);
+    layoutpourLesImages->addWidget(labelMur,2,0);
+    layoutpourLesImages->addWidget(labelImageMur,2,1);
+    layoutpourLesImages->addWidget(labelZoneDep,1,2);
+    layoutpourLesImages->addWidget(labelImageZoneDep,1,3);
+    layoutpourLesImages->addWidget(labelRobot,2,2);
+    layoutpourLesImages->addWidget(labelImageRobot,2,3);
     layoutpourLaVisualisationMap->addWidget(vue);
 
     mainLayout->addLayout(layoutpourLesImages);
     mainLayout->addLayout(layoutpourLaVisualisationMap);
+
+    return true;
 }
 
 /**
@@ -167,39 +169,6 @@ bool ViewCreationDepot::controleTousChampsRempli(){
 
 }
 
-void ViewCreationDepot::AfficherMap(int lon, int larg )
-{
-  QGraphicsItem *item;
-  QPixmap image;
-  Entrepot e = lamap->getEntrepot();
-
-  //Gestion de l'affichage
-  for (int i = 0; i < LONGUEUR; i++)
-    {
-      for (int j = 0; j < LARGEUR; j++)
-        {
-          if (e.tab[i][j] == -1)
-            {
-              image.load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\mur.png", 0, Qt::AutoColor);
-              item = lamap->addPixmap(image);
-              item->setPos(i*20, j*20);
-            }
-          if (e.tab[i][j] == 1)
-            {
-              image.load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\arm.png", 0, Qt::AutoColor);
-              item = lamap->addPixmap(image);
-              item->setPos(i*20, j*20);
-            }
-          if (e.tab[i][j] > 1)
-            {
-              image.load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\rob.png", 0, Qt::AutoColor);
-              item = lamap->addPixmap(image);
-              item->setPos(i*20, j*20);
-            }
-        }
-    }
-}
-
 void ViewCreationDepot::mousePressEvent(){
-    AfficherMap(LONGUEUR,LARGEUR);
+    lamap->AfficherMap();
 }

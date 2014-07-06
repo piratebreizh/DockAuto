@@ -9,6 +9,7 @@ QT += core gui
 QT += widgets
 QT += sql
 
+CONFIG += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -60,3 +61,6 @@ HEADERS  += mainwindow.h \
     viewdefinirtache.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    images.qrc

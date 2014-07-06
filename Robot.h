@@ -7,6 +7,7 @@
 using namespace std;
 
 class Entrepot;
+class Tile;
 
 class Robot : public Tile
 {

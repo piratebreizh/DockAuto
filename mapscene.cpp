@@ -30,25 +30,24 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
     int y =(int)(ev->scenePos().y()/20);
 
     switch (e.tab[x][y]){
-
-    case -1:
-        break;
-    case 0:
-        //Armoire a;
-        //e.AddArmoire(a);
-        e.tab[x][y]=1;
-        break;
-    case 1:
-        e.tab[x][y]=2;
-        break;
-    default:
-        e.tab[x][y]=0;
-        break;
-
+        case MUR:
+            break;
+        case VIDE:
+            //Armoire a;
+            //e.AddArmoire(a);
+            e.tab[x][y]=ARMOIREVIDE;
+            break;
+        case ARMOIREVIDE:
+            e.tab[x][y]=ZONEDEP;
+            break;
+        default:
+            e.tab[x][y]=VIDE;
+            break;
     }
+    this->AfficherMap();
 }
-/*
-void MapScene::AfficherMap(int lon, int larg )
+
+void MapScene::AfficherMap()
 {
   QGraphicsItem *item;
   QPixmap image;
@@ -58,28 +57,52 @@ void MapScene::AfficherMap(int lon, int larg )
     {
       for (int j = 0; j < LARGEUR; j++)
         {
-          if (e.tab[i][j] == -1)
+          //Mur
+          if (e.tab[i][j] == MapScene::MUR)
             {
-              image.load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\mur.png", 0, Qt::AutoColor);
-              item = scene->addPixmap(image);
-              item->setPos(i*20, j*20);
+              image.load(":/res/images/mur.png", 0, Qt::AutoColor);
+              item = this->addPixmap(image);
+              item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
             }
-          if (e.tab[i][j] == 1)
+          //Vide
+          if (e.tab[i][j] == MapScene::VIDE)
             {
-              image.load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\arm.png", 0, Qt::AutoColor);
-              item = scene->addPixmap(image);
-              item->setPos(i*20, j*20);
+              image.load(":/res/images/vide.png", 0, Qt::AutoColor);
+              item = this->addPixmap(image);
+              item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
             }
-          if (e.tab[i][j] > 1)
+          //Armoire
+          if (e.tab[i][j] == MapScene::ARMOIREVIDE)
             {
-              image.load("C:\\Users\\Ludwig\\Documents\\COURS\\2013-2014\\Cpp\\Projet\\DockAuto\\res\\rob.png", 0, Qt::AutoColor);
-              item = scene->addPixmap(image);
-              item->setPos(i*20, j*20);
+              image.load(":/res/images/arm.png", 0, Qt::AutoColor);
+              item = this->addPixmap(image);
+              item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
+            }
+          if (e.tab[i][j] == MapScene::ARMOIREPLEINE)
+            {
+              image.load(":/res/images/arm.png", 0, Qt::AutoColor);
+              item = this->addPixmap(image);
+              item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
+            }
+          //ZoneDepart
+          if (e.tab[i][j] == MapScene::ZONEDEP)
+            {
+              image.load(":/res/images/dep.png", 0, Qt::AutoColor);
+              item = this->addPixmap(image);
+              item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
+            }
+          //Robot
+          if (e.tab[i][j] > MapScene::ZONEDEP)
+            {
+              image.load(":/res/images/rob.png", 0, Qt::AutoColor);
+              item = this->addPixmap(image);
+              item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
             }
         }
     }
 }
-*/
+
+
 
 /**
  * @brief ViewCreationDepot::SaveDepotDb

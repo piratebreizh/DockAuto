@@ -18,6 +18,7 @@ class Entrepot : public Map
 {
 public:
     Entrepot();
+    Entrepot(int,QString);
     ~Entrepot();
     void AddArmoire(Armoire&);
     void RemoveArmoire(Armoire&);
@@ -30,6 +31,7 @@ public:
     QString getNom();
     void setNom(QString);
     void RedefTab(int, int);
+
 
 private:
     map<int,Armoire> lesArmoires;
