@@ -84,6 +84,14 @@ void GestionDB::AfficheResultatsSelect(){
         cout<<ResultatRequete[i].toString().toStdString()<<endl;
 }
 
+QString GestionDB::getResultat(int i){
+    if(ResultatRequete.size()>0){
+        return ResultatRequete[i].toString();
+    }else{
+        return "";
+    }
+}
+
 GestionDB::~GestionDB(){
     NbResultatRequete=0;
     ResultatRequete.clear();

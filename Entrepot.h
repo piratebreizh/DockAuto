@@ -28,6 +28,8 @@ public:
     void setLargeur(int);
     int getLongueur();
     void setLongueur(int);
+    int getId();
+    void setId(int);
     QString getNom();
     void setNom(QString);
     void RedefTab(int, int);
@@ -39,6 +41,7 @@ private:
     int longueur;
     int largeur;
     QString nom;
+    int id;
 
 };
 

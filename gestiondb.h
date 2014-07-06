@@ -17,6 +17,7 @@ public:
     void Requete(const QString&);
     void Select(const QString&);
     void AfficheResultatsSelect();
+    QString getResultat(int);
 
 private:
     QSqlDatabase db;

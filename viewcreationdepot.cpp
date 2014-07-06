@@ -7,6 +7,7 @@
 #include "Entrepot.h"
 #include <QString>
 #include"mapscene.h"
+#include "gestiondb.h"
 
 ViewCreationDepot::ViewCreationDepot()
 {
@@ -62,6 +63,11 @@ void ViewCreationDepot::definitionMainLayout(){
     this->setLayout(mainLayout);
 }
 
+/**
+ * @brief ViewCreationDepot::lancementFenetreCreationMap
+ * Action du bouton Sauvegarder et Editer la Map
+ * Créer un nouvelle Map et la sauvegarde en base de données
+ */
 void ViewCreationDepot::lancementFenetreCreationMap(){
 
     if(controleTousChampsRempli() == true){
@@ -74,7 +80,7 @@ void ViewCreationDepot::lancementFenetreCreationMap(){
     lamap->setInfoDepot(champLargeurDepot->text().toInt(),champLongueurDepot->text().toInt(),champNomDepot->text());
 
     //Sauvegarde en bdd
-    //lamap->SaveDepotDb();
+    lamap->SaveDepotDb();
 
     //Gestion de l'affichage de la map
     initialisationDeLaMap();
@@ -113,8 +119,12 @@ void ViewCreationDepot::masquerLayout2(){
  */
 bool ViewCreationDepot::initialisationDeLaMap(){
 
+    //Init
     layoutpourLaVisualisationMap = new QGridLayout();
     layoutpourLesImages = new QGridLayout();
+    layoutpourLaSauvegardeMap = new QGridLayout();
+
+    //Map
     vue = new QGraphicsView(lamap);
     vue->setMinimumSize(600,600);
     vue->setMaximumSize(600,600);
@@ -135,6 +145,11 @@ bool ViewCreationDepot::initialisationDeLaMap(){
     labelImageMur->setPixmap(QPixmap(":/res/images/mur.png", 0, Qt::AutoColor));
     labelImageRobot->setPixmap(QPixmap(":/res/images/rob.png", 0, Qt::AutoColor));
 
+    //Bouton sauvegarde db
+    sauvegardeModifMap = new QPushButton("Sauvegarder",this);
+    QWidget::connect(sauvegardeModifMap,SIGNAL(clicked()),this,SLOT(SauvegardeMapDb()));
+
+    //GESTION DES LAYOUTS
     layoutpourLesImages->addWidget(labelArmoire,1,0);
     layoutpourLesImages->addWidget(labelImageArmoire,1,1);
     layoutpourLesImages->addWidget(labelMur,2,0);
@@ -144,11 +159,23 @@ bool ViewCreationDepot::initialisationDeLaMap(){
     layoutpourLesImages->addWidget(labelRobot,2,2);
     layoutpourLesImages->addWidget(labelImageRobot,2,3);
     layoutpourLaVisualisationMap->addWidget(vue);
+    layoutpourLaSauvegardeMap->addWidget(sauvegardeModifMap,1,0);
 
     mainLayout->addLayout(layoutpourLesImages);
     mainLayout->addLayout(layoutpourLaVisualisationMap);
+    mainLayout->addLayout(layoutpourLaSauvegardeMap);
 
     return true;
+}
+
+/**
+ * @brief ViewCreationDepot::SauvegardeMapDb
+ * Update la map en base de données
+ */
+void ViewCreationDepot::SauvegardeMapDb(){
+    GestionDB db;
+    /*db.Requete("INSERT INTO entrepot (nom,longueur,largeur) VALUES ('" + e.getNom() +
+               "','" + e.getLargeur() + "','" + e.getLongueur() + "')");*/
 }
 
 /**
@@ -169,6 +196,10 @@ bool ViewCreationDepot::controleTousChampsRempli(){
 
 }
 
+/**
+ * @brief ViewCreationDepot::mousePressEvent
+ * Lance AfficherMap au clic sur la map
+ */
 void ViewCreationDepot::mousePressEvent(){
     lamap->AfficherMap();
 }

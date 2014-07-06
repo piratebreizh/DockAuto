@@ -5,6 +5,7 @@
 #include<QGraphicsSceneMouseEvent>
 #include<QGraphicsView>
 #include"viewcreationdepot.h"
+#include <iostream>
 
 MapScene::MapScene(QObject* parent)
     : QGraphicsScene(parent)
@@ -110,6 +111,30 @@ void MapScene::AfficherMap()
  */
 void MapScene::SaveDepotDb(){
     GestionDB db;
-    db.Requete("INSERT INTO entrepot (nom,longueur,largeur) VALUES ('" + e.getNom() +
+    /*db.Requete("INSERT INTO entrepot (nom,longueur,largeur) VALUES ('" + e.getNom() +
                "','" + e.getLargeur() + "','" + e.getLongueur() + "')");
+    db.Select("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC LIMIT 1");
+    //cout<<"bo"<<endl;
+    //gestion des erreurs
+    //cout<<"res "<<db.getResultat(1).toStdString();
+    //e.setId(db.getResultat(1).toInt());*/
+
+    //sauvegarde en base
+    for (int i = 0; i < LONGUEUR; i++)
+      {
+        for (int j = 0; j < LARGEUR; j++)
+          {
+            //Armoire
+            if (e.tab[i][j] == MapScene::ARMOIREVIDE)
+              {
+                db.Requete(QString("INSERT INTO tile (X,Y,ID_Type,ID_Entrepot) VALUES (") + i + QString(",") + j + QString(",1,") + e.getId()+QString(")"));
+              }
+            //Zone dep
+            if (e.tab[i][j] == MapScene::ZONEDEP)
+              {
+                db.Requete(QString("INSERT INTO tile (X,Y,ID_Type,ID_Entrepot) VALUES (") + i + QString(",") + j + QString(",2,") + e.getId()+QString(")"));
+              }
+        }
+    }
+
 }
