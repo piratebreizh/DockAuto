@@ -27,8 +27,8 @@ Entrepot MapScene::getEntrepot(){
 
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
 
-    int x =(int)(ev->scenePos().x()/20);
-    int y =(int)(ev->scenePos().y()/20);
+    int x =(int)(ev->scenePos().x()/LONGUEURPIX);
+    int y =(int)(ev->scenePos().y()/LARGEURPIX);
 
     switch (e.tab[x][y]){
         case MUR:

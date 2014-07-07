@@ -1,5 +1,4 @@
 #include "viewdefinirtache.h"
-//#include<Arrive.h>
 
 ViewDefinirTache::ViewDefinirTache(ViewMenuListeDesTaches * _menuListeDesTaches)
 {

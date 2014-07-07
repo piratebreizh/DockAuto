@@ -73,7 +73,7 @@ void ViewCreationDepot::lancementFenetreCreationMap(){
     if(controleTousChampsRempli() == true){
         masquerLayout2();
     }
-
+    scene = new QGraphicsScene();
     lamap = new MapScene(scene);
 
     //initialisation du depot
@@ -163,6 +163,14 @@ bool ViewCreationDepot::initialisationDeLaMap(){
     mainLayout->addLayout(layoutpourLaSauvegardeMap);
 
     return true;
+}
+
+/**
+ * @brief ViewCreationDepot::SauvegardeMapDb
+ * Sauvegarde de la map dans la base de données
+ */
+void ViewCreationDepot::SauvegardeMapDb(){
+    lamap->SaveDepotDb();
 }
 
 /**
