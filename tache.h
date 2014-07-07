@@ -1,8 +1,8 @@
 #ifndef TACHE_H
 #define TACHE_H
 #include <Tile.h>
-#include <Depart.h>
-#include<arrive.h>
+//#include <Depart.h>
+//#include<arrive.h>
 
 class Tache
 {

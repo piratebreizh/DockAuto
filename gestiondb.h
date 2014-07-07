@@ -16,6 +16,7 @@ public:
     ~GestionDB();
     void Requete(const QString&);
     void Select(const QString&);
+    void SelectFirst(const QString&);
     void AfficheResultatsSelect();
     QString getResultat(int);
 

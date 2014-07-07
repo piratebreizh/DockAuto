@@ -46,7 +46,7 @@ void GestionDB::Requete(const QString &req){
 /**
  * @brief GestionDB::Select
  * @param sel
- * Permet de récupérer 1 seul résultat pour la requête envoyé en paramètre
+ * Permet de récupérer les résultats pour la requête envoyé en paramètre
  * et le stocke dans ResultatRequete
  */
 void GestionDB::Select(const QString &sel){
@@ -73,6 +73,24 @@ void GestionDB::Select(const QString &sel){
         ResultatRequete.clear();
     }
     db.close();
+}
+
+/**
+ * @brief GestionDB::SelectFirst
+ * Récupère la première valeur de la requête
+ */
+
+void GestionDB::SelectFirst(const QString &){
+    db.setHostName(HostName);
+    db.setUserName(UserName);
+    db.setPassword(Password);
+    db.setDatabaseName(DatabaseName);
+    db.open();
+    QSqlQuery query(db);
+    if(query.first())
+    {
+        ResultatRequete.push_back(query.value(1));
+    }
 }
 
 /**

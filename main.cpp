@@ -49,27 +49,33 @@
 #include <iostream>
 #include <QSqlDatabase>
 #include "gestiondb.h"
+#include <QString>
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
     
-    QApplication app(argc, argv);
+    /*QApplication app(argc, argv);
 
     FenetrePrincipale premierVue;
 
     premierVue.show();
 
-    return app.exec();
+    return app.exec();*/
 
 
 
     //TEST BDD
-    /*GestionDB db;
-    db.Requete("INSERT INTO Robot (Longueur, Largeur, Capacite, Vitesse, ID_Equipe) VALUES (1,1,1,1,1)");
-    db.Select("SELECT * FROM Robot WHERE ID_Robot=1");
-    db.AfficheResultatsSelect();*/
+    GestionDB db;
+    QString qs;
+    //db.Requete("INSERT INTO Robot (Longueur, Largeur, Capacite, Vitesse, ID_Equipe) VALUES (1,1,1,1,1)");
+    db.Select("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC LIMIT 1");
+    cout<<"debut"<<endl;
+    qs = db.getResultat(1);
+    cout<<"result : "<<qs.toStdString()<<endl;
+    cout<<"fin"<<endl;
+    //db.AfficheResultatsSelect();
 
     /*TEST MAP*/
     /*Entrepot e;
