@@ -1,6 +1,9 @@
 #ifndef TACHE_H
 #define TACHE_H
 #include <Tile.h>
+#include <robot.h>
+
+class Robot;
 
 class Tache
 {
@@ -12,6 +15,7 @@ public:
     void setPoids(double);
     Tile  * depart;
     Tile  * arrive;
+    Robot * robot;
 
 
 private :

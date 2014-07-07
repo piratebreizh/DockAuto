@@ -1,4 +1,5 @@
 #include "viewdefinirtache.h"
+#include <gestiondb.h>
 
 ViewDefinirTache::ViewDefinirTache(ViewMenuListeDesTaches * _menuListeDesTaches)
 {
@@ -132,24 +133,27 @@ void ViewDefinirTache::chargerListeDeroulanteDesRobot(){
  *  Charge à partir d'une ID_EQUIPE la liste des robots
  */
 void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe){
-    /* A COMPLETER ET SUPPRIMER LES TESTS */
-    QString requetteSelect = "SELECT ID_Robot, Nom_Robot FROM robot WHERE ID_Equipe = ";
-    requetteSelect.append(ID_Equipe);
-    requetteSelect.append( " ;");
 
     listeRobot = new QList<Robot>;
-    //TEST !!! en attente de connexion a la base de donnée
-    QString p = "Robot 1";
-    QString o = "Robot 2";
-    QString i = "Robot 3";
 
-    Robot a (1,p);
-    Robot b (2,o);
-    Robot c (3,i);
+    GestionDB db;
+    try{
+        QString requetteSelect = "SELECT ID_Robot, Nom_Robot FROM robot WHERE ID_Equipe = ";
+        requetteSelect.append(QString::number(ID_Equipe));
+        requetteSelect.append(";");
+        qDebug()<<requetteSelect;
+        db.selectMutliLigne(requetteSelect);
+    }catch(exception e){
+        qDebug()<<e.what();
+    }
 
-    listeRobot->append(a);
-    listeRobot->append(b);
-    listeRobot->append(c);
+    for(int i=0;i<db.reusltatSelectMultiLignes.size();i++){
+        QList <QVariant> qlistTemp  = db.reusltatSelectMultiLignes.at(i);
+        Robot robotTemp ;
+        robotTemp.setId(qlistTemp.at(0).toInt());
+        robotTemp.nomRobot2=qlistTemp.at(1).toString();
+        listeRobot->append(robotTemp);
+    }
 }
 
 

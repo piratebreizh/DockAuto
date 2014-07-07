@@ -9,3 +9,8 @@ Listetache::Listetache()
 void Listetache::ajoutNouvelleTacheDansListe(Tache _tache){
     this->listDesTache->append(_tache);
 }
+
+
+QList<Tache> * Listetache::getListDesTaches(){
+    return this->listDesTache;
+}

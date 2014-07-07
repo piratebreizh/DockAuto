@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `entrepot` (
 --
 
 CREATE TABLE IF NOT EXISTS `liste_taches` (
-  `ID_Liste_Taches` int(11) NOT NULL,
+  `ID_Liste_Taches` int(11) AUTO_INCREMENT NOT NULL,
   `Nom_Liste_Taches` varchar(100),
    PRIMARY KEY (`ID_Liste_Taches`),
   KEY `ID_Liste_Taches` (`ID_Liste_Taches`)
@@ -131,13 +131,15 @@ CREATE TABLE IF NOT EXISTS `simulation` (
 
 CREATE TABLE IF NOT EXISTS `tache` (
   `ID_Tache` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
-  `Statut` int(11) NOT NULL COMMENT 'Statut de la tâche',
-  `ID_Cargaison` int(11) NOT NULL COMMENT 'Clé de la cargaison',
-  `ID_Armoire` int(11) NOT NULL COMMENT 'Clé de l''armoire',
+  `Poids_Tache` double NOT NULL ,
+  `Depart_X` int(11) NOT NULL ,
+  `Depart_Y` int(11) NOT NULL ,
+  `Arrive_X` int(11) NOT NULL ,
+  `Arrive_Y` int(11) NOT NULL ,
+  `ID_Liste_Taches` int(11) NOT NULL ,
+  `ID_Robot` int(11) NOT NULL ,
   PRIMARY KEY (`ID_Tache`),
-  UNIQUE KEY `ID_Tache` (`ID_Tache`),
-  KEY `ID_Cargaison` (`ID_Cargaison`),
-  KEY `ID_Armoire` (`ID_Armoire`)
+  UNIQUE KEY `ID_Tache` (`ID_Tache`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tâche avec une cargaison et une armoire';
 
 -- --------------------------------------------------------
@@ -176,22 +178,13 @@ CREATE TABLE IF NOT EXISTS `equipe` (
 --
 
 --
--- Contraintes pour la table `armoire`
+-- Contraintes pour la table `tache`
 --
-ALTER TABLE `armoire`
-  ADD CONSTRAINT `armoire_ibfk_1` FOREIGN KEY (`ID_Entrepot`) REFERENCES `entrepot` (`ID_Entrepot`);
+ALTER TABLE `tache`
+  ADD CONSTRAINT `tache_ibfk_1` FOREIGN KEY (`ID_Liste_Taches`) REFERENCES `liste_taches` (`ID_Liste_Taches`),
+  ADD CONSTRAINT `tache_ibfk_2` FOREIGN KEY (`ID_Robot`) REFERENCES `robot` (`ID_Robot`);
 
---
--- Contraintes pour la table `cargaison`
---
-ALTER TABLE `cargaison`
-  ADD CONSTRAINT `cargaison_ibfk_1` FOREIGN KEY (`ID_Armoire`) REFERENCES `armoire` (`ID_Armoire`);
---
--- Contraintes pour la table `liste_taches`
---
-/*ALTER TABLE `liste_taches`
-  ADD CONSTRAINT `liste_taches_ibfk_1` FOREIGN KEY (`ID_Simulation`) REFERENCES `simulation` (`ID_Simulation`);*/
-  
+
 --
 -- Contraintes pour la table `simulation`
 --
@@ -199,13 +192,6 @@ ALTER TABLE `simulation`
   ADD CONSTRAINT `simulation_ibfk_1` FOREIGN KEY (`ID_Entrepot`) REFERENCES `entrepot` (`ID_Entrepot`),
   ADD CONSTRAINT `simulation_ibfk_2` FOREIGN KEY (`ID_Equipe`) REFERENCES `equipe` (`ID_Equipe`),
   ADD CONSTRAINT `simulation_ibfk_3` FOREIGN KEY (`ID_Liste_Taches`) REFERENCES `liste_taches` (`ID_Liste_Taches`);
-
---
--- Contraintes pour la table `tache`
---
-ALTER TABLE `tache`
-  ADD CONSTRAINT `tache_ibfk_2` FOREIGN KEY (`ID_Armoire`) REFERENCES `armoire` (`ID_Armoire`),
-  ADD CONSTRAINT `tache_ibfk_1` FOREIGN KEY (`ID_Cargaison`) REFERENCES `cargaison` (`ID_Cargaison`);
 
 --
 -- Contraintes pour la table `tile`
