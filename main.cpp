@@ -71,9 +71,11 @@ int main(int argc, char *argv[])
     db.selectMutliLigne("SELECT * FROM robot;");
     db.afficherResultatSelectMultiple();
     //qDebug()<< query.value(0).toInt();
+    */
 
-    /*TEST MAP*/
-    /*Entrepot e;
+    /*
+    //TEST MAP
+    Entrepot e;
     Armoire a;
     Robot r;
     e.AfficheMap();
@@ -91,7 +93,8 @@ int main(int argc, char *argv[])
     cout<<"MAP 3"<<endl<<endl;
     r.move(e,1,1);
     e.AfficheMap();
-    cout<<"MAP 4"<<endl<<endl;*/
+    cout<<"MAP 4"<<endl<<endl;
+    */
 
 
     /*TEST EQUIPE*/
