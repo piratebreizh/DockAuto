@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     GestionDB db;
     QString qs;
     //db.Requete("INSERT INTO Robot (Longueur, Largeur, Capacite, Vitesse, ID_Equipe) VALUES (1,1,1,1,1)");
-    db.Select("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC LIMIT 1");
+    db.SelectFirst("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC");
     cout<<"debut"<<endl;
     qs = db.getResultat(1);
     cout<<"result : "<<qs.toStdString()<<endl;

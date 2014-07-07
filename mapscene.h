@@ -2,6 +2,10 @@
 #define MAPSCENE_H
 #define LONGUEURPIX 20
 #define LARGEURPIX 20
+#define VIDE 0
+#define ARMOIREVIDE 1
+#define ARMOIREPLEINE 2
+#define ZONEDEP 3
 #include <QGraphicsScene>
 #include <QString>
 #include "Entrepot.h"

@@ -4,6 +4,7 @@
 #include <QSqlRecord>
 #include <QString>
 #include <iostream>
+#include <QDebug>
 
 using namespace std;
 
@@ -115,3 +116,61 @@ GestionDB::~GestionDB(){
     ResultatRequete.clear();
     db.close();
 }
+
+/**
+ * @brief GestionDB::SelectWithQsqlQuery
+ * @param sel
+ * @return QSqlQuery
+ * retourn un QSqlQuery d'un select avec plusieurs lignes
+ */
+void GestionDB::selectMutliLigne(const QString &sel){
+    db.setHostName(HostName);
+    db.setUserName(UserName);
+    db.setPassword(Password);
+    db.setDatabaseName(DatabaseName);
+    db.open();
+    QSqlQuery query(db);
+    if(query.exec(sel) && query.size()>0)
+    {
+
+        NbResultatRequete=query.record().count();
+        while(query.next())
+        {
+            QList <QVariant> ligne;
+            for(int x=0; x < NbResultatRequete; ++x)
+            {
+
+                ligne.append(QVariant (query.value(x)));
+            }
+          reusltatSelectMultiLignes.append(ligne);
+
+        }
+    }
+    else{
+        NbResultatRequete=0;
+        ResultatRequete.clear();
+    }
+    db.close();
+}
+
+
+void GestionDB::afficherResultatSelectMultiple(){
+    for(int i = 0 ; i<reusltatSelectMultiLignes.size();i++){
+        QList <QVariant> qlistTemp = reusltatSelectMultiLignes.at(i);
+        for(int y=0; y<qlistTemp.size();y++){
+            qDebug()<<qlistTemp.at(y).toString();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+

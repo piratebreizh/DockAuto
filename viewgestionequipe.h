@@ -48,6 +48,7 @@ public slots:
     void ajouterRobotDansList();
     void deleteViewAjoutRobot();
     void declanchementSauvegardeCompleteEquipe();
+    bool messageConfimationCretionEquipe();
 
 private:
     Equipe *equipe;
@@ -55,6 +56,8 @@ private:
     QFormLayout *layoutSencondaire;
     QPushButton *ajouterRobot;
 
+
+    QLabel * labelConfirmation;
     QTableView *resultView;
     QStandardItemModel * model;
 
@@ -72,6 +75,7 @@ private:
     bool sauvegardEquipeEnBase();
     bool sauvegardListeRobotEnBase();
     bool sauvegardLienEquipeRobot();
+    void reinitialisationChamps();
 };
 
 #endif // VIEWGESTIONEQUIPE_H
