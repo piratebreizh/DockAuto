@@ -8,6 +8,7 @@
 #include <QString>
 #include"mapscene.h"
 #include "gestiondb.h"
+#include <iostream>
 
 ViewCreationDepot::ViewCreationDepot()
 {
