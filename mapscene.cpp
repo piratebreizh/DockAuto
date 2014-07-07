@@ -63,7 +63,7 @@ void MapScene::AfficherMap()
             {
               image.load(":/res/images/mur.png", 0, Qt::AutoColor);
               item = this->addPixmap(image);
-              item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
+                item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
             }
           //Vide
           if (e.tab[i][j] == MapScene::VIDE)
@@ -111,13 +111,11 @@ void MapScene::AfficherMap()
  */
 void MapScene::SaveDepotDb(){
     GestionDB db;
-    /*db.Requete("INSERT INTO entrepot (nom,longueur,largeur) VALUES ('" + e.getNom() +
+    db.Requete("INSERT INTO entrepot (nom,longueur,largeur) VALUES ('" + e.getNom() +
                "','" + e.getLargeur() + "','" + e.getLongueur() + "')");
-    db.Select("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC LIMIT 1");
-    //cout<<"bo"<<endl;
+    db.Select("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC");
     //gestion des erreurs
-    //cout<<"res "<<db.getResultat(1).toStdString();
-    //e.setId(db.getResultat(1).toInt());*/
+    e.setId(db.getResultat(1).toInt());
 
     //sauvegarde en base
     for (int i = 0; i < LONGUEUR; i++)

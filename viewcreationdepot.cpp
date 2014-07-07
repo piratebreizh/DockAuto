@@ -79,9 +79,6 @@ void ViewCreationDepot::lancementFenetreCreationMap(){
     //initialisation du depot
     lamap->setInfoDepot(champLargeurDepot->text().toInt(),champLongueurDepot->text().toInt(),champNomDepot->text());
 
-    //Sauvegarde en bdd
-    lamap->SaveDepotDb();
-
     //Gestion de l'affichage de la map
     initialisationDeLaMap();
 
@@ -166,16 +163,6 @@ bool ViewCreationDepot::initialisationDeLaMap(){
     mainLayout->addLayout(layoutpourLaSauvegardeMap);
 
     return true;
-}
-
-/**
- * @brief ViewCreationDepot::SauvegardeMapDb
- * Update la map en base de données
- */
-void ViewCreationDepot::SauvegardeMapDb(){
-    GestionDB db;
-    /*db.Requete("INSERT INTO entrepot (nom,longueur,largeur) VALUES ('" + e.getNom() +
-               "','" + e.getLargeur() + "','" + e.getLongueur() + "')");*/
 }
 
 /**

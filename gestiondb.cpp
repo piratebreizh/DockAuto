@@ -88,7 +88,7 @@ void GestionDB::SelectFirst(const QString &){
     db.setDatabaseName(DatabaseName);
     db.open();
     QSqlQuery query(db);
-    if(query.first())
+    if(query.size()>0)
     {
         ResultatRequete.push_back(query.value(1));
     }

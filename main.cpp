@@ -56,26 +56,27 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     
-    /*QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     FenetrePrincipale premierVue;
 
     premierVue.show();
 
-    return app.exec();*/
+    return app.exec();
 
 
 
     //TEST BDD
-    GestionDB db;
+    /*GestionDB db("localhost","root","","dockautodb");
     QString qs;
-    //db.Requete("INSERT INTO Robot (Longueur, Largeur, Capacite, Vitesse, ID_Equipe) VALUES (1,1,1,1,1)");
-    db.SelectFirst("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC");
+    //db.Requete("INSERT INTO Robot (Longueur, Largeur, Capacite, Vitesse, ID_Equipe) VALUES (3,3,3,3,3)");
+    db.Select("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC");
+    //db.AfficheResultatsSelect();
+
     cout<<"debut"<<endl;
     qs = db.getResultat(1);
     cout<<"result : "<<qs.toStdString()<<endl;
-    cout<<"fin"<<endl;
-    //db.AfficheResultatsSelect();
+    cout<<"fin"<<endl;*/
 
     /*TEST MAP*/
     /*Entrepot e;

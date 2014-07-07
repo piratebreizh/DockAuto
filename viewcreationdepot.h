@@ -27,7 +27,6 @@ public:
 
 public slots:
     void lancementFenetreCreationMap();
-    void SauvegardeMapDb();
 
 private :
     MapScene *lamap;
