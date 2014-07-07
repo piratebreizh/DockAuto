@@ -64,12 +64,13 @@ int main(int argc, char *argv[])
     return app.exec();
 
 
-
+    /*
     //TEST BDD
-    /*GestionDB db;
-    db.Requete("INSERT INTO Robot (Longueur, Largeur, Capacite, Vitesse, ID_Equipe) VALUES (1,1,1,1,1)");
-    db.Select("SELECT * FROM Robot WHERE ID_Robot=1");
-    db.AfficheResultatsSelect();*/
+    GestionDB db;
+    //db.Requete("INSERT INTO Robot (Longueur, Largeur, Capacite, Vitesse, ID_Equipe) VALUES (1,1,1,1,1)");
+    db.selectMutliLigne("SELECT * FROM robot;");
+    db.afficherResultatSelectMultiple();
+    //qDebug()<< query.value(0).toInt();
 
     /*TEST MAP*/
     /*Entrepot e;

@@ -17,15 +17,23 @@ public:
     void Requete(const QString&);
     void Select(const QString&);
     void AfficheResultatsSelect();
+    void selectMutliLigne(const QString &);
+    void afficherResultatSelectMultiple();
+
+    QList< QList<QVariant> > reusltatSelectMultiLignes;
+    vector<QVariant> ResultatRequete;
+
+
 
 private:
     QSqlDatabase db;
-    vector<QVariant> ResultatRequete;
     int NbResultatRequete;
     QString HostName="localhost";
     QString UserName="root";
     QString Password="";
     QString DatabaseName="DockAutodb";
+
+
 };
 
 #endif // GESTIONDB_H

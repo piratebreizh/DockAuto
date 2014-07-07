@@ -17,6 +17,11 @@ ViewGestionEquipe::ViewGestionEquipe(QWidget *parent) : QDialog(parent)
     resetTousLesChamps();
     layoutSencondaire = new QFormLayout;
 
+    labelConfirmation = new QLabel();
+    labelConfirmation->hide();
+
+    layoutSencondaire->addRow(labelConfirmation);
+
     layoutSencondaire->addRow(new QLabel(tr("Nom de l'equipe")));
     champNomEquipe = new QLineEdit();
     layoutSencondaire->addRow(champNomEquipe);
@@ -139,11 +144,11 @@ void ViewGestionEquipe::resetTousLesChamps(){
  * */
 void ViewGestionEquipe::declanchementSauvegardeCompleteEquipe(){
 
-   // gestionDB = new GestionDB("localhost","root","","dockautodb");
-
-    sauvegardEquipeEnBase();
-    sauvegardListeRobotEnBase();
-
+    if(messageConfimationCretionEquipe()){
+        sauvegardEquipeEnBase();
+        sauvegardListeRobotEnBase();
+        reinitialisationChamps();
+    }
 }
 
 
@@ -153,17 +158,15 @@ void ViewGestionEquipe::declanchementSauvegardeCompleteEquipe(){
 void ViewGestionEquipe::recuperationAttributEquipe(){
     equipe = new Equipe();
     equipe->nomEquipe = champNomEquipe->text().toStdString();
-    equipe->idEquipe = dernierIDEquipeEnBase();
 }
 
  /**
    *Récupere le dernier ID d'équipe pour la création d'une nouvelle équipe
    * */
 int ViewGestionEquipe::dernierIDEquipeEnBase(){
-     /* ALEXNADRE : A FINIR CAR MA CONNEXION A LA BASE NE FONCTIONNE PAS */
-    // gestionDB.Select("SELECT MAX(ID_Equipe) FROM equipe;");
-     //POUR TEST
-     return 3;
+    GestionDB db;
+    db.selectMutliLigne("SELECT MAX(ID_Equipe) FROM equipe;");
+    return db.reusltatSelectMultiLignes.at(0).at(0).toInt();
 }
 
 
@@ -171,8 +174,18 @@ int ViewGestionEquipe::dernierIDEquipeEnBase(){
   Sauvegarde en base d'une nouvelle équipe
 **/
 bool ViewGestionEquipe::sauvegardEquipeEnBase(){
-recuperationAttributEquipe();
-   // gestionDB->Requete("INSERT INTO EQUIPE (ID_Equipe,Nom_Equipe) VALUES (" + equipe->idEquipe + " , '" + equipe->nomEquipe+"';");
+    recuperationAttributEquipe();
+    GestionDB db;
+    QString requeteInsert = ("INSERT INTO EQUIPE (Nom_Equipe) VALUES (");
+    requeteInsert.append(" '");
+    requeteInsert.append(QString::fromStdString(equipe->nomEquipe));
+
+    requeteInsert.append("');");
+    qDebug()<<requeteInsert;
+    db.Requete(requeteInsert);
+
+    equipe->idEquipe = dernierIDEquipeEnBase();
+
     return true ;
 }
 
@@ -181,38 +194,64 @@ recuperationAttributEquipe();
 **/
 bool ViewGestionEquipe::sauvegardListeRobotEnBase(){
 
-    if(tableRobot->size()>0){
-        qDebug() << tableRobot->size();
-        for (int i = 0; i<tableRobot->size();i++) {
-            Robot robotTemp  = tableRobot->at(i);
-           QString requeteSQLInsert = " INSERT INTO ROBOT (`Nom_Robot` , `Longueur_Robot`, `Largeur_Robot`, `Vitesse`, `Longueur_Capacite_De_Charge_Robot`, `Largeur_Capactite_De_Charge_Robot`, `Poids_Capacite_De_Charge_Robot`, `ID_Equipe) VALUES (" ;
-           requeteSQLInsert.append(QString::fromUtf8(robotTemp.nomRobot.c_str()));
-           //requeteSQLInsert .append( " , ");
-           requeteSQLInsert.append(QString::number(robotTemp.longueurRobot));
-            requeteSQLInsert .append( " , ");
-            requeteSQLInsert .append(QString::number( robotTemp.largeurRobot));
-            requeteSQLInsert .append(" , ");
-            requeteSQLInsert .append(QString::number(robotTemp.vitesseRobot));
-            requeteSQLInsert .append( " , ");
-            requeteSQLInsert .append(QString::number( robotTemp.longueurCapaciteDeCharge));
-            requeteSQLInsert .append(" , ");
-            requeteSQLInsert .append(QString::number( robotTemp.largeurCapactiteDeCharge));
-            requeteSQLInsert .append( " , ");
-            requeteSQLInsert .append(QString::number( robotTemp.poidsCapaciteDeCharge));
-            requeteSQLInsert .append( " , ");
-            requeteSQLInsert .append(QString::number(  equipe->idEquipe));
-            requeteSQLInsert .append( ")");
-            qDebug()<<requeteSQLInsert;
-        }
-    }
-    //requeteSQLInsert += ";";
 
+    bool firstVirgule = true;
+    if(tableRobot->size()>0){
+        QString requeteSQLInsert = " INSERT INTO ROBOT (`Nom_Robot` , `Longueur_Robot`, `Largeur_Robot`, `Vitesse_Robot`, `Longueur_Capacite_De_Charge_Robot`, `Largeur_Capactite_De_Charge_Robot`, `Poids_Capacite_De_Charge_Robot`, `ID_Equipe`) VALUES (" ;
+        qDebug() << tableRobot->size();
+        for (int i = 0; i<tableRobot->size();i++){
+            if(!firstVirgule){
+                requeteSQLInsert.append(" ),( ");
+            }
+            Robot robotTemp = tableRobot->at(i);
+            requeteSQLInsert.append("'");
+            requeteSQLInsert.append(QString::fromUtf8(robotTemp.nomRobot.c_str()));
+            requeteSQLInsert.append("',");
+            requeteSQLInsert.append(QString::number(robotTemp.longueurRobot));
+            requeteSQLInsert.append( ",");
+            requeteSQLInsert .append(QString::number( robotTemp.largeurRobot));
+            requeteSQLInsert .append(",");
+            requeteSQLInsert .append(QString::number(robotTemp.vitesseRobot));
+            requeteSQLInsert .append( ",");
+            requeteSQLInsert .append(QString::number( robotTemp.longueurCapaciteDeCharge));
+            requeteSQLInsert .append(",");
+            requeteSQLInsert .append(QString::number( robotTemp.largeurCapactiteDeCharge));
+            requeteSQLInsert .append(",");
+            requeteSQLInsert .append(QString::number( robotTemp.poidsCapaciteDeCharge));
+            requeteSQLInsert .append(",");
+            requeteSQLInsert .append(QString::number( equipe->idEquipe));
+            firstVirgule = false;
+        }
+        requeteSQLInsert.append("); ");
+        qDebug()<<requeteSQLInsert;
+        GestionDB db;
+        db.Requete(requeteSQLInsert);
+    }
     return true ;
 }
 
 
+void ViewGestionEquipe::reinitialisationChamps(){
+    champNomEquipe->setText("");
+    equipe = new Equipe();
+    tableRobot->clear();
+    resetTousLesChamps();
+}
 
+bool ViewGestionEquipe::messageConfimationCretionEquipe(){
 
+    if(!champNomEquipe->text().isEmpty() && tableRobot->size() > 0){
+        labelConfirmation->setText("La nouvelle équpe vient d'être enregistrer");
+        labelConfirmation->setStyleSheet("QLabel { color : green; }");
+        labelConfirmation->show();
+        return true ;
+    }else{
+        labelConfirmation->setText("Tous les champs doivent être remplis");
+        labelConfirmation->setStyleSheet("QLabel { color : red; }");
+        labelConfirmation->show();
+     }
+    return false;
+}
 
 
 
