@@ -58,8 +58,7 @@ HEADERS  += mainwindow.h \
     tache.h \
     listetache.h \
     simulation.h \
-    viewdefinirtache.h \
-    gestionmapdepot.h
+    viewdefinirtache.h
 
 FORMS    += mainwindow.ui
 

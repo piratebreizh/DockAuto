@@ -90,22 +90,6 @@ CREATE TABLE IF NOT EXISTS `liste_taches` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `mappe`
---
-
-CREATE TABLE IF NOT EXISTS `mappe` (
-  `ID_Mappe` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
-  `Longueur` int(11) NOT NULL COMMENT 'Longeur de la Mappe (nb de lignes du tableau)',
-  `Largeur` int(11) NOT NULL COMMENT 'Largeur de la Mappe (nb de colonnes du tableau)',
-  `ID_Entrepot` int(11) NOT NULL COMMENT 'Clé de l''entrepôt',
-  PRIMARY KEY (`ID_Mappe`),
-  UNIQUE KEY `ID_Mappe` (`ID_Mappe`),
-  KEY `ID_Entrepot` (`ID_Entrepot`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Mappe décrivant un entrepôt';
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `robot`
 --
 
@@ -169,10 +153,10 @@ CREATE TABLE IF NOT EXISTS `tile` (
   `X` int(11) NOT NULL COMMENT 'Position en abcisse de la Tile sur la Mappe',
   `Y` int(11) NOT NULL COMMENT 'Position en ordonnée de la Tile sur la Mappe',
   `ID_Type` int(11) NOT NULL COMMENT 'Type de Tile (0=vide,1=Armoire,Id=Id objet)',
-  `ID_Mappe` int(11) NOT NULL COMMENT 'Clé de la Mappe',
+  `ID_Entrepot` int(11) NOT NULL COMMENT 'Clé de la Mappe',
   PRIMARY KEY (`ID_Tile`),
   UNIQUE KEY `ID_Tile` (`ID_Tile`),
-  KEY `ID_Mappe` (`ID_Mappe`)
+  KEY `ID_Entrepot` (`ID_Entrepot`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tile de la Mappe';
 
 -- --------------------------------------------------------
@@ -202,12 +186,6 @@ ALTER TABLE `tache`
 
 
 --
--- Contraintes pour la table `mappe`
---
-ALTER TABLE `mappe`
-  ADD CONSTRAINT `mappe_ibfk_1` FOREIGN KEY (`ID_Entrepot`) REFERENCES `entrepot` (`ID_Entrepot`);
-
---
 -- Contraintes pour la table `simulation`
 --
 ALTER TABLE `simulation`
@@ -219,7 +197,7 @@ ALTER TABLE `simulation`
 -- Contraintes pour la table `tile`
 --
 ALTER TABLE `tile`
-  ADD CONSTRAINT `tile_ibfk_1` FOREIGN KEY (`ID_Mappe`) REFERENCES `mappe` (`ID_Mappe`);
+  ADD CONSTRAINT `tile_ibfk_1` FOREIGN KEY (`ID_Entrepot`) REFERENCES `entrepot` (`ID_Entrepot`);
   
 --
 -- Contraintes pour la table `robot`

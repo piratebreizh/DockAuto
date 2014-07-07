@@ -16,14 +16,14 @@ public:
     ~GestionDB();
     void Requete(const QString&);
     void Select(const QString&);
+    void SelectFirst(const QString&);
     void AfficheResultatsSelect();
+    QString getResultat(int);
     void selectMutliLigne(const QString &);
     void afficherResultatSelectMultiple();
 
     QList< QList<QVariant> > reusltatSelectMultiLignes;
     vector<QVariant> ResultatRequete;
-
-
 
 private:
     QSqlDatabase db;

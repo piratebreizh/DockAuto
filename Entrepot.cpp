@@ -83,3 +83,10 @@ QString Entrepot::getNom(){
     return nom;
 }
 
+void Entrepot::setId(int _id){
+    id=_id;
+}
+
+int Entrepot::getId(){
+    return id;
+}

@@ -13,7 +13,7 @@ public:
     MapScene(QObject* parent);
     void setInfoDepot(int lon, int larg, QString nom);
     void SaveDepotDb();
-    Entrepot getEntrepot();
+    Entrepot* getEntrepot();
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
     void AfficherMap();
 
@@ -26,7 +26,7 @@ public:
     };
 
 private:
-    Entrepot e;
+    Entrepot *e;
 };
 
 #endif // MAPSCENE_H

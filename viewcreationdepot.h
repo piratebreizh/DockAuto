@@ -27,6 +27,7 @@ public:
 
 public slots:
     void lancementFenetreCreationMap();
+    void SauvegardeMapDb();
 
 private :
     MapScene *lamap;
@@ -56,6 +57,7 @@ private :
 
     QGridLayout *layoutpourLesImages;
     QGridLayout *layoutpourLaVisualisationMap;
+    QGridLayout *layoutpourLaSauvegardeMap;
 
     QLabel *labelArmoire;
     QLabel *labelZoneDep;
@@ -66,6 +68,8 @@ private :
     QLabel *labelImageZoneDep;
     QLabel *labelImageMur;
     QLabel *labelImageRobot;
+
+    QPushButton *sauvegardeModifMap;
 
 };
 

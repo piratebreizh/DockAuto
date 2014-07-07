@@ -13,10 +13,6 @@ public:
 
     double getPoids();
     void setPoids(double);
-    /*void setDepart(int _x, int _y);
-    Depart getDepart();
-    void setArrive(int _x, int _y);
-//    Arrive getArrive();*/
     Tile  * depart;
     Tile  * arrive;
     Robot * robot;
