@@ -50,20 +50,24 @@
 #include <QSqlDatabase>
 #include "gestiondb.h"
 #include <QString>
+#include "simulation.h"
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
     
-    QApplication app(argc, argv);
+    /*QApplication app(argc, argv);
 
     FenetrePrincipale premierVue;
 
     premierVue.show();
 
-    return app.exec();
+    return app.exec();*/
 
+    //TEST SIMULATION
+    Simulation s;
+    s.ChargerDepot(2);
 
 
     //TEST BDD
@@ -77,12 +81,11 @@ int main(int argc, char *argv[])
     qs = db.getResultat(1);
     cout<<"result : "<<qs.toStdString()<<endl;
     cout<<"fin"<<endl;*/
-    /*GestionDB db;
+    /*GestionDB db("localhost","root","","dockautodb");
     //db.Requete("INSERT INTO Robot (Longueur, Largeur, Capacite, Vitesse, ID_Equipe) VALUES (1,1,1,1,1)");
-    db.selectMutliLigne("SELECT * FROM robot;");
-    db.afficherResultatSelectMultiple();
-    //qDebug()<< query.value(0).toInt();
-    */
+    db.selectMutliLigne("SELECT * FROM tile;");
+    db.afficherResultatSelectMultiple();*/
+
 
 
     /*

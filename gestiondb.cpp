@@ -142,7 +142,7 @@ void GestionDB::selectMutliLigne(const QString &sel){
 
                 ligne.append(QVariant (query.value(x)));
             }
-          reusltatSelectMultiLignes.append(ligne);
+          resultatSelectMultiLignes.append(ligne);
 
         }
     }
@@ -155,14 +155,17 @@ void GestionDB::selectMutliLigne(const QString &sel){
 
 
 void GestionDB::afficherResultatSelectMultiple(){
-    for(int i = 0 ; i<reusltatSelectMultiLignes.size();i++){
-        QList <QVariant> qlistTemp = reusltatSelectMultiLignes.at(i);
+    for(int i = 0 ; i<resultatSelectMultiLignes.size();i++){
+        QList <QVariant> qlistTemp = resultatSelectMultiLignes.at(i);
         for(int y=0; y<qlistTemp.size();y++){
             qDebug()<<qlistTemp.at(y).toString();
         }
     }
 }
 
+int GestionDB::getNbResultat(){
+    return NbResultatRequete;
+}
 
 
 

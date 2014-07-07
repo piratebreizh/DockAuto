@@ -21,8 +21,9 @@ public:
     QString getResultat(int);
     void selectMutliLigne(const QString &);
     void afficherResultatSelectMultiple();
+    int getNbResultat();
 
-    QList< QList<QVariant> > reusltatSelectMultiLignes;
+    QList< QList<QVariant> > resultatSelectMultiLignes;
     vector<QVariant> ResultatRequete;
 
 private:

@@ -166,7 +166,7 @@ void ViewGestionEquipe::recuperationAttributEquipe(){
 int ViewGestionEquipe::dernierIDEquipeEnBase(){
     GestionDB db;
     db.selectMutliLigne("SELECT MAX(ID_Equipe) FROM equipe;");
-    return db.reusltatSelectMultiLignes.at(0).at(0).toInt();
+    return db.resultatSelectMultiLignes.at(0).at(0).toInt();
 }
 
 

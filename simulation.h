@@ -8,13 +8,14 @@ class Simulation
 public:
     Simulation();
     void LancerSimulation();
+    void ChargerDepot(int);
     Listetache * listeTache;
     QString * nomSimulation;
     int IdSimulation;
-    Entrepot e;
+
 
 private :
-
+    Entrepot *e;
 };
 
 #endif // SIMULATION_H
