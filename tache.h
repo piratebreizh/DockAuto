@@ -1,8 +1,9 @@
 #ifndef TACHE_H
 #define TACHE_H
 #include <Tile.h>
-#include <Depart.h>
-#include<arrive.h>
+#include <robot.h>
+
+class Robot;
 
 class Tache
 {
@@ -18,6 +19,7 @@ public:
 //    Arrive getArrive();*/
     Tile  * depart;
     Tile  * arrive;
+    Robot * robot;
 
 
 private :

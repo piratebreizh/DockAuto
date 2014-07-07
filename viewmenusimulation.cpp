@@ -1,5 +1,6 @@
 #include "viewmenusimulation.h"
 #include <stdio.h>
+#include <gestiondb.h>
 
 ViewMenuSimulation::ViewMenuSimulation()
 {
@@ -203,25 +204,11 @@ void ViewMenuSimulation::executionViewMenuListeDesTaches(){
  */
 void ViewMenuSimulation::initialisationDeLaListeDeroulanteEquipe(){
 
-    /* POUR TESTER A SUPPRIMER A remplacer par la fonction SQL ci dessou*/
 
-
-    //chargeToutesLesEquipesDeLaBase();
-
-    QString p = "equpe 1";
-    QString o = "equpe 2";
-    QString i = "equpe 3";
-
-    Equipe a (1,p);
-    Equipe b (2,o);
-    Equipe c (3,i);
-
-    listeEquipe->append(a);
-    listeEquipe->append(b);
-    listeEquipe->append(c);
+    chargeToutesLesEquipesDeLaBase();
 
     if(listeEquipe->size()>0){
-        qDebug() << listeEquipe->size();
+        //qDebug() << listeEquipe->size();
         for (int i = 0; i<listeEquipe->size();i++) {
             Equipe equipeTemp  = listeEquipe->at(i);
             listeDeroulanteChoixEquipe->addItem(equipeTemp.nomEquipe2,equipeTemp.idEquipe);
@@ -236,8 +223,21 @@ void ViewMenuSimulation::initialisationDeLaListeDeroulanteEquipe(){
   * */
 void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase(){
 
-    /*A COMPLETER PAR ANTOINE POUR LA BASE DE DONNE */
-    QString requeteSelect = "SELECT ID_Equipe, Nom_Equipe FROM EQUIPE ;";
+    GestionDB db;
+    try{
+        db.selectMutliLigne("SELECT ID_Equipe, Nom_Equipe FROM equipe ;");
+    }catch(exception e){
+        qDebug()<<e.what();
+    }
+
+    for(int i=0;i<db.reusltatSelectMultiLignes.size();i++){
+        QList <QVariant> qlistTemp  = db.reusltatSelectMultiLignes.at(i);
+        Equipe equipeTemp ;
+        equipeTemp.idEquipe = qlistTemp.at(0).toInt();
+        equipeTemp.nomEquipe2 = qlistTemp.at(1).toString();
+        listeEquipe->append(equipeTemp);
+    }
+
 }
 
 /**
@@ -264,30 +264,8 @@ void ViewMenuSimulation::bloquerSelectionEquipe(){
  */
 void ViewMenuSimulation::initialisationDeLaListeDeroulanteDepot(){
 
-    /* POUR TESTER A SUPPRIMER A remplacer par la fonction SQL ci dessou*/
+    chargeToutesLesDepotsDeLaBase();
 
-
-    //chargeToutesLesEquipesDeLaBase();
-
-    QString p = "equpe 1";
-    QString o = "equpe 2";
-    QString i = "equpe 3";
-
-    Entrepot a;
-    Entrepot b;
-    Entrepot c;
-
-    a.setIDMap(1);
-    b.setIDMap(2);
-    c.setIDMap(3);
-
-    a.setNomMap("entrepot 1");
-    b.setNomMap("entrepot 2");
-    c.setNomMap("entrepot 3");
-
-    listeDepot->append(a);
-    listeDepot->append(b);
-    listeDepot->append(c);
 
     if(listeDepot->size()>0){
         qDebug() << listeDepot->size();
@@ -305,8 +283,20 @@ void ViewMenuSimulation::initialisationDeLaListeDeroulanteDepot(){
   * */
 void ViewMenuSimulation::chargeToutesLesDepotsDeLaBase(){
 
-    /*A COMPLETER PAR ANTOINE POUR LA BASE DE DONNE */
-    QString requeteSelect = "SELECT ID_Entrepot, Nom FROM ENTREPOT ;";
+    GestionDB db;
+    try{
+        db.selectMutliLigne("SELECT ID_Entrepot, Nom_Entrepot FROM entrepot");
+    }catch(exception e){
+        qDebug()<<e.what();
+    }
+
+    for(int i=0;i<db.reusltatSelectMultiLignes.size();i++){
+        QList <QVariant> qlistTemp  = db.reusltatSelectMultiLignes.at(i);
+        Entrepot entrepotTemp;
+        entrepotTemp.setIDMap(qlistTemp.at(0).toInt());
+        entrepotTemp.setNomMap(qlistTemp.at(1).toString().toStdString());
+        listeDepot->append(entrepotTemp);
+    }
 }
 
 /**

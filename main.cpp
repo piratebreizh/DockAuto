@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     return app.exec();
 
 
-    /*
+
     //TEST BDD
     GestionDB db;
     //db.Requete("INSERT INTO Robot (Longueur, Largeur, Capacite, Vitesse, ID_Equipe) VALUES (1,1,1,1,1)");

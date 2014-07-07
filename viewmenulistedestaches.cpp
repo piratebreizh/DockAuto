@@ -1,5 +1,5 @@
 #include "viewmenulistedestaches.h"
-
+#include <gestiondb.h>
 ViewMenuListeDesTaches::ViewMenuListeDesTaches(ViewMenuSimulation * _viewMenuSimulation)
 {
     viewMenuSimulation = &* _viewMenuSimulation;
@@ -87,9 +87,6 @@ void ViewMenuListeDesTaches::ajouterTacheDansListe(){
 
     model->appendRow(listItem);
 
-
-    this->listeTache->ajoutNouvelleTacheDansListe(*this->nouvelleTacheTemp);
-
 }
 
 
@@ -102,54 +99,59 @@ void ViewMenuListeDesTaches::CliqueSauvegarder(){
 }
 
 void ViewMenuListeDesTaches::enregistrementDansLaTableListetache(){
-   initialisationIDListeTache();
 
-   QString insertListeTable = "INSERT INTO liste_taches (ID_Liste_Taches,ID_Simulation,NomListeTache) VALUES ( ";
-    insertListeTable.append(QString::number(this->listeTache->IDListeTache));
-    insertListeTable.append(" , ");
-    insertListeTable.append(QString::number(this->viewMenuSimulation->simulation->IdSimulation));
-    insertListeTable.append(" , ");
+   QString insertListeTable = "INSERT INTO liste_taches (Nom_Liste_Taches) VALUES ('";
     insertListeTable.append(this->champNomTacheListe->text());
-    insertListeTable.append(" ); ");
+    insertListeTable.append("');");
 
     qDebug()<<insertListeTable;
+    GestionDB db;
+    db.Requete(insertListeTable);
+
+    initialisationIDListeTache();
+
+
 }
 
 void ViewMenuListeDesTaches::initialisationIDListeTache(){
-    QString selectMax = "SELECT MAX(ID_Liste_Taches) FROM liste_taches ;";
-    this->listeTache->IDListeTache = 1;
+    GestionDB db;
+    db.selectMutliLigne("SELECT MAX(ID_Liste_Taches) FROM liste_taches ;");
+    this->listeTache->IDListeTache  = db.reusltatSelectMultiLignes.at(0).at(0).toInt();
 }
 
 
 void ViewMenuListeDesTaches::enregistrementDansLaTableTache(){
 
-    QString insertDansTache ("INSERT INTO tache (poids_Tache,depart_X,arrive_X,depart_Y, arrive_Y, ID_Liste_Taches) VALUES  ");
-    bool firstPlacement = true;
+    QString insertDansTache ("INSERT INTO tache (Poids_Tache,Depart_X,Depart_Y,Arrive_X, Arrive_Y, ID_Liste_Taches) VALUES (");
 
-    if(this->listeTache->getListDesTaches.size()>0){
-        for(int i = 0;i<listeTache->getListDesTaches.size();i++){
-            Tache tacheTemp = listeTache->getListDesTaches.at(i);
-            if(firstPlacement){
-                insertDansTache.append(" , ");
+    bool firstVirgule = true;
+
+    qDebug()<<listeTache->getListDesTaches()->size();
+    if(this->listeTache->getListDesTaches()->size()>0){
+        for(int i = 0;i<listeTache->getListDesTaches()->size();i++){
+            if(!firstVirgule){
+                insertDansTache.append(" ),( ");
             }
-            insertDansTache.append(" ( ");
+            Tache tacheTemp = listeTache->getListDesTaches()->at(i);
+            insertDansTache.append("'");
             insertDansTache.append(QString::number(tacheTemp.getPoids()));
-            insertDansTache.append(" , ");
+            insertDansTache.append("',");
             insertDansTache.append(QString::number(tacheTemp.depart->getX()));
-            insertDansTache.append(" , ");
+            insertDansTache.append( ",");
             insertDansTache.append(QString::number(tacheTemp.depart->getY()));
-            insertDansTache.append(" , ");
+            insertDansTache .append(",");
             insertDansTache.append(QString::number(tacheTemp.arrive->getX()));
-            insertDansTache.append(" , ");
+            insertDansTache .append( ",");
             insertDansTache.append(QString::number(tacheTemp.arrive->getY()));
-            insertDansTache.append(" , ");
+            insertDansTache .append(",");
             insertDansTache.append(QString::number(this->listeTache->IDListeTache));
-            insertDansTache.append(" ) ");
-            firstPlacement = true;
+            firstVirgule = false;
         }
-            insertDansTache.append(" ; ");
+        insertDansTache.append("); ");
+        qDebug()<<insertDansTache;
+        GestionDB db;
+        db.Requete(insertDansTache);
     }
-    qDebug()<<insertDansTache;
 
 }
 
