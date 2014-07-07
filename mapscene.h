@@ -1,12 +1,12 @@
 #ifndef MAPSCENE_H
 #define MAPSCENE_H
+#define LONGUEURPIX 20
+#define LARGEURPIX 20
 #include <QGraphicsScene>
 #include <QString>
 #include "Entrepot.h"
 
-#include "gestionmapdepot.h"
-
-class MapScene : public QGraphicsScene, public GestionMapDepot
+class MapScene : public QGraphicsScene
 {
 public:
     MapScene();
@@ -16,6 +16,14 @@ public:
     Entrepot getEntrepot();
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
     void AfficherMap();
+
+    enum TilesNumbers{
+        MUR = -1,
+        VIDE = 0,
+        ARMOIREVIDE = 1,
+        ARMOIREPLEINE = 2,
+        ZONEDEP = 3
+    };
 
 private:
     Entrepot e;

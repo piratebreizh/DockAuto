@@ -49,6 +49,11 @@ void ViewMenuSimulation::initialisationComposantFenetreMenuSimulation(){
    listeEquipe = new  QList<Equipe>;
    listeDepot = new QList<Entrepot>;
 
+   simulation = new Simulation();
+
+   // A SUPPRIMER !!!!!!!!!!!
+   simulation->IdSimulation = 3;
+
 
 
 }
