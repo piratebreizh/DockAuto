@@ -27,7 +27,7 @@ void Simulation::LancerSimulation(){
  */
 void Simulation::ChargerDepot(int id){
 
-    GestionDB db("localhost","root","","dockautodb");
+    GestionDB db;
     db.selectMutliLigne("SELECT X,Y,ID_Type FROM tile WHERE ID_Entrepot=" + QString::number(id));
     for(int i = 0 ; i<db.resultatSelectMultiLignes.size();i++){
         QList <QVariant> qlistTemp = db.resultatSelectMultiLignes.at(i);

@@ -111,7 +111,7 @@ void MapScene::AfficherMap()
  * Sauvegarde du depot dans la base de donnée
  */
 void MapScene::SaveDepotDb(){
-    GestionDB db("localhost","root","","dockautodb");
+    GestionDB db;
     db.Requete("INSERT INTO entrepot (Nom_Entrepot,Longueur_Entrepot,Largeur_Entrepot) VALUES ('" + e->getNom() +
                "'," + QString::number(e->getLargeur()) + "," + QString::number(e->getLongueur()) + ")");
     db.Select("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC");

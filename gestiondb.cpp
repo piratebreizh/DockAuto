@@ -5,20 +5,25 @@
 #include <QString>
 #include <iostream>
 #include <QDebug>
+#include <QSettings>
+
 
 using namespace std;
 
 GestionDB::GestionDB()
 {
     db = QSqlDatabase::addDatabase("QMYSQL");
-}
 
-GestionDB::GestionDB(const QString &_HostName, const QString& _UserName, const QString& _Password, const QString& _DatabaseName){
-    db = QSqlDatabase::addDatabase("QMYSQL");
-    HostName= _HostName;
-    UserName=_UserName;
-    Password=_Password;
-    DatabaseName=_DatabaseName;
+      QSettings settings(":/res/configDB.ini", QSettings::IniFormat);
+      HostName =settings.value("CONFIGDATABASE/hostname").toString();
+      UserName =settings.value("CONFIGDATABASE/username").toString();
+      Password =settings.value("CONFIGDATABASE/password").toString();
+      DatabaseName =settings.value("CONFIGDATABASE/databasename").toString();
+      db.setHostName(HostName);
+      db.setUserName(UserName);
+      db.setPassword(Password);
+      db.setDatabaseName(DatabaseName);
+
 }
 
 /**
@@ -28,11 +33,6 @@ GestionDB::GestionDB(const QString &_HostName, const QString& _UserName, const Q
  * Pour les selections, utilisé la fonction Select
  */
 void GestionDB::Requete(const QString &req){
-    //QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName(HostName);
-    db.setUserName(UserName);
-    db.setPassword(Password);
-    db.setDatabaseName(DatabaseName);
     db.open();
     QSqlQuery query(db);
     if(query.exec(req)){
@@ -51,11 +51,6 @@ void GestionDB::Requete(const QString &req){
  * et le stocke dans ResultatRequete
  */
 void GestionDB::Select(const QString &sel){
-    //QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName(HostName);
-    db.setUserName(UserName);
-    db.setPassword(Password);
-    db.setDatabaseName(DatabaseName);
     db.open();
     QSqlQuery query(db);
     if(query.exec(sel) && query.size()>0)
@@ -82,16 +77,13 @@ void GestionDB::Select(const QString &sel){
  */
 
 void GestionDB::SelectFirst(const QString &){
-    db.setHostName(HostName);
-    db.setUserName(UserName);
-    db.setPassword(Password);
-    db.setDatabaseName(DatabaseName);
     db.open();
     QSqlQuery query(db);
     if(query.size()>0)
     {
         ResultatRequete.push_back(query.value(1));
     }
+    db.close();
 }
 
 /**
@@ -104,6 +96,7 @@ void GestionDB::AfficheResultatsSelect(){
 }
 
 QString GestionDB::getResultat(unsigned int i){
+    cout << "taille requete : " << ResultatRequete.size() <<endl;
     if(ResultatRequete.size()>=i){
         return ResultatRequete[i].toString();
     }else{
@@ -124,10 +117,6 @@ GestionDB::~GestionDB(){
  * retourn un QSqlQuery d'un select avec plusieurs lignes
  */
 void GestionDB::selectMutliLigne(const QString &sel){
-    db.setHostName(HostName);
-    db.setUserName(UserName);
-    db.setPassword(Password);
-    db.setDatabaseName(DatabaseName);
     db.open();
     QSqlQuery query(db);
     if(query.exec(sel) && query.size()>0)
