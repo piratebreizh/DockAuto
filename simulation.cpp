@@ -33,5 +33,4 @@ void Simulation::ChargerDepot(int id){
         QList <QVariant> qlistTemp = db.resultatSelectMultiLignes.at(i);
         e->tab[qlistTemp.at(0).toInt()][qlistTemp.at(1).toInt()]=qlistTemp.at(2).toInt();
     }
-    e->AfficheMap();
 }

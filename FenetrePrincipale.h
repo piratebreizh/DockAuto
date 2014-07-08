@@ -48,6 +48,9 @@
 #include <viewgestionequipe.h>
 #include <viewcreationdepot.h>
 #include <viewmenusimulation.h>
+#include "mapscene.h"
+#include <QGraphicsView>
+#include <QGraphicsScene>
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -78,6 +81,7 @@ class FenetrePrincipale : public QMainWindow
 public:
     FenetrePrincipale(QWidget *parent = 0);
     void definirSimulation(Simulation * _simulation);
+    void createMap();
 
 public slots:
     void lancementViewCreationDepot();
@@ -92,10 +96,20 @@ private:
     void createFormGroupBox();
     void createBarreDeLancement();
 
+
     enum { NumGridRows = 3, NumButtons = 5 };
 
+    QHBoxLayout *mainLayout;
+
+    QGridLayout *map;
+    QGridLayout *barreLancement;
+
+    MapScene *lamap;
+    QGraphicsView *vue;
+    QGraphicsScene *scene ;
 
     Simulation * simulation;
+
     QMenuBar *menuBar;
     QGroupBox *horizontalGroupBox;
     QGroupBox *gridGroupBox;
@@ -109,8 +123,7 @@ private:
     QMenu *fileMenu;
     QAction *exitAction;
 
-    QGroupBox *map;
-    QGroupBox *barreLancement;
+
     QPushButton *nouvelleSimulation;
     QPushButton *gestionDesEquipe;
     QPushButton *gestionDesDepots;
