@@ -12,7 +12,6 @@ class GestionDB
 {
 public:
     GestionDB();
-    GestionDB(const QString&,const QString&,const QString&,const QString&);
     ~GestionDB();
     void Requete(const QString&);
     void Select(const QString&);
@@ -29,12 +28,10 @@ public:
 private:
     QSqlDatabase db;
     int NbResultatRequete;
-    QString HostName="localhost";
-    QString UserName="root";
-    QString Password="";
-    QString DatabaseName="DockAutodb";
-
-
+    QString HostName;
+    QString UserName;
+    QString Password;
+    QString DatabaseName;
 };
 
 #endif // GESTIONDB_H

@@ -5,5 +5,6 @@
         <file>images/mur.png</file>
         <file>images/rob.png</file>
         <file>images/vide.png</file>
+        <file>configDB.ini</file>
     </qresource>
 </RCC>
