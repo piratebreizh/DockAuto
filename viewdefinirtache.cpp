@@ -136,19 +136,19 @@ void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe){
 
     listeRobot = new QList<Robot>;
 
-    GestionDB db;
+    GestionDB * db = GestionDB::getInstance();
     try{
         QString requetteSelect = "SELECT ID_Robot, Nom_Robot FROM robot WHERE ID_Equipe = ";
         requetteSelect.append(QString::number(ID_Equipe));
         requetteSelect.append(";");
         qDebug()<<requetteSelect;
-        db.selectMutliLigne(requetteSelect);
+        db->selectMutliLigne(requetteSelect);
     }catch(exception e){
         qDebug()<<e.what();
     }
 
-    for(int i=0;i<db.resultatSelectMultiLignes.size();i++){
-        QList <QVariant> qlistTemp  = db.resultatSelectMultiLignes.at(i);
+    for(int i=0;i<db->resultatSelectMultiLignes.size();i++){
+        QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);
         Robot robotTemp ;
         robotTemp.setId(qlistTemp.at(0).toInt());
         robotTemp.nomRobot2=qlistTemp.at(1).toString();

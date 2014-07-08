@@ -6,13 +6,29 @@
 #include <QVariant>
 #include <vector>
 #include <string>
+#include <iostream>
 
 using namespace std;
 class GestionDB
 {
 public:
-    GestionDB();
-    ~GestionDB();
+    static GestionDB * getInstance()
+    {
+        if (NULL == _singleton)
+            _singleton =  new GestionDB;
+
+        return _singleton;
+    }
+
+    static void kill()
+    {
+      if (NULL != _singleton)
+        {
+          delete _singleton;
+          _singleton = NULL;
+        }
+    }
+
     void Requete(const QString&);
     void Select(const QString&);
     void SelectFirst(const QString&);
@@ -26,12 +42,15 @@ public:
     vector<QVariant> ResultatRequete;
 
 private:
+    static GestionDB * _singleton;
     QSqlDatabase db;
     int NbResultatRequete;
     QString HostName;
     QString UserName;
     QString Password;
     QString DatabaseName;
+    GestionDB();
+    ~GestionDB();
 };
 
 #endif // GESTIONDB_H

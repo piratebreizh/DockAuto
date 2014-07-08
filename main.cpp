@@ -56,7 +56,6 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    
     QApplication app(argc, argv);
 
     FenetrePrincipale premierVue;
@@ -70,18 +69,19 @@ int main(int argc, char *argv[])
     Simulation s;
     s.ChargerDepot(2);
 */
-
+/*
     //TEST BDD
-    /*GestionDB db("localhost","root","","dockautodb");
+     db = GestionDB::getInstance();
     QString qs;
     //db.Requete("INSERT INTO Robot (Longueur, Largeur, Capacite, Vitesse, ID_Equipe) VALUES (3,3,3,3,3)");
-    db.Select("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC");
-    //db.AfficheResultatsSelect();
+    db->Select("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC");
+    db->AfficheResultatsSelect();
 
     cout<<"debut"<<endl;
-    qs = db.getResultat(1);
+    qs = db->getResultat(0);
     cout<<"result : "<<qs.toStdString()<<endl;
-    cout<<"fin"<<endl;*/
+    cout<<"fin"<<endl;
+    */
     /*GestionDB db("localhost","root","","dockautodb");
     //db.Requete("INSERT INTO Robot (Longueur, Largeur, Capacite, Vitesse, ID_Equipe) VALUES (1,1,1,1,1)");
     db.selectMutliLigne("SELECT * FROM tile;");
