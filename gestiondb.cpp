@@ -103,7 +103,7 @@ void GestionDB::AfficheResultatsSelect(){
         cout<<ResultatRequete[i].toString().toStdString()<<endl;
 }
 
-QString GestionDB::getResultat(int i){
+QString GestionDB::getResultat(unsigned int i){
     if(ResultatRequete.size()>=i){
         return ResultatRequete[i].toString();
     }else{

@@ -57,18 +57,19 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     
-    /*QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     FenetrePrincipale premierVue;
 
     premierVue.show();
 
-    return app.exec();*/
+    return app.exec();
 
+/*
     //TEST SIMULATION
     Simulation s;
     s.ChargerDepot(2);
-
+*/
 
     //TEST BDD
     /*GestionDB db("localhost","root","","dockautodb");

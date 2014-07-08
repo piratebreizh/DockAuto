@@ -115,7 +115,7 @@ void MapScene::SaveDepotDb(){
     db.Requete("INSERT INTO entrepot (Nom_Entrepot,Longueur_Entrepot,Largeur_Entrepot) VALUES ('" + e->getNom() +
                "'," + QString::number(e->getLargeur()) + "," + QString::number(e->getLongueur()) + ")");
     db.Select("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC");
-    e->setId(db.getResultat(1).toInt());
+    e->setId(db.getResultat(0).toInt());
 
 
     //sauvegarde en base

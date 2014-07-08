@@ -18,7 +18,7 @@ public:
     void Select(const QString&);
     void SelectFirst(const QString&);
     void AfficheResultatsSelect();
-    QString getResultat(int);
+    QString getResultat(unsigned int);
     void selectMutliLigne(const QString &);
     void afficherResultatSelectMultiple();
     int getNbResultat();
