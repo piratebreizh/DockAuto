@@ -3,16 +3,18 @@
 #include<QSqlError>
 #include <QSqlRecord>
 #include <QString>
-#include <iostream>
 #include <QDebug>
 #include <QSettings>
 
 
 using namespace std;
 
+
+GestionDB *GestionDB::_singleton = NULL;
+
 GestionDB::GestionDB()
 {
-    db = QSqlDatabase::addDatabase("QMYSQL");
+      db = QSqlDatabase::addDatabase("QMYSQL");
 
       QSettings settings(":/res/configDB.ini", QSettings::IniFormat);
       HostName =settings.value("CONFIGDATABASE/hostname").toString();

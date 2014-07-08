@@ -111,11 +111,11 @@ void MapScene::AfficherMap()
  * Sauvegarde du depot dans la base de donnée
  */
 void MapScene::SaveDepotDb(){
-    GestionDB db;
-    db.Requete("INSERT INTO entrepot (Nom_Entrepot,Longueur_Entrepot,Largeur_Entrepot) VALUES ('" + e->getNom() +
+    GestionDB * db = GestionDB::getInstance();
+    db->Requete("INSERT INTO entrepot (Nom_Entrepot,Longueur_Entrepot,Largeur_Entrepot) VALUES ('" + e->getNom() +
                "'," + QString::number(e->getLargeur()) + "," + QString::number(e->getLongueur()) + ")");
-    db.Select("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC");
-    e->setId(db.getResultat(0).toInt());
+    db->Select("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC");
+    e->setId(db->getResultat(0).toInt());
 
 
     //sauvegarde en base
@@ -126,12 +126,12 @@ void MapScene::SaveDepotDb(){
             //Armoire
             if (e->tab[i][j] == MapScene::ARMOIREVIDE)
               {
-                db.Requete("INSERT INTO tile (X,Y,ID_Type,ID_Entrepot) VALUES (" + QString::number(i) + "," + QString::number(j) + ",1," + QString::number(e->getId()) + ")");
+                db->Requete("INSERT INTO tile (X,Y,ID_Type,ID_Entrepot) VALUES (" + QString::number(i) + "," + QString::number(j) + ",1," + QString::number(e->getId()) + ")");
               }
             //Zone dep
             if (e->tab[i][j] == MapScene::ZONEDEP)
               {
-                db.Requete("INSERT INTO tile (X,Y,ID_Type,ID_Entrepot) VALUES (" + QString::number(i) + "," + QString::number(j) + ",2," + QString::number(e->getId()) + ")");
+                db->Requete("INSERT INTO tile (X,Y,ID_Type,ID_Entrepot) VALUES (" + QString::number(i) + "," + QString::number(j) + ",2," + QString::number(e->getId()) + ")");
               }
         }
     }

@@ -27,10 +27,10 @@ void Simulation::LancerSimulation(){
  */
 void Simulation::ChargerDepot(int id){
 
-    GestionDB db;
-    db.selectMutliLigne("SELECT X,Y,ID_Type FROM tile WHERE ID_Entrepot=" + QString::number(id));
-    for(int i = 0 ; i<db.resultatSelectMultiLignes.size();i++){
-        QList <QVariant> qlistTemp = db.resultatSelectMultiLignes.at(i);
+    GestionDB * db = GestionDB::getInstance();
+    db->selectMutliLigne("SELECT X,Y,ID_Type FROM tile WHERE ID_Entrepot=" + QString::number(id));
+    for(int i = 0 ; i<db->resultatSelectMultiLignes.size();i++){
+        QList <QVariant> qlistTemp = db->resultatSelectMultiLignes.at(i);
         e->tab[qlistTemp.at(0).toInt()][qlistTemp.at(1).toInt()]=qlistTemp.at(2).toInt();
     }
 }
