@@ -71,7 +71,7 @@ void ViewGestionEquipe::creationTableauRobot(){
 
 void ViewGestionEquipe::enregistrerEquipe(){
     sauvegarde = new QPushButton(tr("Sauvegarder"));
-    annuler = new QPushButton(tr("Annuler"));
+    annuler = new QPushButton(tr("Retour"));
     connect(annuler, SIGNAL(clicked()), this, SLOT(deleteViewAjoutRobot()));
     connect(sauvegarde, SIGNAL(clicked()), this, SLOT(declanchementSauvegardeCompleteEquipe()));
     QGridLayout *layoutBottom = new QGridLayout();
@@ -241,7 +241,7 @@ void ViewGestionEquipe::reinitialisationChamps(){
 bool ViewGestionEquipe::messageConfimationCretionEquipe(){
 
     if(!champNomEquipe->text().isEmpty() && tableRobot->size() > 0){
-        labelConfirmation->setText("La nouvelle équpe vient d'être enregistrer");
+        labelConfirmation->setText("La nouvelle équpe vient d'être enregistrée");
         labelConfirmation->setStyleSheet("QLabel { color : green; }");
         labelConfirmation->show();
         return true ;

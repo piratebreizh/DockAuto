@@ -60,6 +60,7 @@ class QMenuBar;
 class QPushButton;
 class QTextEdit;
 class QPushButton;
+class ViewMenuSimulation;
 
 QT_END_NAMESPACE
 
@@ -76,6 +77,7 @@ class FenetrePrincipale : public QMainWindow
 
 public:
     FenetrePrincipale(QWidget *parent = 0);
+    void definirSimulation(Simulation * _simulation);
 
 public slots:
     void lancementViewCreationDepot();
@@ -92,6 +94,8 @@ private:
 
     enum { NumGridRows = 3, NumButtons = 5 };
 
+
+    Simulation * simulation;
     QMenuBar *menuBar;
     QGroupBox *horizontalGroupBox;
     QGroupBox *gridGroupBox;
@@ -117,6 +121,6 @@ private:
     ViewCreationDepot * viewCreationDepot;
     ViewMenuSimulation * viewMenuSimulation;
 };
-//! [0]
+
 
 #endif // DIALOG_H

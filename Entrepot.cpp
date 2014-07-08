@@ -12,8 +12,8 @@ Entrepot::~Entrepot(){
 }
 
 
-Entrepot::Entrepot(int _IDMap,QString _nom){
-    this->setIDMap(_IDMap);
+Entrepot::Entrepot(int _id,QString _nom){
+    this->id =_id;
     this->nom = _nom;
 }
 

@@ -115,9 +115,10 @@ CREATE TABLE IF NOT EXISTS `robot` (
 
 CREATE TABLE IF NOT EXISTS `simulation` (
   `ID_Simulation` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
+  `Nom_Simulation` varchar(100) ,
   `ID_Entrepot` int(11) NOT NULL COMMENT 'Clé de l''entrepôt',
   `ID_Equipe` int(11) NOT NULL COMMENT 'Clé de l''équipe',
-  `ID_Liste_Taches` int(11) NOT NULL COMMENT 'Clé de l''équipe',
+  `ID_Liste_Taches` int(11) NOT NULL COMMENT 'Clé de la liste de tache',
   PRIMARY KEY (`ID_Simulation`),
   UNIQUE KEY `ID_Simulation` (`ID_Simulation`),
   KEY `ID_Entrepot` (`ID_Entrepot`)

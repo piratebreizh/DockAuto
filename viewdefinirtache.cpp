@@ -40,7 +40,7 @@ void ViewDefinirTache::initialisationComposant(){
 
     sauvegarder = new QPushButton("Ajouter la tâche");
     sauvegarder->setEnabled(false);
-    annuler = new QPushButton("Annuler");
+    annuler = new QPushButton("Retour");
 
     QWidget::connect(pushDefinirDepart, SIGNAL(clicked()), this, SLOT(cliqueAjouterDepart()));
     QWidget::connect(pushDefinirArrive, SIGNAL(clicked()), this, SLOT(cliqueAjouterArrive()));

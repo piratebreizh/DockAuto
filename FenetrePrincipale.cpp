@@ -45,7 +45,6 @@
 
 
 
-//! [0]
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) : QMainWindow(parent)
 {
 
@@ -62,9 +61,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) : QMainWindow(parent)
 
      //viewmap = new ViewMap;
 
-//! [0]
 
-//! [1]
     bigEditor = new QTextEdit;
     bigEditor->setPlainText(tr("This widget takes up all the remaining space "
                                "in the top-level layout."));
@@ -85,15 +82,14 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) : QMainWindow(parent)
     //mainLayout->addWidget(viewmap);
 
 
-//! [4] //! [5]
+
     setCentralWidget(new QWidget);
     centralWidget()->setLayout(mainLayout);
 
     //setWindowTitle(tr("Basic Layouts"));*/
 }
-//! [5]
 
-//! [6]
+
 void FenetrePrincipale::createMenu()
 {
     menuBar = new QMenuBar;
@@ -104,31 +100,14 @@ void FenetrePrincipale::createMenu()
 
     connect(exitAction, SIGNAL(triggered()), this, SLOT(accept()));
 }
-//! [6]
 
-//! [7]
-/*void FenetrePrincipale::createHorizontalGroupBox()
-{
-    horizontalGroupBox = new QGroupBox(tr("Horizontal layout"));
-    QHBoxLayout *layout = new QHBoxLayout;
-
-    for (int i = 0; i < NumButtons; ++i) {
-        buttons[i] = new QPushButton(tr("Button %1").arg(i + 1));
-    layout->addWidget(buttons[i]);
-    }
-    horizontalGroupBox->setLayout(layout);
-}*/
-//! [7]
-
-//! [8]
 void FenetrePrincipale::createGridGroupBox()
 {
 
     gridGroupBox = new QGroupBox(tr("Grid layout"));
-//! [8]
+
     QGridLayout *layout = new QGridLayout;
 
-//! [9]
     for (int i = 0; i < NumGridRows; ++i) {
         labels[i] = new QLabel(tr("Line %1:").arg(i + 1));
         lineEdits[i] = new QLineEdit;
@@ -136,21 +115,17 @@ void FenetrePrincipale::createGridGroupBox()
         layout->addWidget(lineEdits[i], i + 1, 1);
     }
 
-//! [9] //! [10]
+
     smallEditor = new QTextEdit;
     smallEditor->setPlainText(tr("This widget takes up about two thirds of the "
                                  "grid layout."));
     layout->addWidget(smallEditor, 0, 2, 4, 1);
-//! [10]
 
-//! [11]
     layout->setColumnStretch(1, 10);
     layout->setColumnStretch(2, 20);
     gridGroupBox->setLayout(layout);
 }
-//! [11]
 
-//! [12]
 void FenetrePrincipale::createFormGroupBox()
 {
     formGroupBox = new QGroupBox(tr("Form layout"));
@@ -170,7 +145,7 @@ void FenetrePrincipale::createFormGroupBox()
     layout->addRow(new QLabel(tr("Line 3:")), new QSpinBox);
     formGroupBox->setLayout(layout);
 }
-//! [12]
+
 
 
 void FenetrePrincipale::createBarreDeLancement(){
@@ -180,13 +155,15 @@ void FenetrePrincipale::createBarreDeLancement(){
 
     gestionDesEquipe = new QPushButton(tr("&Gestion des équipes"));
     gestionDesEquipe->setFocusPolicy(Qt::NoFocus);
-    nouvelleSimulation = new QPushButton(tr("&Nouvelle simulation"));
+    nouvelleSimulation = new QPushButton(tr("&Simulation"));
     nouvelleSimulation->setFocusPolicy(Qt::NoFocus);
     gestionDesDepots = new QPushButton(tr("&Gestion des dépots"));
     demarrerSimulation = new QPushButton(tr("&Start"));
+    demarrerSimulation->setEnabled(false);
     demarrerSimulation->setFocusPolicy(Qt::NoFocus);
     pauseSimulation = new QPushButton(tr("&Stop"));
     pauseSimulation->setFocusPolicy(Qt::NoFocus);
+    pauseSimulation->setEnabled(false);
 
     layout->addWidget(nouvelleSimulation);
     layout->addWidget(gestionDesEquipe);
@@ -218,6 +195,18 @@ void FenetrePrincipale::lancementViewCreationDepot(){
 }
 
 void FenetrePrincipale::lancementViewMenuSimulation(){
-    viewMenuSimulation = new ViewMenuSimulation();
+    viewMenuSimulation = new ViewMenuSimulation(this);
     viewMenuSimulation->exec();
+}
+
+
+/*
+ * A VOUS DE CODER A PARTIR DE LA
+ * Cette fonction est appelé lors de la définition d'une simulation dans l'interface Simulation (viewMenuSimulation)
+ * Que ce soit une ancienne simulation ou une nouvelle
+ * */
+void FenetrePrincipale::definirSimulation(Simulation *_simulation){
+    simulation = _simulation;
+    demarrerSimulation->setEnabled(true);
+    pauseSimulation->setEnabled(true);
 }

@@ -53,6 +53,7 @@ private :
     QPushButton * pushSauvegarder;
     QPushButton * pushAnnuler;
 
+    QLabel * confirmationEnregistrement;
 
     void enregistrementDansLaTableListetache();
     void initialisationIDListeTache();
