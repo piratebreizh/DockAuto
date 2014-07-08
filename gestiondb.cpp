@@ -36,7 +36,7 @@ void GestionDB::Requete(const QString &req){
     db.open();
     QSqlQuery query(db);
     if(query.exec(req)){
-        cout<<"La requete c'est bien passee"<<endl;
+        cout<<"La requete s'est bien passee"<<endl;
     }else{
         cout<<"Erreur lors de l'execution de la requete " << query.lastError().text().toStdString()<<endl;
     }
@@ -104,7 +104,7 @@ void GestionDB::AfficheResultatsSelect(){
 }
 
 QString GestionDB::getResultat(int i){
-    if(ResultatRequete.size()>0){
+    if(ResultatRequete.size()>=i){
         return ResultatRequete[i].toString();
     }else{
         return "";

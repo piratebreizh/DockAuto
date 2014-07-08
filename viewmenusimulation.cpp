@@ -230,8 +230,8 @@ void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase(){
         qDebug()<<e.what();
     }
 
-    for(int i=0;i<db.reusltatSelectMultiLignes.size();i++){
-        QList <QVariant> qlistTemp  = db.reusltatSelectMultiLignes.at(i);
+    for(int i=0;i<db.resultatSelectMultiLignes.size();i++){
+        QList <QVariant> qlistTemp  = db.resultatSelectMultiLignes.at(i);
         Equipe equipeTemp ;
         equipeTemp.idEquipe = qlistTemp.at(0).toInt();
         equipeTemp.nomEquipe2 = qlistTemp.at(1).toString();
@@ -290,8 +290,8 @@ void ViewMenuSimulation::chargeToutesLesDepotsDeLaBase(){
         qDebug()<<e.what();
     }
 
-    for(int i=0;i<db.reusltatSelectMultiLignes.size();i++){
-        QList <QVariant> qlistTemp  = db.reusltatSelectMultiLignes.at(i);
+    for(int i=0;i<db.resultatSelectMultiLignes.size();i++){
+        QList <QVariant> qlistTemp  = db.resultatSelectMultiLignes.at(i);
         Entrepot entrepotTemp;
         entrepotTemp.setIDMap(qlistTemp.at(0).toInt());
         entrepotTemp.setNomMap(qlistTemp.at(1).toString().toStdString());

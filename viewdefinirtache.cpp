@@ -147,8 +147,8 @@ void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe){
         qDebug()<<e.what();
     }
 
-    for(int i=0;i<db.reusltatSelectMultiLignes.size();i++){
-        QList <QVariant> qlistTemp  = db.reusltatSelectMultiLignes.at(i);
+    for(int i=0;i<db.resultatSelectMultiLignes.size();i++){
+        QList <QVariant> qlistTemp  = db.resultatSelectMultiLignes.at(i);
         Robot robotTemp ;
         robotTemp.setId(qlistTemp.at(0).toInt());
         robotTemp.nomRobot2=qlistTemp.at(1).toString();
