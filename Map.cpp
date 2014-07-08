@@ -19,6 +19,7 @@ Map::Map(int _ID, string _nom)
     this->nomMap = _nom;
 }
 
+
 void Map::AfficheMap(){
     for(int i=0;i<LONGUEUR;i++){
         for(int j=0;j<LARGEUR;j++){

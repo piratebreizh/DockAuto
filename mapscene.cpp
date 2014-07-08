@@ -82,7 +82,7 @@ void MapScene::AfficherMap()
             }
           if (e->tab[i][j] == MapScene::ARMOIREPLEINE)
             {
-              image.load(":/res/images/arm.png", 0, Qt::AutoColor);
+              image.load(":/res/images/armp.png", 0, Qt::AutoColor);
               item = this->addPixmap(image);
               item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
             }
@@ -131,9 +131,20 @@ void MapScene::SaveDepotDb(){
             //Zone dep
             if (e->tab[i][j] == MapScene::ZONEDEP)
               {
-                db->Requete("INSERT INTO tile (X,Y,ID_Type,ID_Entrepot) VALUES (" + QString::number(i) + "," + QString::number(j) + ",2," + QString::number(e->getId()) + ")");
+                db->Requete("INSERT INTO tile (X,Y,ID_Type,ID_Entrepot) VALUES (" + QString::number(i) + "," + QString::number(j) + ",3," + QString::number(e->getId()) + ")");
               }
         }
     }
 
+}
+
+/**
+ * @brief MapScene::setDepot
+ * @param _e
+ * redéfini le dépot
+ */
+void MapScene::setDepot(Entrepot *_e){
+    e=new Entrepot();
+    e->copieEntrepot(_e);
+    e->RedefTab(e->getLongueur(),e->getLargeur());
 }

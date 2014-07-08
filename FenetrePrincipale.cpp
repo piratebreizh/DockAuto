@@ -43,7 +43,7 @@
 #include <QtWidgets>
 #include "ui_mainwindow.h"
 
-
+#include "simulation.h"
 
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) : QMainWindow(parent)
 {
@@ -62,6 +62,9 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) : QMainWindow(parent)
     createBarreDeLancement();
     createMap();
 
+    /*Simulation *s = new Simulation();
+    s->IdSimulation=1;
+    definirSimulation(s);*/
     //viewmap = new ViewMap;
 
 
@@ -133,7 +136,6 @@ void FenetrePrincipale::createFormGroupBox()
     a->addItems(*b);
 
     layout->addRow(new QLabel(tr("Line 2, long text:")), a);
-    ;
     layout->addRow(new QLabel(tr("Line 3:")), new QSpinBox);
     formGroupBox->setLayout(layout);
 }
@@ -209,7 +211,20 @@ void FenetrePrincipale::createMap(){
  * Que ce soit une ancienne simulation ou une nouvelle
  * */
 void FenetrePrincipale::definirSimulation(Simulation *_simulation){
+    int iddep;
     simulation = _simulation;
     demarrerSimulation->setEnabled(true);
     pauseSimulation->setEnabled(true);
+    GestionDB * db = GestionDB::getInstance();
+    try{
+        db->Select("SELECT Id_Entrepot FROM simulation WHERE ID_Simulation=" + QString::number(simulation->IdSimulation));
+    }catch(exception e){
+        qDebug()<<e.what();
+    }
+    iddep = db->getResultat(0).toInt();
+    simulation->ChargerDepot(iddep);
+    simulation->getEntrepot()->AfficheMap();
+    lamap->setDepot(simulation->getEntrepot());
+    lamap->getEntrepot()->AfficheMap();
+    lamap->AfficherMap();
 }

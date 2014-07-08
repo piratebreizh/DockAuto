@@ -16,6 +16,7 @@ public:
     Entrepot* getEntrepot();
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
     void AfficherMap();
+    void setDepot(Entrepot *e);
 
     enum TilesNumbers{
         MUR = -1,

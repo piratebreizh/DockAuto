@@ -64,11 +64,12 @@ int main(int argc, char *argv[])
 
     return app.exec();
 
-/*
+
     //TEST SIMULATION
-    Simulation s;
-    s.ChargerDepot(2);
-*/
+    //Simulation *s;
+    //s->IdSimulation=1;
+    //s.ChargerDepot(2);
+
 /*
     //TEST BDD
      db = GestionDB::getInstance();
