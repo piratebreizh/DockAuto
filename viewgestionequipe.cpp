@@ -164,9 +164,9 @@ void ViewGestionEquipe::recuperationAttributEquipe(){
    *Récupere le dernier ID d'équipe pour la création d'une nouvelle équipe
    * */
 int ViewGestionEquipe::dernierIDEquipeEnBase(){
-    GestionDB db;
-    db.selectMutliLigne("SELECT MAX(ID_Equipe) FROM equipe;");
-    return db.resultatSelectMultiLignes.at(0).at(0).toInt();
+    GestionDB * db = GestionDB::getInstance();
+    db->selectMutliLigne("SELECT MAX(ID_Equipe) FROM equipe;");
+    return db->resultatSelectMultiLignes.at(0).at(0).toInt();
 }
 
 
@@ -175,14 +175,14 @@ int ViewGestionEquipe::dernierIDEquipeEnBase(){
 **/
 bool ViewGestionEquipe::sauvegardEquipeEnBase(){
     recuperationAttributEquipe();
-    GestionDB db;
+    GestionDB * db = GestionDB::getInstance();
     QString requeteInsert = ("INSERT INTO EQUIPE (Nom_Equipe) VALUES (");
     requeteInsert.append(" '");
     requeteInsert.append(QString::fromStdString(equipe->nomEquipe));
 
     requeteInsert.append("');");
     qDebug()<<requeteInsert;
-    db.Requete(requeteInsert);
+    db->Requete(requeteInsert);
 
     equipe->idEquipe = dernierIDEquipeEnBase();
 
@@ -224,8 +224,8 @@ bool ViewGestionEquipe::sauvegardListeRobotEnBase(){
         }
         requeteSQLInsert.append("); ");
         qDebug()<<requeteSQLInsert;
-        GestionDB db;
-        db.Requete(requeteSQLInsert);
+        GestionDB * db = GestionDB::getInstance();
+        db->Requete(requeteSQLInsert);
     }
     return true ;
 }

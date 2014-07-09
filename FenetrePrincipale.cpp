@@ -43,7 +43,7 @@
 #include <QtWidgets>
 #include "ui_mainwindow.h"
 
-
+#include "simulation.h"
 
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) : QMainWindow(parent)
 {
@@ -52,42 +52,37 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) : QMainWindow(parent)
     ui->setupUi(this);
 
 
-    //createMenu();
-   // createHorizontalGroupBox();
-    //createGridGroupBox();
-    //createFormGroupBox();
 
-     createBarreDeLancement();
+    //initialisation mainlayout
+    mainLayout = new QHBoxLayout();
+    //this->setLayout(mainLayout);
+    setCentralWidget(new QWidget);
+    centralWidget()->setLayout(mainLayout);
 
-     //viewmap = new ViewMap;
+    createBarreDeLancement();
+    createMap();
+
+    /*Simulation *s = new Simulation();
+    s->IdSimulation=1;
+    definirSimulation(s);*/
+    //viewmap = new ViewMap;
 
 
     bigEditor = new QTextEdit;
     bigEditor->setPlainText(tr("This widget takes up all the remaining space "
-                               "in the top-level layout."));
+                           "in the top-level layout."));
 
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
-                                     | QDialogButtonBox::Cancel);
+                                 | QDialogButtonBox::Cancel);
 
 
 
 
-
-    QHBoxLayout *mainLayout = new QHBoxLayout;
-
- //   mainLayout->setMenuBar(menuBar);
-
-
-    mainLayout->addWidget(barreLancement);
-    //mainLayout->addWidget(viewmap);
-
-
-
-    setCentralWidget(new QWidget);
-    centralWidget()->setLayout(mainLayout);
+    //setCentralWidget(new QWidget);
+    //centralWidget()->setLayout(mainLayout);
 
     //setWindowTitle(tr("Basic Layouts"));*/
-}
+    }
 
 
 void FenetrePrincipale::createMenu()
@@ -141,7 +136,6 @@ void FenetrePrincipale::createFormGroupBox()
     a->addItems(*b);
 
     layout->addRow(new QLabel(tr("Line 2, long text:")), a);
-    ;
     layout->addRow(new QLabel(tr("Line 3:")), new QSpinBox);
     formGroupBox->setLayout(layout);
 }
@@ -149,9 +143,7 @@ void FenetrePrincipale::createFormGroupBox()
 
 
 void FenetrePrincipale::createBarreDeLancement(){
-    barreLancement = new QGroupBox(tr("Barre de lancement"));
-
-    QHBoxLayout *layout = new QHBoxLayout;
+    barreLancement = new QGridLayout;
 
     gestionDesEquipe = new QPushButton(tr("&Gestion des équipes"));
     gestionDesEquipe->setFocusPolicy(Qt::NoFocus);
@@ -165,11 +157,11 @@ void FenetrePrincipale::createBarreDeLancement(){
     pauseSimulation->setFocusPolicy(Qt::NoFocus);
     pauseSimulation->setEnabled(false);
 
-    layout->addWidget(nouvelleSimulation);
-    layout->addWidget(gestionDesEquipe);
-    layout->addWidget(gestionDesDepots);
-    layout->addWidget(demarrerSimulation);
-    layout->addWidget(pauseSimulation);
+    barreLancement->addWidget(nouvelleSimulation);
+    barreLancement->addWidget(gestionDesEquipe);
+    barreLancement->addWidget(gestionDesDepots);
+    barreLancement->addWidget(demarrerSimulation);
+    barreLancement->addWidget(pauseSimulation);
 
 
 
@@ -179,7 +171,7 @@ void FenetrePrincipale::createBarreDeLancement(){
     QWidget::connect(gestionDesDepots, SIGNAL(clicked()), this, SLOT(lancementViewCreationDepot()));
     QWidget::connect(nouvelleSimulation, SIGNAL(clicked()), this, SLOT(lancementViewMenuSimulation()));
 
-    barreLancement->setLayout(layout);
+    mainLayout->addLayout(barreLancement);
 }
 
 
@@ -199,6 +191,19 @@ void FenetrePrincipale::lancementViewMenuSimulation(){
     viewMenuSimulation->exec();
 }
 
+void FenetrePrincipale::createMap(){
+
+    map=new QGridLayout();
+    scene = new QGraphicsScene();
+    lamap = new MapScene(scene);
+    //Map
+    vue = new QGraphicsView(lamap);
+    vue->setMinimumSize(600,600);
+    vue->setMaximumSize(600,600);
+    vue->show();
+    map->addWidget(vue);
+    mainLayout->addLayout(map);
+}
 
 /*
  * A VOUS DE CODER A PARTIR DE LA
@@ -206,7 +211,20 @@ void FenetrePrincipale::lancementViewMenuSimulation(){
  * Que ce soit une ancienne simulation ou une nouvelle
  * */
 void FenetrePrincipale::definirSimulation(Simulation *_simulation){
+    int iddep;
     simulation = _simulation;
     demarrerSimulation->setEnabled(true);
     pauseSimulation->setEnabled(true);
+    GestionDB * db = GestionDB::getInstance();
+    try{
+        db->Select("SELECT Id_Entrepot FROM simulation WHERE ID_Simulation=" + QString::number(simulation->IdSimulation));
+    }catch(exception e){
+        qDebug()<<e.what();
+    }
+    iddep = db->getResultat(0).toInt();
+    simulation->ChargerDepot(iddep);
+    simulation->getEntrepot()->AfficheMap();
+    lamap->setDepot(simulation->getEntrepot());
+    lamap->getEntrepot()->AfficheMap();
+    lamap->AfficherMap();
 }

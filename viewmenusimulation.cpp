@@ -261,15 +261,15 @@ void ViewMenuSimulation::initialisationDeLaListeDeroulanteEquipe(){
   * */
 void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase(){
 
-    GestionDB db;
+    GestionDB * db = GestionDB::getInstance();
     try{
-        db.selectMutliLigne("SELECT ID_Equipe, Nom_Equipe FROM equipe ;");
+        db->selectMutliLigne("SELECT ID_Equipe, Nom_Equipe FROM equipe ;");
     }catch(exception e){
         qDebug()<<e.what();
     }
 
-    for(int i=0;i<db.resultatSelectMultiLignes.size();i++){
-        QList <QVariant> qlistTemp  = db.resultatSelectMultiLignes.at(i);
+    for(int i=0;i<db->resultatSelectMultiLignes.size();i++){
+        QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);
         Equipe equipeTemp ;
         equipeTemp.idEquipe = qlistTemp.at(0).toInt();
         equipeTemp.nomEquipe2 = qlistTemp.at(1).toString();
@@ -321,15 +321,15 @@ void ViewMenuSimulation::initialisationDeLaListeDeroulanteDepot(){
   * */
 void ViewMenuSimulation::chargeToutesLesDepotsDeLaBase(){
 
-    GestionDB db;
+    GestionDB * db = GestionDB::getInstance();
     try{
-        db.selectMutliLigne("SELECT ID_Entrepot, Nom_Entrepot FROM entrepot");
+        db->selectMutliLigne("SELECT ID_Entrepot, Nom_Entrepot FROM entrepot");
     }catch(exception e){
         qDebug()<<e.what();
     }
 
-    for(int i=0;i<db.resultatSelectMultiLignes.size();i++){
-        QList <QVariant> qlistTemp  = db.resultatSelectMultiLignes.at(i);
+    for(int i=0;i<db->resultatSelectMultiLignes.size();i++){
+        QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);
         Entrepot entrepotTemp;
         entrepotTemp.setIDMap(qlistTemp.at(0).toInt());
         entrepotTemp.setNomMap(qlistTemp.at(1).toString().toStdString());
@@ -381,9 +381,9 @@ void ViewMenuSimulation::sauvegardeEnBaseDeLaSimulation(){
     requeteInsert.append(",");
     requeteInsert.append(QString::number(this->viewMenuListeDesTaches->listeTache->IDListeTache));
     requeteInsert.append(");");
-    GestionDB db;
+    GestionDB * db = GestionDB::getInstance();
     qDebug()<<requeteInsert;
-    db.Requete(requeteInsert);
+    db->Requete(requeteInsert);
 }
 
 void ViewMenuSimulation::initialisationDelaSimulation(){
@@ -400,17 +400,17 @@ void ViewMenuSimulation::cliqueDefinirSimulation(){
 
 
 int ViewMenuSimulation::derniereIDSimulation(){
-    GestionDB db;
-    db.selectMutliLigne("SELECT MAX(ID_Simulation) FROM simulation;");
-    return  db.resultatSelectMultiLignes.at(0).at(0).toInt();
+    GestionDB * db = GestionDB::getInstance();
+    db->selectMutliLigne("SELECT MAX(ID_Simulation) FROM simulation;");
+    return  db->resultatSelectMultiLignes.at(0).at(0).toInt();
 }
 
 
 
 void ViewMenuSimulation::controleDepotExist(){
-    GestionDB db;
-    db.selectMutliLigne("SELECT count(ID_Entrepot) FROM entrepot;");
-    if(db.resultatSelectMultiLignes.at(0).at(0).toInt() == 0){
+    GestionDB * db = GestionDB::getInstance();
+    db->selectMutliLigne("SELECT count(ID_Entrepot) FROM entrepot;");
+    if(db->resultatSelectMultiLignes.at(0).at(0).toInt() == 0){
         messageControleDesDonneesExistante->append("La création d'une nouvelle simulation nécessite au moins un dépôt existant \n");
         labelConfirmationEnregistremetnSimulation->setText(*messageControleDesDonneesExistante);
         labelConfirmationEnregistremetnSimulation->setStyleSheet("QLabel { color : red; }");
@@ -420,12 +420,12 @@ void ViewMenuSimulation::controleDepotExist(){
 }
 
 void ViewMenuSimulation::controleEquipeExist(){
-    GestionDB db;
-    db.selectMutliLigne("SELECT count(ID_Equipe) FROM equipe;");
+    GestionDB * db = GestionDB::getInstance();
+    db->selectMutliLigne("SELECT count(ID_Equipe) FROM equipe;");
+    int res1 = db->resultatSelectMultiLignes.at(0).at(0).toInt();
 
-    GestionDB db2;
-    db2.selectMutliLigne("SELECT count(ID_Robot) FROM robot;");
-    if(db.resultatSelectMultiLignes.at(0).at(0).toInt() == 0 || db2.resultatSelectMultiLignes.at(0).at(0).toInt() == 0){
+    db->selectMutliLigne("SELECT count(ID_Robot) FROM robot;");
+    if(res1 == 0 || db->resultatSelectMultiLignes.at(0).at(0).toInt() == 0){
             messageControleDesDonneesExistante->append("La création d'une nouvelle simulation nécessite au moins une équipe existante \n");
             labelConfirmationEnregistremetnSimulation->setText(*messageControleDesDonneesExistante);
             labelConfirmationEnregistremetnSimulation->setStyleSheet("QLabel { color : red; }");
@@ -435,9 +435,9 @@ void ViewMenuSimulation::controleEquipeExist(){
 }
 
 void ViewMenuSimulation::controleSimulationExist(){
-    GestionDB db;
-    db.selectMutliLigne("SELECT count(ID_Simulation) FROM simulation;");
-    if(db.resultatSelectMultiLignes.at(0).at(0).toInt() == 0){
+    GestionDB * db = GestionDB::getInstance();
+    db->selectMutliLigne("SELECT count(ID_Simulation) FROM simulation;");
+    if(db->resultatSelectMultiLignes.at(0).at(0).toInt() == 0){
         messageControleDesDonneesExistante->append("Aucune simulation enregistré");
         labelConfirmationEnregistremetnSimulation->setText(*messageControleDesDonneesExistante);
         labelConfirmationEnregistremetnSimulation->setStyleSheet("QLabel { color : red; }");
@@ -466,15 +466,15 @@ void ViewMenuSimulation::layoutChargerSimulation(){
 
 
 void ViewMenuSimulation::chargerListeSimulationDepuisLaBase(){
-    GestionDB db;
+    GestionDB * db = GestionDB::getInstance();
     try{
-        db.selectMutliLigne("SELECT ID_Simulation, Nom_Simulation FROM simulation");
+        db->selectMutliLigne("SELECT ID_Simulation, Nom_Simulation FROM simulation");
     }catch(exception e){
         qDebug()<<e.what();
     }
 
-    for(int i=0;i<db.resultatSelectMultiLignes.size();i++){
-        QList <QVariant> qlistTemp  = db.resultatSelectMultiLignes.at(i);
+    for(int i=0;i<db->resultatSelectMultiLignes.size();i++){
+        QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);
         listeDeroulanteChoixSimulationCharger->addItem(qlistTemp.at(1).toString(),qlistTemp.at(0).toInt());
     }
 }

@@ -12,6 +12,7 @@ public:
     Listetache * listeTache;
     QString * nomSimulation;
     int IdSimulation;
+    Entrepot* getEntrepot();
 
 
 private :

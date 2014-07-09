@@ -17,6 +17,27 @@ Entrepot::Entrepot(int _id,QString _nom){
     this->nom = _nom;
 }
 
+/*Entrepot::Entrepot(Entrepot *_e) {
+    nom=_e->getNom();
+    largeur=_e->getLargeur();
+    longueur=_e->getLongueur();
+    for (int i = longueur+1; i < LONGUEUR; i++)
+      {
+        for (int j = 0; j < LARGEUR; j++)
+          {
+            tab[i][j]=-1;
+          }
+      }
+
+    for (int i = 0; i < LONGUEUR; i++)
+      {
+        for (int j = largeur+1; j < LARGEUR; j++)
+          {
+            tab[i][j]=-1;
+          }
+      }
+}*/
+
 void Entrepot::AddArmoire(Armoire &arm){
     //if(arm!=NULL && tab[arm.getX()][arm.getY()]==0)
     if(tab[arm.getX()][arm.getY()]==0)
@@ -89,4 +110,19 @@ void Entrepot::setId(int _id){
 
 int Entrepot::getId(){
     return id;
+}
+
+void Entrepot::copieEntrepot(Entrepot *_e){
+    nom=_e->getNom();
+    largeur=_e->getLargeur();
+    longueur=_e->getLongueur();
+    RedefTab(longueur,largeur);
+    for (int i = 0; i < longueur; i++)
+      {
+        for (int j = 0; j < largeur; j++)
+          {
+            tab[i][j]=_e->tab[i][j];
+          }
+      }
+
 }

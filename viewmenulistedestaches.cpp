@@ -122,8 +122,8 @@ void ViewMenuListeDesTaches::enregistrementDansLaTableListetache(){
     insertListeTable.append("');");
 
     qDebug()<<insertListeTable;
-    GestionDB db;
-    db.Requete(insertListeTable);
+    GestionDB * db = GestionDB::getInstance();
+    db->Requete(insertListeTable);
 
     initialisationIDListeTache();
 
@@ -131,9 +131,9 @@ void ViewMenuListeDesTaches::enregistrementDansLaTableListetache(){
 }
 
 void ViewMenuListeDesTaches::initialisationIDListeTache(){
-    GestionDB db;
-    db.selectMutliLigne("SELECT MAX(ID_Liste_Taches) FROM liste_taches ;");
-    this->listeTache->IDListeTache  = db.resultatSelectMultiLignes.at(0).at(0).toInt();
+    GestionDB * db = GestionDB::getInstance();
+    db->selectMutliLigne("SELECT MAX(ID_Liste_Taches) FROM liste_taches ;");
+    this->listeTache->IDListeTache  = db->resultatSelectMultiLignes.at(0).at(0).toInt();
 }
 
 
@@ -168,8 +168,8 @@ void ViewMenuListeDesTaches::enregistrementDansLaTableTache(){
         }
         insertDansTache.append("); ");
         qDebug()<<insertDansTache;
-        GestionDB db;
-        db.Requete(insertDansTache);
+        GestionDB * db = GestionDB::getInstance();
+        db->Requete(insertDansTache);
     }
 
 }

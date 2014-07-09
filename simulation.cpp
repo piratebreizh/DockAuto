@@ -26,12 +26,22 @@ void Simulation::LancerSimulation(){
  * Charge l'entrepot choisi
  */
 void Simulation::ChargerDepot(int id){
-
-    GestionDB db;
-    db.selectMutliLigne("SELECT X,Y,ID_Type FROM tile WHERE ID_Entrepot=" + QString::number(id));
-    for(int i = 0 ; i<db.resultatSelectMultiLignes.size();i++){
-        QList <QVariant> qlistTemp = db.resultatSelectMultiLignes.at(i);
+QList <QVariant> qlistTemp;
+    GestionDB * db = GestionDB::getInstance();
+    db->selectMutliLigne("SELECT X,Y,ID_Type FROM tile WHERE ID_Entrepot=" + QString::number(id));
+    for(int i = 0 ; i<db->resultatSelectMultiLignes.size();i++){
+        qlistTemp = db->resultatSelectMultiLignes.at(i);
         e->tab[qlistTemp.at(0).toInt()][qlistTemp.at(1).toInt()]=qlistTemp.at(2).toInt();
     }
-    e->AfficheMap();
+    db->selectMutliLigne("SELECT Nom_Entrepot,Longueur_Entrepot,Largeur_entrepot FROM entrepot WHERE ID_Entrepot=" + QString::number(id));
+    for(int i = 0 ; i<db->resultatSelectMultiLignes.size();i++){
+        qlistTemp = db->resultatSelectMultiLignes.at(i);
+        e->setNom(qlistTemp.at(0).toString());
+        e->setLongueur(qlistTemp.at(1).toInt());
+        e->setLargeur(qlistTemp.at(2).toInt());
+    }
+}
+
+Entrepot* Simulation::getEntrepot(){
+    return e;
 }
