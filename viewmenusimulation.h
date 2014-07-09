@@ -46,6 +46,7 @@ public slots:
     void cliqueDefinirSimulation();
     void layoutChargerSimulation();
     void pushBoutonDefinirSimulationCharger();
+    void cliqueDefinirSimulationPourCharger();
 
 
 private:

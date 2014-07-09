@@ -113,7 +113,8 @@ void ViewMenuSimulation::definitionMainLayout(){
     QWidget::connect(sauvegarderSimulation,SIGNAL(clicked()),this,SLOT(cliqueSauvegarderSimulation()));
     QWidget::connect(definirCommeSimulation,SIGNAL(clicked()),this,SLOT(cliqueDefinirSimulation()));
     QWidget::connect(pushRetour,SIGNAL(clicked()),this,SLOT(close()));
-    QWidget::connect(definirCommeSimualtionCharger,SIGNAL(clicked()),this,SLOT(pushBoutonDefinirSimulationCharger()));
+    QWidget::connect(definirSimulation,SIGNAL(clicked()),this,SLOT(pushBoutonDefinirSimulationCharger()));
+    QWidget::connect(definirCommeSimualtionCharger,SIGNAL(clicked()),this,SLOT(cliqueDefinirSimulationPourCharger()));
 
 
 
@@ -491,7 +492,9 @@ void ViewMenuSimulation::pushBoutonDefinirSimulationCharger(){
 
 
 
+void ViewMenuSimulation::cliqueDefinirSimulationPourCharger(){
 
+}
 
 
 
