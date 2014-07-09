@@ -13,7 +13,11 @@
 #include <listetache.h>
 #include <QComboBox>
 #include <robot.h>
+#include <mapscene.h>
 
+
+
+class MapScene;
 class ViewMenuListeDesTaches;
 class ViewMenuSimulation;
 
@@ -23,6 +27,26 @@ class ViewDefinirTache : public QDialog
 public:
     ViewDefinirTache(ViewMenuListeDesTaches * _menuListeDesTaches);
     ViewMenuListeDesTaches * menuListeDesTaches;
+
+    QLabel * labelDepart;
+    QLabel * champDepart;
+    QPushButton * pushDefinirDepart;
+    double valeurDepart;
+    bool estDefinitDepart;
+
+    QLabel * labelArrive;
+    QLabel * champArrive;
+    QPushButton * pushDefinirArrive;
+    double valeurArrive;
+    bool estDefiniArrive;
+
+    QPushButton * sauvegarder;
+    QPushButton * annuler;
+
+    int departX;
+    int departY;
+    int arriveX;
+    int arriveY;
 
 
 public slots :
@@ -47,30 +71,19 @@ private :
     QLabel * labelPoids;
     QLineEdit * champPoids;
 
-    QLabel * labelDepart;
-    QLabel * champDepart;
-    QPushButton * pushDefinirDepart;
-    double valeurDepart;
-    bool estDefinitDepart;
-
-    QLabel * labelArrive;
-    QLabel * champArrive;
-    QPushButton * pushDefinirArrive;
-    double valeurArrive;
-    bool estDefiniArrive;
-
-    QPushButton * sauvegarder;
-    QPushButton * annuler;
-
     QList<Robot> * listeRobot;
+
+    QGridLayout * map;
+    QGraphicsScene * scene;
+    MapScene * lamap;
+    QGraphicsView * vue;
+
 
     void initialisationComposant();
     void definitonLayout();
     void chargerListeDeroulanteDesRobot();
     void chargerListeRobotEnBase(int ID_Equipe);
     void  viderTousLesChamps();
-
-
 
 };
 

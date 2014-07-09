@@ -5,6 +5,7 @@
 
 class Simulation
 {
+
 public:
     Simulation();
     void LancerSimulation();

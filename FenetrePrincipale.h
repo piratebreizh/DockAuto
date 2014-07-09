@@ -64,6 +64,9 @@ class QPushButton;
 class QTextEdit;
 class QPushButton;
 class ViewMenuSimulation;
+class MapScene;
+class ViewCreationDepot;
+
 
 QT_END_NAMESPACE
 

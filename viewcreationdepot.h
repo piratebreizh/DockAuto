@@ -12,6 +12,8 @@
 #include "Entrepot.h"
 #include "mapscene.h"
 
+class MapScene;
+
 
 class ViewCreationDepot : public QDialog
 {

@@ -5,6 +5,11 @@
 #include <QGraphicsScene>
 #include <QString>
 #include "Entrepot.h"
+#include "Tile.h"
+#include <viewdefinirtache.h>
+
+class Tile;
+class ViewDefinirTache;
 
 class MapScene : public QGraphicsScene
 {
@@ -17,6 +22,14 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
     void AfficherMap();
     void setDepot(Entrepot *e);
+
+    void entrerEnModeDefinitionTache(ViewDefinirTache * viewDefinirTache);
+    bool flagEditionTache;
+    bool flagEditerDepart;
+    bool flagEditerArriver;
+    void coordonneeCliquer(int x,int y);
+    Tile retournTileSelectionnee();
+    ViewDefinirTache * viewDefinirTache;
 
     enum TilesNumbers{
         MUR = -1,

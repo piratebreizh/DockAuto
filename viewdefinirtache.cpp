@@ -9,6 +9,8 @@ ViewDefinirTache::ViewDefinirTache(ViewMenuListeDesTaches * _menuListeDesTaches)
 }
 
 
+
+
 void ViewDefinirTache::initialisationComposant(){
     mainLayout = new QGridLayout();
     layoutMenuDroiteSelection = new QGridLayout();
@@ -42,6 +44,19 @@ void ViewDefinirTache::initialisationComposant(){
     sauvegarder->setEnabled(false);
     annuler = new QPushButton("Retour");
 
+
+    map=new QGridLayout();
+    scene = new QGraphicsScene();
+    lamap = new MapScene(scene);
+    lamap->AfficherMap();
+    lamap->entrerEnModeDefinitionTache(this);
+
+
+    //Map
+    vue = new QGraphicsView(lamap);
+    vue->setMinimumSize(600,600);
+    vue->setMaximumSize(600,600);
+
     QWidget::connect(pushDefinirDepart, SIGNAL(clicked()), this, SLOT(cliqueAjouterDepart()));
     QWidget::connect(pushDefinirArrive, SIGNAL(clicked()), this, SLOT(cliqueAjouterArrive()));
     QWidget::connect(sauvegarder, SIGNAL(clicked()), this, SLOT(ajouterNouvelleTacheALaListeDeTache()));
@@ -49,8 +64,6 @@ void ViewDefinirTache::initialisationComposant(){
     QWidget::connect(annuler, SIGNAL(clicked()), this, SLOT(close()));
 
     chargerListeDeroulanteDesRobot();
-
-
 }
 
 
@@ -74,7 +87,11 @@ void ViewDefinirTache::definitonLayout(){
 
     layoutMenuDroiteSelection->addWidget(sauvegarder,5,0);
     layoutMenuDroiteSelection->addWidget(annuler,5,1);
-    mainLayout->addLayout(layoutMenuDroiteSelection,1,1);
+
+    map->addWidget(vue);
+
+    mainLayout->addLayout(map,0,0,20,1);
+    mainLayout->addLayout(layoutMenuDroiteSelection,0,1);
 
     this->setLayout(mainLayout);
 }
@@ -173,12 +190,12 @@ void ViewDefinirTache::ajouterNouvelleTacheALaListeDeTache(){
     menuListeDesTaches->nouvelleTacheTemp->setPoids(champPoids->text().replace(',','.').toDouble());
 
     // A MODIFIER
-    menuListeDesTaches->nouvelleTacheTemp->depart->setX(champDepart->text().toInt());
-    menuListeDesTaches->nouvelleTacheTemp->depart->setY(champDepart->text().toInt());
+    menuListeDesTaches->nouvelleTacheTemp->depart->setX(departX);
+    menuListeDesTaches->nouvelleTacheTemp->depart->setY(departY);
 
     // A MODIFER
-    menuListeDesTaches->nouvelleTacheTemp->arrive->setX(champArrive->text().toInt());
-    menuListeDesTaches->nouvelleTacheTemp->arrive->setY(champArrive->text().toInt());
+    menuListeDesTaches->nouvelleTacheTemp->arrive->setX(arriveX);
+    menuListeDesTaches->nouvelleTacheTemp->arrive->setY(arriveY);
 
     menuListeDesTaches->listeTache->ajoutNouvelleTacheDansListe(tacheTemp);
 
@@ -198,18 +215,24 @@ void ViewDefinirTache::viderTousLesChamps(){
 
 
 void ViewDefinirTache::cliqueAjouterDepart(){
-    // A COMPLETER
-    estDefinitDepart=true;
-    champDepart->setText("22");
-    switchBoutonLabelDefinir();
 
+    estDefinitDepart = true;
+    lamap->flagEditerDepart = true;
+    lamap->flagEditerArriver = false;
+
+    //estDefinitDepart=true;
+    //champDepart->setText("22");
 }
 
 void ViewDefinirTache::cliqueAjouterArrive(){
     estDefiniArrive = true;
-    champArrive->setText("33");
-    switchBoutonLabelDefinir();
+    lamap->flagEditerDepart = false;
+    lamap->flagEditerArriver = true;
+    //champArrive->setText("33");
+    //switchBoutonLabelDefinir();
 }
+
+
 
 
 

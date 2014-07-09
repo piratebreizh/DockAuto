@@ -183,8 +183,6 @@ bool ViewGestionEquipe::sauvegardEquipeEnBase(){
 
     db->Requete(requeteInsert);
 
-    equipe->idEquipe = dernierIDEquipeEnBase();
-
     return true ;
 }
 
@@ -194,6 +192,7 @@ bool ViewGestionEquipe::sauvegardEquipeEnBase(){
 bool ViewGestionEquipe::sauvegardListeRobotEnBase(){
 
 
+    equipe->idEquipe = dernierIDEquipeEnBase();
     bool firstVirgule = true;
     if(tableRobot->size()>0){
         QString requeteSQLInsert = " INSERT INTO ROBOT (`Nom_Robot` , `Longueur_Robot`, `Largeur_Robot`, `Vitesse_Robot`, `Longueur_Capacite_De_Charge_Robot`, `Largeur_Capactite_De_Charge_Robot`, `Poids_Capacite_De_Charge_Robot`, `ID_Equipe`) VALUES (" ;
