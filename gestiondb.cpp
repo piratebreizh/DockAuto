@@ -117,6 +117,7 @@ GestionDB::~GestionDB(){
  */
 void GestionDB::selectMutliLigne(const QString &sel){
     db.open();
+    resultatSelectMultiLignes.clear();
     QSqlQuery query(db);
     if(query.exec(sel) && query.size()>0)
     {
