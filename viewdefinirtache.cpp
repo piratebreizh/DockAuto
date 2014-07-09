@@ -149,10 +149,12 @@ void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe){
 
     for(int i=0;i<db->resultatSelectMultiLignes.size();i++){
         QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);
-        Robot robotTemp ;
-        robotTemp.setId(qlistTemp.at(0).toInt());
-        robotTemp.nomRobot2=qlistTemp.at(1).toString();
-        listeRobot->append(robotTemp);
+        if(qlistTemp.size() == 2){
+            Robot robotTemp ;
+            robotTemp.setId(qlistTemp.at(0).toInt());
+            robotTemp.nomRobot2=qlistTemp.at(1).toString();
+            listeRobot->append(robotTemp);
+        }
     }
 }
 
