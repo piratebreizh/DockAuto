@@ -52,6 +52,7 @@ void GestionDB::Requete(const QString &req){
  */
 void GestionDB::Select(const QString &sel){
     db.open();
+    ResultatRequete.clear();
     QSqlQuery query(db);
     if(query.exec(sel) && query.size()>0)
     {
