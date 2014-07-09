@@ -179,9 +179,8 @@ bool ViewGestionEquipe::sauvegardEquipeEnBase(){
     QString requeteInsert = ("INSERT INTO EQUIPE (Nom_Equipe) VALUES (");
     requeteInsert.append(" '");
     requeteInsert.append(QString::fromStdString(equipe->nomEquipe));
-
     requeteInsert.append("');");
-    qDebug()<<requeteInsert;
+
     db->Requete(requeteInsert);
 
     equipe->idEquipe = dernierIDEquipeEnBase();
@@ -198,7 +197,6 @@ bool ViewGestionEquipe::sauvegardListeRobotEnBase(){
     bool firstVirgule = true;
     if(tableRobot->size()>0){
         QString requeteSQLInsert = " INSERT INTO ROBOT (`Nom_Robot` , `Longueur_Robot`, `Largeur_Robot`, `Vitesse_Robot`, `Longueur_Capacite_De_Charge_Robot`, `Largeur_Capactite_De_Charge_Robot`, `Poids_Capacite_De_Charge_Robot`, `ID_Equipe`) VALUES (" ;
-        qDebug() << tableRobot->size();
         for (int i = 0; i<tableRobot->size();i++){
             if(!firstVirgule){
                 requeteSQLInsert.append(" ),( ");
@@ -223,7 +221,6 @@ bool ViewGestionEquipe::sauvegardListeRobotEnBase(){
             firstVirgule = false;
         }
         requeteSQLInsert.append("); ");
-        qDebug()<<requeteSQLInsert;
         GestionDB * db = GestionDB::getInstance();
         db->Requete(requeteSQLInsert);
     }

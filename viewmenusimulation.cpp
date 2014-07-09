@@ -269,10 +269,12 @@ void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase(){
 
     for(int i=0;i<db->resultatSelectMultiLignes.size();i++){
         QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);
-        Equipe equipeTemp ;
-        equipeTemp.idEquipe = qlistTemp.at(0).toInt();
-        equipeTemp.nomEquipe2 = qlistTemp.at(1).toString();
-        listeEquipe->append(equipeTemp);
+        if(qlistTemp.size()==2){
+            Equipe equipeTemp ;
+            equipeTemp.idEquipe = qlistTemp.at(0).toInt();
+            equipeTemp.nomEquipe2 = qlistTemp.at(1).toString();
+            listeEquipe->append(equipeTemp);
+        }
     }
 
 }
@@ -305,7 +307,6 @@ void ViewMenuSimulation::initialisationDeLaListeDeroulanteDepot(){
 
 
     if(listeDepot->size()>0){
-        qDebug() << listeDepot->size();
         for (int i = 0; i<listeDepot->size();i++) {
             Entrepot depotTemp  = listeDepot->at(i);
             listeDeroulanteChoixDepot->addItem(QString::fromStdString(depotTemp.getNomMap()),depotTemp.getIDMap());
@@ -330,10 +331,13 @@ void ViewMenuSimulation::chargeToutesLesDepotsDeLaBase(){
     for(int i=0;i<db->resultatSelectMultiLignes.size();i++){
         QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);
         Entrepot entrepotTemp;
-        entrepotTemp.setIDMap(qlistTemp.at(0).toInt());
-        entrepotTemp.setNomMap(qlistTemp.at(1).toString().toStdString());
-        listeDepot->append(entrepotTemp);
+        if(qlistTemp.size() == 2){
+            entrepotTemp.setIDMap(qlistTemp.at(0).toInt());
+            entrepotTemp.setNomMap(qlistTemp.at(1).toString().toStdString());
+            listeDepot->append(entrepotTemp);
+        }
     }
+
 }
 
 /**
@@ -474,7 +478,8 @@ void ViewMenuSimulation::chargerListeSimulationDepuisLaBase(){
 
     for(int i=0;i<db->resultatSelectMultiLignes.size();i++){
         QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);
-        listeDeroulanteChoixSimulationCharger->addItem(qlistTemp.at(1).toString(),qlistTemp.at(0).toInt());
+        if(qlistTemp.size()==2)
+            listeDeroulanteChoixSimulationCharger->addItem(qlistTemp.at(1).toString(),qlistTemp.at(0).toInt());
     }
 }
 
