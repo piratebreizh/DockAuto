@@ -196,6 +196,7 @@ void FenetrePrincipale::createMap(){
     map=new QGridLayout();
     scene = new QGraphicsScene();
     lamap = new MapScene(scene);
+    lamap->lectureSeule = true;
     //Map
     vue = new QGraphicsView(lamap);
     vue->setMinimumSize(LONGUEUR*LONGUEURPIX+5,LONGUEUR*LONGUEURPIX+5);

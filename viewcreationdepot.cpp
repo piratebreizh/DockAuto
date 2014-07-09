@@ -175,7 +175,9 @@ bool ViewCreationDepot::initialisationDeLaMap(){
  * Sauvegarde de la map dans la base de données
  */
 void ViewCreationDepot::SauvegardeMapDb(){
+    sauvegardeModifMap->setEnabled(false);
     lamap->SaveDepotDb();
+    this->close();
 }
 
 /**
