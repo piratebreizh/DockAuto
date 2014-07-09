@@ -226,5 +226,6 @@ void FenetrePrincipale::definirSimulation(Simulation *_simulation){
     simulation->getEntrepot()->AfficheMap();
     lamap->setDepot(simulation->getEntrepot());
     lamap->getEntrepot()->AfficheMap();
+    lamap->lectureSeule = true;
     lamap->AfficherMap();
 }

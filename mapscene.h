@@ -27,6 +27,7 @@ public:
     bool flagEditionTache;
     bool flagEditerDepart;
     bool flagEditerArriver;
+    bool lectureSeule;
     void coordonneeCliquer(int x,int y);
     Tile retournTileSelectionnee();
     ViewDefinirTache * viewDefinirTache;

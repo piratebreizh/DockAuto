@@ -14,6 +14,7 @@ MapScene::MapScene(QObject* parent)
     flagEditionTache = false;
     flagEditerArriver = false;
     flagEditerDepart = false;
+    lectureSeule = false;
 }
 
 void MapScene::setInfoDepot(int lon, int larg, QString nom){
@@ -31,46 +32,47 @@ Entrepot* MapScene::getEntrepot(){
 
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
 
+    if(!lectureSeule){
+        int x =(int)(ev->scenePos().x()/LONGUEURPIX);
+        int y =(int)(ev->scenePos().y()/LARGEURPIX);
 
-    int x =(int)(ev->scenePos().x()/LONGUEURPIX);
-    int y =(int)(ev->scenePos().y()/LARGEURPIX);
 
-
-    if(flagEditionTache){
-        QString affichage("X : " + QString::number(x) + "       Y : " + QString::number(y));
-        if(flagEditerDepart){
-            viewDefinirTache->champDepart->setText(affichage);
-            viewDefinirTache->champDepart->show();
-            viewDefinirTache->pushDefinirArrive->setEnabled(true);
-            viewDefinirTache->switchBoutonLabelDefinir();
-            viewDefinirTache->departX = x;
-            viewDefinirTache->departY = y;
-            flagEditerDepart = false;
-        }else if(flagEditerArriver){
-            viewDefinirTache->champArrive->setText(affichage);
-            viewDefinirTache->champArrive->show();
-            viewDefinirTache->switchBoutonLabelDefinir();
-            viewDefinirTache->sauvegarder->setEnabled(true);
-            viewDefinirTache->arriveX=x;
-            viewDefinirTache->arriveY=y;
+        if(flagEditionTache){
+            QString affichage("X : " + QString::number(x) + "       Y : " + QString::number(y));
+            if(flagEditerDepart){
+                viewDefinirTache->champDepart->setText(affichage);
+                viewDefinirTache->champDepart->show();
+                viewDefinirTache->pushDefinirArrive->setEnabled(true);
+                viewDefinirTache->switchBoutonLabelDefinir();
+                viewDefinirTache->departX = x;
+                viewDefinirTache->departY = y;
+                flagEditerDepart = false;
+            }else if(flagEditerArriver){
+                viewDefinirTache->champArrive->setText(affichage);
+                viewDefinirTache->champArrive->show();
+                viewDefinirTache->switchBoutonLabelDefinir();
+                viewDefinirTache->sauvegarder->setEnabled(true);
+                viewDefinirTache->arriveX=x;
+                viewDefinirTache->arriveY=y;
+            }
+        }else{
+            switch (e->tab[x][y]){
+                case MUR:
+                    break;
+                case VIDE:
+                    //Armoire a;
+                    //e.AddArmoire(a);
+                    e->tab[x][y]=ARMOIREVIDE;
+                    break;
+                case ARMOIREVIDE:
+                    e->tab[x][y]=ZONEDEP;
+                    break;
+                default:
+                    e->tab[x][y]=VIDE;
+                    break;
+            }
+            this->AfficherMap();
         }
-    }else{
-        switch (e->tab[x][y]){
-            case MUR:
-                break;
-            case VIDE:
-                //Armoire a;
-                //e.AddArmoire(a);
-                e->tab[x][y]=ARMOIREVIDE;
-                break;
-            case ARMOIREVIDE:
-                e->tab[x][y]=ZONEDEP;
-                break;
-            default:
-                e->tab[x][y]=VIDE;
-                break;
-        }
-        this->AfficherMap();
     }
 }
 
