@@ -54,8 +54,8 @@ void ViewDefinirTache::initialisationComposant(){
 
     //Map
     vue = new QGraphicsView(lamap);
-    vue->setMinimumSize(600,600);
-    vue->setMaximumSize(600,600);
+    vue->setMinimumSize(LONGUEUR*LONGUEURPIX+5,LONGUEUR*LONGUEURPIX+5);
+    vue->setMaximumSize(LONGUEUR*LONGUEURPIX+5,LONGUEUR*LONGUEURPIX+5);
 
     QWidget::connect(pushDefinirDepart, SIGNAL(clicked()), this, SLOT(cliqueAjouterDepart()));
     QWidget::connect(pushDefinirArrive, SIGNAL(clicked()), this, SLOT(cliqueAjouterArrive()));

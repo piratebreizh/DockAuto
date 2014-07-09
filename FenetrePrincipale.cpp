@@ -198,8 +198,8 @@ void FenetrePrincipale::createMap(){
     lamap = new MapScene(scene);
     //Map
     vue = new QGraphicsView(lamap);
-    vue->setMinimumSize(600,600);
-    vue->setMaximumSize(600,600);
+    vue->setMinimumSize(LONGUEUR*LONGUEURPIX+5,LONGUEUR*LONGUEURPIX+5);
+    vue->setMaximumSize(LONGUEUR*LONGUEURPIX+5,LONGUEUR*LONGUEURPIX+5);
     vue->show();
     map->addWidget(vue);
     mainLayout->addLayout(map);
@@ -223,9 +223,9 @@ void FenetrePrincipale::definirSimulation(Simulation *_simulation){
     }
     iddep = db->getResultat(0).toInt();
     simulation->ChargerDepot(iddep);
-    simulation->getEntrepot()->AfficheMap();
+    //simulation->getEntrepot()->AfficheMap();
     lamap->setDepot(simulation->getEntrepot());
-    lamap->getEntrepot()->AfficheMap();
+    //lamap->getEntrepot()->AfficheMap();
     lamap->lectureSeule = true;
     lamap->AfficherMap();
 }

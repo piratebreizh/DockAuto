@@ -73,12 +73,16 @@ void ViewCreationDepot::lancementFenetreCreationMap(){
 
     if(controleTousChampsRempli() == true){
         masquerLayout2();
+    }else{
+        return;
     }
     scene = new QGraphicsScene();
     lamap = new MapScene(scene);
 
     //initialisation du depot
-    lamap->setInfoDepot(champLargeurDepot->text().toInt(),champLongueurDepot->text().toInt(),champNomDepot->text());
+    lamap->setInfoDepot(champLongueurDepot->text().toInt(),
+                        champLargeurDepot->text().toInt(),
+                        champNomDepot->text());
 
     //Gestion de l'affichage de la map
     initialisationDeLaMap();
@@ -124,8 +128,8 @@ bool ViewCreationDepot::initialisationDeLaMap(){
 
     //Map
     vue = new QGraphicsView(lamap);
-    vue->setMinimumSize(600,600);
-    vue->setMaximumSize(600,600);
+    vue->setMinimumSize(LONGUEUR*LONGUEURPIX+5,LONGUEUR*LONGUEURPIX+5);
+    vue->setMaximumSize(LONGUEUR*LONGUEURPIX+5,LONGUEUR*LONGUEURPIX+5);
     vue->show();
 
 
@@ -188,6 +192,14 @@ bool ViewCreationDepot::controleTousChampsRempli(){
        this->labelMessageErreur->show();
             return false;
     }
+    int largeur = this->champLargeurDepot->text().toInt();
+    int longueur = this->champLongueurDepot->text().toInt();
+    if(largeur<5 || largeur>30 || longueur<5 || longueur>30){
+        this->labelMessageErreur->setText("Les dimensions doivent être comprise entre 5 et 30");
+        this->labelMessageErreur->setStyleSheet("QLabel { color : red; }");
+        this->labelMessageErreur->show();
+             return false;
+     }
     return true;
 
 }
