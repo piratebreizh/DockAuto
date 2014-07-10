@@ -1,7 +1,3 @@
-//http://fr.openclassrooms.com/forum/sujet/jeu-2d-tile-mapping-qt-93098s
-//http://fr.openclassrooms.com/forum/sujet/quadrillage-sur-un-qgraphicsscene
-//http://fr.openclassrooms.com/forum/sujet/dragamp-drop-dans-une-qgraphicsscene-75520
-
 #include "viewcreationdepot.h"
 #include "gestiondb.h"
 #include "Entrepot.h"
@@ -12,20 +8,21 @@
 
 ViewCreationDepot::ViewCreationDepot()
 {
-    initialisationConposantFenetreIdentificationDepot();
-
+    positionneFenetre();
+    initialisationComposantFenetreIdentificationDepot();
     definitionMainLayout();
 }
 
 
-void ViewCreationDepot::initialisationConposantFenetreIdentificationDepot(){
+void ViewCreationDepot::initialisationComposantFenetreIdentificationDepot()
+{
     mainLayout = new QVBoxLayout(this);
     layout2pourFenetreIdentification = new QGridLayout();
     layout3PourBoutonSauvegarderAnnuler = new QGridLayout();
 
     labelNomDepot = new QLabel("Nom du dépôt");
-    labelLongueurDepot = new QLabel("Largeur (en nombre de case)");
-    labelLargeurDepot = new QLabel("Longueur (en nombre de case)");
+    labelLongueurDepot = new QLabel("Largeur (en nombre de cases)");
+    labelLargeurDepot = new QLabel("Longueur (en nombre de cases)");
     labelMessageErreur = new QLabel();
     labelMessageErreur->hide();
 
@@ -36,17 +33,16 @@ void ViewCreationDepot::initialisationConposantFenetreIdentificationDepot(){
     champLongueurDepot->setValidator(new QIntValidator(champLongueurDepot));
     champLargeurDepot->setValidator(new QIntValidator(champLargeurDepot));
 
-    sauvegardeEtEditerMap = new QPushButton("Sauvegarder et éditer la Map",this);
+    sauvegarderEtEditerMap = new QPushButton("Sauvegarder et éditer la Map",this);
     annuler = new QPushButton("Annuler",this);
 
-    QWidget::connect(sauvegardeEtEditerMap,SIGNAL(clicked()),this,SLOT(lancementFenetreCreationMap()));
+    QWidget::connect(sauvegarderEtEditerMap,SIGNAL(clicked()),this,SLOT(lancementFenetreCreationMap()));
     QWidget::connect(annuler,SIGNAL(clicked()),this,SLOT(close()));
 
 }
 
-void ViewCreationDepot::definitionMainLayout(){
-
-
+void ViewCreationDepot::definitionMainLayout()
+{
     layout2pourFenetreIdentification->addWidget(labelMessageErreur);
     layout2pourFenetreIdentification->addWidget(labelNomDepot,1,0);
     layout2pourFenetreIdentification->addWidget(champNomDepot,1,1);
@@ -55,7 +51,7 @@ void ViewCreationDepot::definitionMainLayout(){
     layout2pourFenetreIdentification->addWidget(labelLargeurDepot,3,0);
     layout2pourFenetreIdentification->addWidget(champLargeurDepot,3,1);
 
-    layout3PourBoutonSauvegarderAnnuler->addWidget(sauvegardeEtEditerMap,0,0);
+    layout3PourBoutonSauvegarderAnnuler->addWidget(sauvegarderEtEditerMap,0,0);
     layout3PourBoutonSauvegarderAnnuler->addWidget(annuler,0,1);
 
     mainLayout->addLayout(layout2pourFenetreIdentification);
@@ -65,13 +61,12 @@ void ViewCreationDepot::definitionMainLayout(){
 }
 
 /**
- * @brief ViewCreationDepot::lancementFenetreCreationMap
- * Action du bouton Sauvegarder et Editer la Map
- * Créer un nouvelle Map et la sauvegarde en base de données
+ * @brief Action du bouton Sauvegarder et Editer la Map
+ *      Créer une nouvelle Map et la sauvegarde en base de données
  */
-void ViewCreationDepot::lancementFenetreCreationMap(){
-
-    if(controleTousChampsRempli() == true){
+void ViewCreationDepot::lancementFenetreCreationMap()
+{
+    if(controleChamps() == true){
         masquerLayout2();
     }else{
         return;
@@ -89,38 +84,30 @@ void ViewCreationDepot::lancementFenetreCreationMap(){
 
     //Affichage des éléments de la map
     lamap->AfficherMap();
-
-    //this->sauvegardeEtEdi     terMap->
-    //mainLayout->removeItem(layout2pourFenetreIdentification);
-    //mainLayout->removeItem(layout3PourBoutonSauvegarderAnnuler);
-    //this->setLayout(mainLayout);*/
 }
 /**
- * @brief ViewCreationDepot::masquerLayout2
- * Masque tout le layout2 qui contient le nom , la longueur et la largeur d'un dépôt
+ * @brief Masque tout le layout2 qui contient le nom , la longueur et la largeur d'un dépôt
  */
-
-void ViewCreationDepot::masquerLayout2(){
+void ViewCreationDepot::masquerLayout2()
+{
     labelNomDepot->hide();
     champNomDepot->hide();
     labelLongueurDepot->hide();
     champLongueurDepot->hide();
     labelLargeurDepot->hide();
     champLargeurDepot->hide();
-    sauvegardeEtEditerMap->hide();
+    sauvegarderEtEditerMap->hide();
     annuler->hide();
     labelMessageErreur->hide();
 }
 
-
 /**
- * @brief ViewCreationDepot::initialisationDeLaMap
- * Permet la création de la MAP en fonction de la longueur et largeur de case
- * Lors de la sauvegarde
- * @return true si tout c'est bien passé
+ * @brief Permet la création de la MAP en fonction de la longueur et largeur de case
+ *      Lors de la sauvegarde
+ * @return true si tout s'est bien passée
  */
-bool ViewCreationDepot::initialisationDeLaMap(){
-
+bool ViewCreationDepot::initialisationDeLaMap()
+{
     //Init
     layoutpourLaVisualisationMap = new QGridLayout();
     layoutpourLesImages = new QGridLayout();
@@ -131,7 +118,6 @@ bool ViewCreationDepot::initialisationDeLaMap(){
     vue->setMinimumSize(LONGUEUR*LONGUEURPIX+5,LONGUEUR*LONGUEURPIX+5);
     vue->setMaximumSize(LONGUEUR*LONGUEURPIX+5,LONGUEUR*LONGUEURPIX+5);
     vue->show();
-
 
     //LabelLesImages
     labelMur = new QLabel("Mur");
@@ -171,21 +157,21 @@ bool ViewCreationDepot::initialisationDeLaMap(){
 }
 
 /**
- * @brief ViewCreationDepot::SauvegardeMapDb
- * Sauvegarde de la map dans la base de données
+ * @brief Sauvegarde de la map dans la base de données
  */
-void ViewCreationDepot::SauvegardeMapDb(){
+void ViewCreationDepot::SauvegardeMapDb()
+{
     sauvegardeModifMap->setEnabled(false);
     lamap->SaveDepotDb();
     this->close();
 }
 
 /**
- * @brief ViewCreationDepot::controleTousChampRempli
- * Controle si tout les champs ont bien étaient remplis
- * @return true si tout les champs sont bien rempli false sinon
+ * @brief Controle si tous les champs ont bien été remplis
+ * @return true si c'est le cas sinon false
  */
-bool ViewCreationDepot::controleTousChampsRempli(){
+bool ViewCreationDepot::controleChamps()
+{
     if(this->champNomDepot->text().compare("")==0 ||
        this->champLargeurDepot->text().compare("")==0 ||
        this->champLongueurDepot->text().compare("")==0){
@@ -202,14 +188,24 @@ bool ViewCreationDepot::controleTousChampsRempli(){
         this->labelMessageErreur->show();
              return false;
      }
-    return true;
 
+    return true;
 }
 
 /**
- * @brief ViewCreationDepot::mousePressEvent
- * Lance AfficherMap au clic sur la map
+ * @brief Lance AfficherMap au clic sur la map
  */
-void ViewCreationDepot::mousePressEvent(){
+void ViewCreationDepot::mousePressEvent()
+{
     lamap->AfficherMap();
+}
+
+/**
+ * @brief Positionne la fenêtre au centre de l'écran
+ */
+void ViewCreationDepot::positionneFenetre()
+{
+    const QRect screen = QApplication::desktop()->screenGeometry();
+    const QPoint delta = QPoint(0,100);
+    this->move( screen.center() - this->rect().center() - delta);
 }

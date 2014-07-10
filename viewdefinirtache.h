@@ -15,8 +15,6 @@
 #include <robot.h>
 #include <mapscene.h>
 
-
-
 class MapScene;
 class ViewMenuListeDesTaches;
 class ViewMenuSimulation;
@@ -24,7 +22,9 @@ class ViewMenuSimulation;
 class ViewDefinirTache : public QDialog
 {
     Q_OBJECT
+
 public:
+
     ViewDefinirTache(ViewMenuListeDesTaches * _menuListeDesTaches);
     ViewMenuListeDesTaches * menuListeDesTaches;
 
@@ -48,14 +48,12 @@ public:
     int arriveX;
     int arriveY;
 
-
 public slots :
+
     void cliqueAjouterDepart();
     void cliqueAjouterArrive();
     void ajouterNouvelleTacheALaListeDeTache();
     void switchBoutonLabelDefinir();
-
-
 
 private :
 
@@ -64,7 +62,6 @@ private :
 
     QLabel * labelRobot;
     QComboBox * listeDeroulanteRobot;
-
 
     QLabel * messageConfirmationAjout;
 
@@ -78,12 +75,12 @@ private :
     MapScene * lamap;
     QGraphicsView * vue;
 
-
     void initialisationComposant();
     void definitonLayout();
-    void chargerListeDeroulanteDesRobot();
+    void chargerListeDeroulanteDesRobots();
     void chargerListeRobotEnBase(int ID_Equipe);
-    void  viderTousLesChamps();
+    void viderTousLesChamps();
+    void positionneFenetre();
 
 };
 

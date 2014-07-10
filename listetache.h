@@ -10,7 +10,7 @@ public:
     Listetache();
 
     void setListDesTaches(QList<Tache> listeDesTache);
-    QList<Tache> * getListDesTaches();
+    QList<Tache> * getListeDesTaches();
 
     void ajoutNouvelleTacheDansListe(Tache _tache);
 

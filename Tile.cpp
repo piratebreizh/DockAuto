@@ -6,18 +6,22 @@ Tile::Tile()
 {
 }
 
-void Tile::setX(int x){
+void Tile::setX(int x)
+{
     this->x=x;
 }
 
-void Tile::setY(int y){
+void Tile::setY(int y)
+{
     this->y=y;
 }
 
-int Tile::getX(){
+int Tile::getX()
+{
     return x;
 }
 
-int Tile::getY(){
+int Tile::getY()
+{
     return y;
 }

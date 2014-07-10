@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include "ViewCreationRobot.h"
 #include <QtWidgets>
@@ -8,18 +7,14 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
-
-
-
 /**
- * @brief ViewCreationRobot::ViewCreationRobot
- * Création de la IHM de la création d'un nouveau robot dans une équipe cette IHM est appeler par ViewGestionEquipe
+ * @brief Création de la IHM de la création d'un nouveau robot dans une équipe
+ *      cette IHM est appelée par ViewGestionEquipe
  * @param parent
  * @param a
  */
 ViewCreationRobot::ViewCreationRobot(ViewGestionEquipe * _gestionEquipe)
 {
-
     gestionEquipe = &*_gestionEquipe;
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -29,15 +24,14 @@ ViewCreationRobot::ViewCreationRobot(ViewGestionEquipe * _gestionEquipe)
 
     confirmationCreationRobot = new QLabel();
 
-    structureRobot = new QGroupBox("Caractéristique du robot");
+    structureRobot = new QGroupBox("Caractéristiques du robot");
     cargaisonRobot = new QGroupBox("Valeurs maximales de la cargaison du robot");
 
     sauvegarde = new QPushButton("Ajouter le robot");
     annuler = new QPushButton("Retour");
+
     QWidget::connect(annuler, SIGNAL(clicked()), this, SLOT(close()));
-
     QWidget::connect(sauvegarde, SIGNAL(clicked()), this, SLOT(s_clicked()));
-
     QWidget::connect(sauvegarde,SIGNAL(clicked()),gestionEquipe,SLOT(ajouterRobotDansList()));
 
     champNom = new QLineEdit;
@@ -76,7 +70,6 @@ ViewCreationRobot::ViewCreationRobot(ViewGestionEquipe * _gestionEquipe)
     structureRobot->setLayout(layout);
     cargaisonRobot->setLayout(layout2);
 
-
     mainLayout->addWidget(confirmationCreationRobot);
     mainLayout->addWidget(structureRobot);
     mainLayout->addWidget(cargaisonRobot);
@@ -113,10 +106,10 @@ void ViewCreationRobot::s_clicked()
         confirmationCreationRobot->setStyleSheet("QLabel { color : red; }");
     }
     confirmationCreationRobot->setAlignment(Qt::AlignCenter);
-
 }
 
-void  ViewCreationRobot::videTousLesChamps(){
+void  ViewCreationRobot::videTousLesChamps()
+{
     champNom->setText("");
     champLargeur->setText("");
     champLongueur->setText("");
@@ -125,6 +118,3 @@ void  ViewCreationRobot::videTousLesChamps(){
     champCargaisonLongueur->setText("");
     champCargaisonPoids->setText("");
 }
-
-
-
