@@ -12,22 +12,17 @@ Robot::Robot()
     this->setY(0);
 }
 
-Robot::Robot(int _id, string _nom){
-    idRobot=_id;
-    nomRobot=_nom;
-}
-
 Robot::Robot(int _id, QString _nom){
     idRobot=_id;
-    nomRobot2 = _nom;
+    nomRobot = _nom;
 }
 
-string Robot::getNom(){
+QString Robot::getNom(){
     return nomRobot;
 }
 
 void Robot::setNom(string nom){
-    nomRobot=nom;
+    nomRobot=QString::fromStdString(nom);
 }
 
 int Robot::getId(){

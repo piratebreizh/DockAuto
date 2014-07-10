@@ -128,7 +128,7 @@ void ViewDefinirTache::chargerListeDeroulanteDesRobots()
     if(listeRobot->size()>0){
         for (int i = 0; i<listeRobot->size();i++) {
             Robot robotTemp  = listeRobot->at(i);
-            listeDeroulanteRobot->addItem(robotTemp.nomRobot2,robotTemp.getId());
+            listeDeroulanteRobot->addItem(robotTemp.nomRobot,robotTemp.getId());
         }
     }
 }
@@ -155,7 +155,7 @@ void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe)
         if(qlistTemp.size() == 2){
             Robot robotTemp ;
             robotTemp.setId(qlistTemp.at(0).toInt());
-            robotTemp.nomRobot2=qlistTemp.at(1).toString();
+            robotTemp.nomRobot=qlistTemp.at(1).toString();
             listeRobot->append(robotTemp);
         }
     }

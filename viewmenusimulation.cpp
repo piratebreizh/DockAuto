@@ -236,7 +236,7 @@ void ViewMenuSimulation::initialisationDeLaListeDeroulanteEquipe()
         //qDebug() << listeEquipe->size();
         for (int i = 0; i<listeEquipe->size();i++) {
             Equipe equipeTemp  = listeEquipe->at(i);
-            listeDeroulanteChoixEquipe->addItem(equipeTemp.nomEquipe2,equipeTemp.idEquipe);
+            listeDeroulanteChoixEquipe->addItem(equipeTemp.nomEquipe,equipeTemp.idEquipe);
         }
     }
 }
@@ -259,7 +259,7 @@ void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase()
         if(qlistTemp.size()==2){
             Equipe equipeTemp ;
             equipeTemp.idEquipe = qlistTemp.at(0).toInt();
-            equipeTemp.nomEquipe2 = qlistTemp.at(1).toString();
+            equipeTemp.nomEquipe = qlistTemp.at(1).toString();
             listeEquipe->append(equipeTemp);
         }
     }

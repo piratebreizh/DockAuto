@@ -12,7 +12,7 @@ using namespace std;
 class Robot;
 class Equipe;
 class Map;
-class Armoir;
+class Armoire;
 
 class Entrepot : public Map
 {

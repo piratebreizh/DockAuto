@@ -9,6 +9,7 @@
 #include "mapscene.h"
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include "simulation.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -43,6 +44,8 @@ public slots:
     void lancementViewCreationDepot();
     void lancementViewCreationEquipe();
     void lancementViewMenuSimulation();
+
+    void lancerSimulation();
 
 private:
 

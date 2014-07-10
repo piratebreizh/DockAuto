@@ -83,7 +83,7 @@ ViewCreationRobot::ViewCreationRobot(ViewGestionEquipe * _gestionEquipe)
 
 void ViewCreationRobot::s_clicked()
 {
-    gestionEquipe->robotTemp.nomRobot = champNom->text().toStdString();
+    gestionEquipe->robotTemp.nomRobot = champNom->text();
     gestionEquipe->robotTemp.largeurRobot = champLargeur->text().replace(',','.').toDouble();
     gestionEquipe->robotTemp.longueurRobot = champLongueur->text().replace(',','.').toDouble();
     gestionEquipe->robotTemp.vitesseRobot = champVitesse->text().replace(',','.').toDouble();
@@ -91,7 +91,7 @@ void ViewCreationRobot::s_clicked()
     gestionEquipe->robotTemp.longueurCapaciteDeCharge = champCargaisonLongueur->text().replace(',','.').toDouble();
     gestionEquipe->robotTemp.poidsCapaciteDeCharge = champCargaisonPoids->text().replace(',','.').toDouble();
 
-    if(!gestionEquipe->robotTemp.nomRobot.empty() &&
+    if(!gestionEquipe->robotTemp.nomRobot.isEmpty() &&
             gestionEquipe->robotTemp.largeurRobot != 0 &&
             gestionEquipe->robotTemp.longueurRobot != 0 &&
             gestionEquipe->robotTemp.vitesseRobot != 0 &&

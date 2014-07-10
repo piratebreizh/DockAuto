@@ -103,14 +103,14 @@ void ViewGestionEquipe::ajouterRobotDansList()
     tableRobot->append(this->robotTemp);
     QList <QStandardItem*> listItem;
 
-    if(!this->robotTemp.nomRobot.empty() &&
+    if(!this->robotTemp.nomRobot.isEmpty() &&
             this->robotTemp.largeurRobot != 0 &&
             this->robotTemp.longueurRobot != 0 &&
             this->robotTemp.vitesseRobot != 0 &&
             this->robotTemp.largeurCapactiteDeCharge != 0 &&
             this->robotTemp.longueurCapaciteDeCharge != 0 &&
             this->robotTemp.poidsCapaciteDeCharge != 0){
-        listItem.append(new QStandardItem (QString::fromUtf8(this->robotTemp.nomRobot.c_str())));
+        listItem.append(new QStandardItem (this->robotTemp.nomRobot));
         listItem.append(new QStandardItem (QString::number(this->robotTemp.largeurRobot)));
         listItem.append(new QStandardItem (QString::number(this->robotTemp.longueurRobot)));
         listItem.append(new QStandardItem (QString::number(this->robotTemp.vitesseRobot)));
@@ -150,7 +150,7 @@ void ViewGestionEquipe::declanchementSauvegardeCompleteEquipe()
 void ViewGestionEquipe::recuperationAttributEquipe()
 {
     equipe = new Equipe();
-    equipe->nomEquipe = champNomEquipe->text().toStdString();
+    equipe->nomEquipe = champNomEquipe->text();
 }
 
 /**
@@ -174,7 +174,7 @@ bool ViewGestionEquipe::sauvegardeEquipeEnBase()
     GestionDB * db = GestionDB::getInstance();
     QString requeteInsert = ("INSERT INTO EQUIPE (Nom_Equipe) VALUES (");
     requeteInsert.append(" '");
-    requeteInsert.append(QString::fromStdString(equipe->nomEquipe));
+    requeteInsert.append(equipe->nomEquipe);
     requeteInsert.append("');");
 
     db->Requete(requeteInsert);
@@ -198,7 +198,7 @@ bool ViewGestionEquipe::sauvegardeListeRobotsEnBase()
             }
             Robot robotTemp = tableRobot->at(i);
             requeteSQLInsert.append("'");
-            requeteSQLInsert.append(QString::fromUtf8(robotTemp.nomRobot.c_str()));
+            requeteSQLInsert.append(robotTemp.nomRobot);
             requeteSQLInsert.append("',");
             requeteSQLInsert.append(QString::number(robotTemp.longueurRobot));
             requeteSQLInsert.append( ",");

@@ -53,6 +53,7 @@ void FenetrePrincipale::createBarreDeLancement()
     QWidget::connect(gestionDesEquipe, SIGNAL(clicked()), this, SLOT(lancementViewCreationEquipe()));
     QWidget::connect(gestionDesDepots, SIGNAL(clicked()), this, SLOT(lancementViewCreationDepot()));
     QWidget::connect(nouvelleSimulation, SIGNAL(clicked()), this, SLOT(lancementViewMenuSimulation()));
+    QWidget::connect(demarrerSimulation, SIGNAL(clicked()), this, SLOT(lancerSimulation()));
 
     mainLayout->addLayout(barreLancement);
 }
@@ -74,6 +75,12 @@ void FenetrePrincipale::lancementViewMenuSimulation()
     viewMenuSimulation = new ViewMenuSimulation(this);
     viewMenuSimulation->exec();
 }
+
+void FenetrePrincipale::lancerSimulation()
+{
+    simulation->LancerSimulation();
+}
+
 
 void FenetrePrincipale::createMap()
 {
@@ -109,6 +116,7 @@ void FenetrePrincipale::definirSimulation(Simulation *_simulation)
     }
     iddep = db->getResultat(0).toInt();
     simulation->ChargerDepot(iddep);
+    simulation->mapScene = lamap;
     lamap->setDepot(simulation->getEntrepot());
     lamap->lectureSeule = true;
     lamap->AfficherMap();

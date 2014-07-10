@@ -72,7 +72,7 @@ void ViewMenuListeDesTaches::ajouterTacheDansListe()
 {
     QList <QStandardItem*> listItem;
 
-    listItem.append(new QStandardItem (QString::fromUtf8(this->nouveauRobotTemp->nomRobot.c_str())));
+    listItem.append(new QStandardItem (this->nouveauRobotTemp->nomRobot));
     listItem.append(new QStandardItem (QString::number(this->nouvelleTacheTemp->getPoids())));
     QString champDepart(QString::number(this->nouvelleTacheTemp->depart->getX()));
     champDepart.append(" : ");

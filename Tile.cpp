@@ -6,6 +6,12 @@ Tile::Tile()
 {
 }
 
+Tile::Tile(int x, int y)
+{
+    this->x=x;
+    this->y=y;
+}
+
 void Tile::setX(int x)
 {
     this->x=x;
