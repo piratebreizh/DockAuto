@@ -4,12 +4,12 @@
 #include "Tile.h"
 #include "Entrepot.h"
 #include <QtSql>
-#include "Tache.h"
+#include "listetache.h"
 
 using namespace std;
 
 class Entrepot;
-class Tache;
+class Listetache;
 
 class Robot : public Tile
 {
@@ -23,12 +23,11 @@ public:
     void setId(int);
 
     void move(Entrepot&, int,int);
-
-    void addTache(Tache);
-    Tache * getTacheNonEffectuee();
+    void moveToObjectif(Entrepot&, Tile);
 
     int idRobot;
     QString nomRobot;
+    Listetache listeTaches;
 
     double vitesseRobot;
     double longueurRobot;
@@ -38,8 +37,6 @@ public:
     double poidsCapaciteDeCharge;
     double longueurCapaciteDeCharge;
     double largeurCapactiteDeCharge;
-
-    QList<Tache> listeTaches;
 
 private:
 

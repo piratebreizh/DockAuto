@@ -34,15 +34,14 @@ void Robot::setId(int id){
 }
 
 /**
- * @brief Robot::move
+ * @brief Deplacement du robot si l'emplacement est libre
  * @param e
  * @param x
  * @param y
- * Deplacement du robot si l'emplacement est libre
  */
-void Robot::move(Entrepot &e, int x, int y){
-    //if(e!=NULL && e.tab[x][y]==0){
-    if(e.tab[x][y]==0){
+void Robot::move(Entrepot &e, int x, int y)
+{
+    if(e.isTileDisponible(x,y)){
         e.RemoveRobot(*this);
         this->setX(x);
         this->setY(y);
@@ -50,7 +49,23 @@ void Robot::move(Entrepot &e, int x, int y){
     }
 }
 
-void Robot::addTache(Tache _tache)
+void Robot::moveToObjectif(Entrepot &e, Tile objectif)
 {
-    listeTaches.append(_tache);
+    int moveToX = this->getX();
+    int moveToY = this->getY();
+    int dx = objectif.getX() - this->getX();
+    int dy = objectif.getY() - this->getY();
+
+    if(dx>0){
+        moveToX++;
+    }else if(dx<0){
+        moveToX--;
+    }else{
+        if(dy>0){
+            moveToY++;
+        }else if(dy<0){
+            moveToY--;
+        }
+    }
+    this->move(e, moveToX, moveToY);
 }

@@ -183,10 +183,10 @@ void ViewDefinirTache::ajouterNouvelleTacheALaListeDeTache()
     menuListeDesTaches->nouvelleTacheTemp->depart->setY(departY);
 
     // A MODIFER
-    menuListeDesTaches->nouvelleTacheTemp->arrive->setX(arriveX);
-    menuListeDesTaches->nouvelleTacheTemp->arrive->setY(arriveY);
+    menuListeDesTaches->nouvelleTacheTemp->arrivee->setX(arriveX);
+    menuListeDesTaches->nouvelleTacheTemp->arrivee->setY(arriveY);
 
-    menuListeDesTaches->listeTache->ajoutNouvelleTacheDansListe(*menuListeDesTaches->nouvelleTacheTemp);
+    menuListeDesTaches->listeTache->ajoutTache(menuListeDesTaches->nouvelleTacheTemp);
 
     messageConfirmationAjout->show();
     messageConfirmationAjout->setText("La nouvelle tâche a été ajoutée");

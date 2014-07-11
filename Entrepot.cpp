@@ -25,7 +25,7 @@ void Entrepot::AddArmoire(Armoire &arm){
 }
 
 void Entrepot::AddRobot(Robot &rob){
-    if(tab[rob.getX()][rob.getY()]==MapScene::VIDE || tab[rob.getX()][rob.getY()]==MapScene::ZONEDEP)
+    if(isTileDisponible(rob.getX(), rob.getY()))
         tab[rob.getX()][rob.getY()]=rob.getId();
 }
 
@@ -101,4 +101,9 @@ void Entrepot::copieEntrepot(Entrepot *_e){
             tab[i][j]=_e->tab[i][j];
         }
     }
+}
+
+bool Entrepot::isTileDisponible(int X, int Y)
+{
+    return tab[X][Y]==MapScene::VIDE || tab[X][Y]==MapScene::ZONEDEP;
 }

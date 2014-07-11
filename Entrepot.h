@@ -21,10 +21,12 @@ public:
     Entrepot(int,QString);
     Entrepot(Entrepot *e);
     ~Entrepot();
+
     void AddArmoire(Armoire&);
     void RemoveArmoire(Armoire&);
     void AddRobot(Robot&);
     void RemoveRobot(Robot&);
+
     int getLargeur();
     void setLargeur(int);
     int getLongueur();
@@ -33,6 +35,9 @@ public:
     void setId(int);
     QString getNom();
     void setNom(QString);
+
+    bool isTileDisponible(int,int);
+
     void RedefTab(int, int);
     void copieEntrepot(Entrepot *);
 

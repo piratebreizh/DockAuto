@@ -14,19 +14,56 @@ Simulation::Simulation()
  */
 bool Simulation::LancerSimulation()
 {
-
-    QMap<int, Robot>::iterator it;
+    /***********AFFICHAGE DEBUG**************/
+    QMap<int, Robot*>::iterator it;
     for (it = listeRobots.begin(); it != listeRobots.end(); ++it){
-        Robot robotTmp = it.value();
-        qDebug() << "Robot " << robotTmp.getId() << " (" << robotTmp.getX()<< "," << robotTmp.getY() << ")";
+        Robot * robotTmp = it.value();
+        qDebug() << "Robot " << robotTmp->getId() << " (" << robotTmp->getX()<< "," << robotTmp->getY() << ")";
+    }
+    qDebug() << "Liste des taches au début";
+    for(int t=0 ; t < taches.getListeDesTaches()->size() ; t++){
+        Tache * tacheTmp = taches.getListeDesTaches()->at(t);
+        qDebug() << "Tache " << "Départ : " << tacheTmp->depart->getX() << ", " << tacheTmp->depart->getY()
+                 << "Arrivée : " << tacheTmp->arrivee->getX() << ", " << tacheTmp->arrivee->getY()
+                 << "statut : " << tacheTmp->statut;
+    }
+    qDebug() << "--------------------------";
+    /*****************************************/
 
-        for(int t=0 ; t < robotTmp.listeTaches.size() ; t++){
-            Tache tacheTmp = robotTmp.listeTaches.at(t);
-            qDebug() << "Tache " << tacheTmp.arrive->getX() << " " << tacheTmp.arrive->getY() ;
+
+    Tache * tache = taches.getTacheNonEffectuee();
+    while(tache!=NULL){
+        qDebug() << "Tache " << "Départ : " << tache->depart->getX() << ", " << tache->depart->getY()
+                 << "Arrivée : " << tache->arrivee->getX() << ", " << tache->arrivee->getY()
+                 << "statut : " << tache->statut;
+
+        QMap<int, Robot*>::iterator it;
+        for (it = listeRobots.begin(); it != listeRobots.end(); ++it){
+            Robot * robotTmp = it.value();
+            Tache * t = robotTmp->listeTaches.getTacheNonEffectuee();
+            if(t!=NULL){
+                Tile * objectif;
+                if(t->statut == Tache::A_EFFECTUER){
+                    objectif = t->depart;
+                }else if(t->statut == Tache::CARGAISON_RECUP){
+                    objectif = t->arrivee;
+                }
+                robotTmp->moveToObjectif(*entrepot, *objectif);
+                //t->statut = Tache::EFFECTUEE;
+            }
+            RaffraichirMap();
         }
+
+        tache = taches.getTacheNonEffectuee();
     }
 
 /*
+        for(int t=0 ; t < robotTmp.listeTaches.size() ; t++){
+            Tache tacheTmp = robotTmp.listeTaches.at(t);
+            qDebug() << "Tache " << "Départ : " << tacheTmp.depart->getX() << " " << tacheTmp.depart->getY()
+                     << "Arrivée : " << tacheTmp.arrive->getX() << " " << tacheTmp.arrive->getY() ;
+        }
+
     //Placement des robots sur l'entrepot
     for(int i=0; i < listeRobots.size() ; i++) {
         Robot robotTmp = listeRobots.at(i);
@@ -43,19 +80,21 @@ bool Simulation::LancerSimulation()
     entrepot->AddRobot(robot);
 
     for(int i =0 ; i<5; i++){
-        QThread::msleep(200);
         robot.move(*entrepot,robot.getX()+1,robot.getY());
         RaffraichirMap();
     }
 */
 
-    //parcours de la liste des tâches
-    //for chaque tache
-        //effectue la tache (déplacement ou rangement)
-        //tu peux utiliser les fonctions dans robot pour les déplacer
-        //tu peux accéder au tableau par e.tab[][] (il est en public)
-        //les constantes LONGEUR et LARGEUR définisse la taille max du tableau
-    //fin for
+    /*
+     * TantQue taches->getTacheNonEffectuee()!=null
+     *      Pour chaque robot
+     *          getTacheNonEffectuee()
+     *          vitesse =0;
+     *          avancerVersObjectif(); vitesse++; //tant que vitesseMax non ateinte
+     *      FinPour
+     * FinTantQue
+     *
+     * */
 
     return true;
 }
@@ -76,6 +115,7 @@ Tile Simulation::getZoneDepartLibre()
  */
 void Simulation::RaffraichirMap()
 {
+    QThread::msleep(100);
     mapScene->setDepot(entrepot);
     mapScene->AfficherMap();
     mapScene->update();
@@ -132,17 +172,17 @@ bool Simulation::ChargerEquipe(int ID_Equipe)
     for(int i=0 ; i < db->resultatSelectMultiLignes.size() ; i++){
         QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);
         if(qlistTemp.size() == 7){
-            Robot robotTemp ;
-            robotTemp.setId(qlistTemp.at(0).toInt());
+            Robot * robotTemp = new Robot();
+            robotTemp->setId(qlistTemp.at(0).toInt());
 
             //Placement du robot sur une Zone de Départ
             Tile zoneDepLibre = getZoneDepartLibre();
             if(zoneDepLibre.getX() == -1)
                 return false;
-            robotTemp.setCoordonnees(zoneDepLibre);
-            entrepot->AddRobot(robotTemp);
+            robotTemp->setCoordonnees(zoneDepLibre);
+            entrepot->AddRobot(*robotTemp);
 
-            listeRobots[robotTemp.getId()] = robotTemp;
+            listeRobots[robotTemp->getId()] = robotTemp;
         }
     }
 
@@ -167,13 +207,17 @@ void Simulation::ChargerListeTaches(int ID_Liste_Taches)
     for(int i=0 ; i < db->resultatSelectMultiLignes.size() ; i++){
         QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);
         if(qlistTemp.size() == 6){
-            Tache tache = Tache(qlistTemp.at(1).toDouble(),
-                                qlistTemp.at(2).toInt(),
-                                qlistTemp.at(3).toInt(),
-                                qlistTemp.at(4).toInt(),
-                                qlistTemp.at(5).toInt());
-            listeRobots[qlistTemp.at(0).toInt()].addTache(tache);
-            //Tache(double _poids, int _departX, int _departY, int _arriveX, int _arriveY)
+            int ID_Robot = qlistTemp.at(0).toInt();
+            double Poids_Tache = qlistTemp.at(2).toDouble();
+            int Depart_X = qlistTemp.at(2).toInt();
+            int Depart_Y = qlistTemp.at(3).toInt();
+            int Arrive_X = qlistTemp.at(4).toInt();
+            int Arrive_Y = qlistTemp.at(5).toInt();
+            Tache * tacheTmp = new Tache(Poids_Tache, Depart_X, Depart_Y, Arrive_X, Arrive_Y);
+            taches.ajoutTache(tacheTmp);
+            listeRobots[ID_Robot]->listeTaches.ajoutTache(tacheTmp);
+            //On remplit le départ
+            entrepot->tab[Depart_X][Depart_Y] = MapScene::ARMOIREPLEINE;
         }
     }
 }

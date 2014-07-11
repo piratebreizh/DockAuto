@@ -2,6 +2,7 @@
 #define SIMULATION_H
 #include "Entrepot.h"
 #include "Robot.h"
+#include "Listetache.h"
 #include "Tile.h"
 #include "gestiondb.h"
 
@@ -30,7 +31,8 @@ public:
 
 private :
     Entrepot * entrepot;
-    QMap<int, Robot> listeRobots;
+    QMap<int, Robot*> listeRobots;
+    Listetache taches;
     QList<Tile> listeZonesDepart;
 };
 
