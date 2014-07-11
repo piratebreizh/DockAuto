@@ -41,9 +41,13 @@ void ViewDefinirTache::initialisationComposant()
     sauvegarder->setEnabled(false);
     annuler = new QPushButton("Retour");
 
+
+    this->menuListeDesTaches->viewMenuSimulation->simulation->ChargerDepot(this->menuListeDesTaches->viewMenuSimulation->depotSelectionne->getId());
     map=new QGridLayout();
     scene = new QGraphicsScene();
     lamap = new MapScene(scene);
+    lamap->setDepot(this->menuListeDesTaches->viewMenuSimulation->simulation->getEntrepot());
+    //lamap->lectureSeule = true;
     lamap->AfficherMap();
     lamap->entrerEnModeDefinitionTache(this);
 
