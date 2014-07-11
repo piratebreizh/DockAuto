@@ -6,18 +6,34 @@ Tile::Tile()
 {
 }
 
-void Tile::setX(int x){
+Tile::Tile(int x, int y)
+{
     this->x=x;
-}
-
-void Tile::setY(int y){
     this->y=y;
 }
 
-int Tile::getX(){
+void Tile::setCoordonnees(Tile t)
+{
+    this->x=t.getX();
+    this->y=t.getY();
+}
+
+void Tile::setX(int x)
+{
+    this->x=x;
+}
+
+void Tile::setY(int y)
+{
+    this->y=y;
+}
+
+int Tile::getX()
+{
     return x;
 }
 
-int Tile::getY(){
+int Tile::getY()
+{
     return y;
 }

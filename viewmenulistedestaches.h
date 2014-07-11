@@ -21,7 +21,9 @@ class Listetache;
 class ViewMenuListeDesTaches: public QDialog
 {
     Q_OBJECT
+
 public:
+
     ViewMenuListeDesTaches(ViewMenuSimulation * _viewMenuSimulation);
     void initialisationComposant();
     void definitonLayout();
@@ -29,10 +31,13 @@ public:
     ViewMenuSimulation * viewMenuSimulation;
     Tache * nouvelleTacheTemp;
     Robot * nouveauRobotTemp;
+    Listetache * listeTache;
 
 public slots :
+
     void executerViewDefinirTache();
     void ajouterTacheDansListe();
+    void CliqueSauvegarder();
 
 private :
 
@@ -50,8 +55,11 @@ private :
     QPushButton * pushSauvegarder;
     QPushButton * pushAnnuler;
 
-    Listetache * listeTache;
+    QLabel * confirmationEnregistrement;
 
+    void enregistrementDansLaTableListetache();
+    void initialisationIDListeTache();
+    void enregistrementDansLaTableTache();
 
 };
 

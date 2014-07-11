@@ -44,17 +44,21 @@ public:
     Robot  robotTemp;
 
 public slots:
+
     void appelAjoutRobot();
     void ajouterRobotDansList();
     void deleteViewAjoutRobot();
     void declanchementSauvegardeCompleteEquipe();
+    bool messageConfimationCreationEquipe();
 
 private:
+
     Equipe *equipe;
     QLineEdit * champNomEquipe;
     QFormLayout *layoutSencondaire;
     QPushButton *ajouterRobot;
 
+    QLabel * labelConfirmation;
     QTableView *resultView;
     QStandardItemModel * model;
 
@@ -64,14 +68,13 @@ private:
 
     QList <Robot> * tableRobot;
 
-    GestionDB * gestionDB;
-
     void resetTousLesChamps();
     int dernierIDEquipeEnBase();
     void recuperationAttributEquipe();
-    bool sauvegardEquipeEnBase();
-    bool sauvegardListeRobotEnBase();
+    bool sauvegardeEquipeEnBase();
+    bool sauvegardeListeRobotsEnBase();
     bool sauvegardLienEquipeRobot();
+    void reinitialisationChamps();
 };
 
 #endif // VIEWGESTIONEQUIPE_H

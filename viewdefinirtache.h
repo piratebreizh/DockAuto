@@ -13,39 +13,20 @@
 #include <listetache.h>
 #include <QComboBox>
 #include <robot.h>
+#include <mapscene.h>
 
+class MapScene;
 class ViewMenuListeDesTaches;
 class ViewMenuSimulation;
 
 class ViewDefinirTache : public QDialog
 {
     Q_OBJECT
+
 public:
+
     ViewDefinirTache(ViewMenuListeDesTaches * _menuListeDesTaches);
     ViewMenuListeDesTaches * menuListeDesTaches;
-
-
-public slots :
-    void cliqueAjouterDepart();
-    void cliqueAjouterArrive();
-    void ajouterNouvelleTacheALaListeDeTache();
-    void switchBoutonLabelDefinir();
-
-
-
-private :
-
-    QGridLayout * mainLayout;
-    QGridLayout * layoutMenuDroiteSelection;
-
-    QLabel * labelRobot;
-    QComboBox * listeDeroulanteRobot;
-
-
-    QLabel * messageConfirmationAjout;
-
-    QLabel * labelPoids;
-    QLineEdit * champPoids;
 
     QLabel * labelDepart;
     QLabel * champDepart;
@@ -62,15 +43,44 @@ private :
     QPushButton * sauvegarder;
     QPushButton * annuler;
 
+    int departX;
+    int departY;
+    int arriveX;
+    int arriveY;
+
+public slots :
+
+    void cliqueAjouterDepart();
+    void cliqueAjouterArrive();
+    void ajouterNouvelleTacheALaListeDeTache();
+    void switchBoutonLabelDefinir();
+
+private :
+
+    QGridLayout * mainLayout;
+    QGridLayout * layoutMenuDroiteSelection;
+
+    QLabel * labelRobot;
+    QComboBox * listeDeroulanteRobot;
+
+    QLabel * messageConfirmationAjout;
+
+    QLabel * labelPoids;
+    QLineEdit * champPoids;
+
     QList<Robot> * listeRobot;
+
+    QGridLayout * map;
+    QGraphicsScene * scene;
+    MapScene * lamap;
+    QGraphicsView * vue;
 
     void initialisationComposant();
     void definitonLayout();
-    void chargerListeDeroulanteDesRobot();
+    void chargerListeDeroulanteDesRobots();
     void chargerListeRobotEnBase(int ID_Equipe);
-    void  viderTousLesChamps();
-
-
+    void viderTousLesChamps();
+    void positionneFenetre();
 
 };
 

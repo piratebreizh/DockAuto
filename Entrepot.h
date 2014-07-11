@@ -12,13 +12,14 @@ using namespace std;
 class Robot;
 class Equipe;
 class Map;
-class Armoir;
+class Armoire;
 
 class Entrepot : public Map
 {
 public:
     Entrepot();
     Entrepot(int,QString);
+    Entrepot(Entrepot *e);
     ~Entrepot();
     void AddArmoire(Armoire&);
     void RemoveArmoire(Armoire&);
@@ -28,9 +29,12 @@ public:
     void setLargeur(int);
     int getLongueur();
     void setLongueur(int);
+    int getId();
+    void setId(int);
     QString getNom();
     void setNom(QString);
     void RedefTab(int, int);
+    void copieEntrepot(Entrepot *);
 
 
 private:
@@ -39,6 +43,7 @@ private:
     int longueur;
     int largeur;
     QString nom;
+    int id;
 
 };
 

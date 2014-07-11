@@ -1,223 +1,127 @@
-/****************************************************************************
-**
-** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
-** Contact: http://www.qt-project.org/legal
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** You may use this file under the terms of the BSD license as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of Digia Plc and its Subsidiary(-ies) nor the names
-**     of its contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
-
-
 #include "FenetrePrincipale.h"
 #include <QtWidgets>
 #include "ui_mainwindow.h"
 
+#include "simulation.h"
 
-
-//! [0]
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) : QMainWindow(parent)
 {
+    setWindowTitle(tr("DockAuto"));
+    positionne();
 
-    ui = new Ui::MainWindow;
-    ui->setupUi(this);
-
-
-    //createMenu();
-   // createHorizontalGroupBox();
-    //createGridGroupBox();
-    //createFormGroupBox();
-
-     createBarreDeLancement();
-
-     //viewmap = new ViewMap;
-
-//! [0]
-
-//! [1]
-    bigEditor = new QTextEdit;
-    bigEditor->setPlainText(tr("This widget takes up all the remaining space "
-                               "in the top-level layout."));
-
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
-                                     | QDialogButtonBox::Cancel);
-
-
-
-
-
-    QHBoxLayout *mainLayout = new QHBoxLayout;
-
- //   mainLayout->setMenuBar(menuBar);
-
-
-    mainLayout->addWidget(barreLancement);
-    //mainLayout->addWidget(viewmap);
-
-
-//! [4] //! [5]
+    //initialisation mainlayout
+    mainLayout = new QHBoxLayout();
     setCentralWidget(new QWidget);
     centralWidget()->setLayout(mainLayout);
 
-    //setWindowTitle(tr("Basic Layouts"));*/
+    createBarreDeLancement();
+    createMap();
 }
-//! [5]
 
-//! [6]
-void FenetrePrincipale::createMenu()
+/**
+ * @brief Positionne la fenêtre au centre de l'écran
+ */
+void FenetrePrincipale::positionne()
 {
-    menuBar = new QMenuBar;
-
-    fileMenu = new QMenu(tr("&File"), this);
-    exitAction = fileMenu->addAction(tr("E&xit"));
-    menuBar->addMenu(fileMenu);
-
-    connect(exitAction, SIGNAL(triggered()), this, SLOT(accept()));
+    const QRect screen = QApplication::desktop()->screenGeometry();
+    const QPoint delta = QPoint(0,100);
+    this->move( screen.center() - this->rect().center() - delta);
 }
-//! [6]
 
-//! [7]
-/*void FenetrePrincipale::createHorizontalGroupBox()
+void FenetrePrincipale::createBarreDeLancement()
 {
-    horizontalGroupBox = new QGroupBox(tr("Horizontal layout"));
-    QHBoxLayout *layout = new QHBoxLayout;
-
-    for (int i = 0; i < NumButtons; ++i) {
-        buttons[i] = new QPushButton(tr("Button %1").arg(i + 1));
-    layout->addWidget(buttons[i]);
-    }
-    horizontalGroupBox->setLayout(layout);
-}*/
-//! [7]
-
-//! [8]
-void FenetrePrincipale::createGridGroupBox()
-{
-
-    gridGroupBox = new QGroupBox(tr("Grid layout"));
-//! [8]
-    QGridLayout *layout = new QGridLayout;
-
-//! [9]
-    for (int i = 0; i < NumGridRows; ++i) {
-        labels[i] = new QLabel(tr("Line %1:").arg(i + 1));
-        lineEdits[i] = new QLineEdit;
-        layout->addWidget(labels[i], i + 1, 0);
-        layout->addWidget(lineEdits[i], i + 1, 1);
-    }
-
-//! [9] //! [10]
-    smallEditor = new QTextEdit;
-    smallEditor->setPlainText(tr("This widget takes up about two thirds of the "
-                                 "grid layout."));
-    layout->addWidget(smallEditor, 0, 2, 4, 1);
-//! [10]
-
-//! [11]
-    layout->setColumnStretch(1, 10);
-    layout->setColumnStretch(2, 20);
-    gridGroupBox->setLayout(layout);
-}
-//! [11]
-
-//! [12]
-void FenetrePrincipale::createFormGroupBox()
-{
-    formGroupBox = new QGroupBox(tr("Form layout"));
-    QFormLayout *layout = new QFormLayout;
-    layout->addRow(new QLabel(tr("Line 1:")), new QLineEdit);
-
-    QComboBox *a = new QComboBox();
-
-    QStringList *b = new QStringList();
-    b->append("Premier");
-    b->append("Deuxième");
-
-    a->addItems(*b);
-
-    layout->addRow(new QLabel(tr("Line 2, long text:")), a);
-    ;
-    layout->addRow(new QLabel(tr("Line 3:")), new QSpinBox);
-    formGroupBox->setLayout(layout);
-}
-//! [12]
-
-
-void FenetrePrincipale::createBarreDeLancement(){
-    barreLancement = new QGroupBox(tr("Barre de lancement"));
-
-    QHBoxLayout *layout = new QHBoxLayout;
+    barreLancement = new QGridLayout;
 
     gestionDesEquipe = new QPushButton(tr("&Gestion des équipes"));
     gestionDesEquipe->setFocusPolicy(Qt::NoFocus);
-    nouvelleSimulation = new QPushButton(tr("&Nouvelle simulation"));
+    nouvelleSimulation = new QPushButton(tr("&Simulation"));
     nouvelleSimulation->setFocusPolicy(Qt::NoFocus);
-    gestionDesDepots = new QPushButton(tr("&Gestion des dépots"));
+    gestionDesDepots = new QPushButton(tr("&Gestion des dépôts"));
     demarrerSimulation = new QPushButton(tr("&Start"));
+    demarrerSimulation->setEnabled(false);
     demarrerSimulation->setFocusPolicy(Qt::NoFocus);
     pauseSimulation = new QPushButton(tr("&Stop"));
     pauseSimulation->setFocusPolicy(Qt::NoFocus);
+    pauseSimulation->setEnabled(false);
 
-    layout->addWidget(nouvelleSimulation);
-    layout->addWidget(gestionDesEquipe);
-    layout->addWidget(gestionDesDepots);
-    layout->addWidget(demarrerSimulation);
-    layout->addWidget(pauseSimulation);
-
-
-
-    //viewGestionEquipe = new ViewGestionEquipe;
+    barreLancement->addWidget(nouvelleSimulation);
+    barreLancement->addWidget(gestionDesEquipe);
+    barreLancement->addWidget(gestionDesDepots);
+    barreLancement->addWidget(demarrerSimulation);
+    barreLancement->addWidget(pauseSimulation);
 
     QWidget::connect(gestionDesEquipe, SIGNAL(clicked()), this, SLOT(lancementViewCreationEquipe()));
     QWidget::connect(gestionDesDepots, SIGNAL(clicked()), this, SLOT(lancementViewCreationDepot()));
     QWidget::connect(nouvelleSimulation, SIGNAL(clicked()), this, SLOT(lancementViewMenuSimulation()));
+    QWidget::connect(demarrerSimulation, SIGNAL(clicked()), this, SLOT(lancerSimulation()));
 
-    barreLancement->setLayout(layout);
+    mainLayout->addLayout(barreLancement);
 }
 
-
-void FenetrePrincipale::lancementViewCreationEquipe(){
+void FenetrePrincipale::lancementViewCreationEquipe()
+{
     viewGestionEquipe = new ViewGestionEquipe();
     viewGestionEquipe->exec();
 }
 
-
-void FenetrePrincipale::lancementViewCreationDepot(){
+void FenetrePrincipale::lancementViewCreationDepot()
+{
     viewCreationDepot = new ViewCreationDepot();
     viewCreationDepot->exec();
 }
 
-void FenetrePrincipale::lancementViewMenuSimulation(){
-    viewMenuSimulation = new ViewMenuSimulation();
+void FenetrePrincipale::lancementViewMenuSimulation()
+{
+    viewMenuSimulation = new ViewMenuSimulation(this);
     viewMenuSimulation->exec();
+}
+
+void FenetrePrincipale::lancerSimulation()
+{
+    boolean resultat = simulation->LancerSimulation();
+    qDebug() << "resultat simulation : " << resultat;
+}
+
+
+void FenetrePrincipale::createMap()
+{
+    map=new QGridLayout();
+    scene = new QGraphicsScene();
+    lamap = new MapScene(scene);
+    lamap->lectureSeule = true;
+    //Map
+    vue = new QGraphicsView(lamap);
+    vue->setMinimumSize(LONGUEUR*LONGUEURPIX+5,LONGUEUR*LONGUEURPIX+5);
+    vue->setMaximumSize(LONGUEUR*LONGUEURPIX+5,LONGUEUR*LONGUEURPIX+5);
+    vue->show();
+    map->addWidget(vue);
+    mainLayout->addLayout(map);
+}
+
+/*
+ * A VOUS DE CODER A PARTIR DE LA
+ * Cette fonction est appelé lors de la définition d'une simulation dans l'interface Simulation (viewMenuSimulation)
+ * Que ce soit une ancienne simulation ou une nouvelle
+ * */
+void FenetrePrincipale::definirSimulation(Simulation *_simulation)
+{
+    int iddep;
+    simulation = _simulation;
+    demarrerSimulation->setEnabled(true);
+    pauseSimulation->setEnabled(true);
+    GestionDB * db = GestionDB::getInstance();
+    try{
+        db->Select("SELECT Id_Entrepot, ID_Equipe FROM simulation WHERE ID_Simulation=" + QString::number(simulation->IdSimulation));
+    }catch(exception e){
+        qDebug()<<e.what();
+    }
+    iddep = db->getResultat(0).toInt();
+    simulation->ChargerDepot(iddep);
+    int ID_Equipe = db->getResultat(1).toInt();
+    simulation->ChargerEquipe(ID_Equipe);
+
+    simulation->mapScene = lamap;
+    lamap->setDepot(simulation->getEntrepot());
+    lamap->lectureSeule = true;
+    lamap->AfficherMap();
 }

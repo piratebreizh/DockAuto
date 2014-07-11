@@ -3,6 +3,7 @@
 #include<string>
 #include "Tile.h"
 #include "Entrepot.h"
+#include <QtSql>
 
 using namespace std;
 
@@ -13,9 +14,8 @@ class Robot : public Tile
 {
 public:
     Robot();
-    Robot(int,string);
     Robot(int,QString);
-    string getNom();
+    QString getNom();
     void setNom(string);
     int getId();
     void setId(int);
@@ -24,10 +24,9 @@ public:
 
 
     int idRobot;
-    string nomRobot;
-    QString nomRobot2;
+    QString nomRobot;
 
-    //Position sur la map
+    //PositnomRobota map
     //int xPositionRobot;
     //int yPositionRobot;
 
@@ -35,7 +34,7 @@ public:
     double longueurRobot;
     double largeurRobot;
 
-    //Afin de déterminer si le robit peut prendre une cargaison
+    //Afin de déterminer si le robot peut prendre une cargaison
     double poidsCapaciteDeCharge;
     double longueurCapaciteDeCharge;
     double largeurCapactiteDeCharge;

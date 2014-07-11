@@ -6,26 +6,51 @@
 #include <QVariant>
 #include <vector>
 #include <string>
+#include <iostream>
 
 using namespace std;
 class GestionDB
 {
 public:
-    GestionDB();
-    GestionDB(const QString&,const QString&,const QString&,const QString&);
-    ~GestionDB();
+    static GestionDB * getInstance()
+    {
+        if (NULL == _singleton)
+            _singleton =  new GestionDB;
+
+        return _singleton;
+    }
+
+    static void kill()
+    {
+      if (NULL != _singleton)
+        {
+          delete _singleton;
+          _singleton = NULL;
+        }
+    }
+
     void Requete(const QString&);
     void Select(const QString&);
+    void SelectFirst(const QString&);
     void AfficheResultatsSelect();
+    QString getResultat(unsigned int);
+    void selectMutliLigne(const QString &);
+    void afficherResultatSelectMultiple();
+    int getNbResultat();
+
+    QList< QList<QVariant> > resultatSelectMultiLignes;
+    vector<QVariant> ResultatRequete;
 
 private:
+    static GestionDB * _singleton;
     QSqlDatabase db;
-    vector<QVariant> ResultatRequete;
     int NbResultatRequete;
-    QString HostName="localhost";
-    QString UserName="root";
-    QString Password="";
-    QString DatabaseName="DockAutodb";
+    QString HostName;
+    QString UserName;
+    QString Password;
+    QString DatabaseName;
+    GestionDB();
+    ~GestionDB();
 };
 
 #endif // GESTIONDB_H

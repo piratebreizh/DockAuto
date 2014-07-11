@@ -19,6 +19,10 @@ SET time_zone = "+00:00";
 --
 -- Base de données: `DockAutodb`
 --
+
+DROP DATABASE IF EXISTS `DockAutodb`;
+
+
 CREATE DATABASE IF NOT EXISTS `DockAutodb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `DockAutodb`;
 
@@ -60,26 +64,15 @@ CREATE TABLE IF NOT EXISTS `cargaison` (
 
 CREATE TABLE IF NOT EXISTS `entrepot` (
   `ID_Entrepot` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
-  `Nom` varchar(100) NOT NULL COMMENT 'Nom de l''entrepôt',
-  `Longueur` int(11) NOT NULL COMMENT 'Longueur de l''entrepot',
-  `Largeur` int(11) NOT NULL COMMENT 'Largeur de l''entrepot',
+  `Nom_Entrepot` varchar(100) NOT NULL COMMENT 'Nom de l''entrepôt',
+  `Longueur_Entrepot` double NOT NULL COMMENT 'Longueur de l''entrepot',
+  `Largeur_Entrepot` double NOT NULL COMMENT 'Largeur de l''entrepot',
   PRIMARY KEY (`ID_Entrepot`),
   UNIQUE KEY `ID_Entrepot` (`ID_Entrepot`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Entrepôt gérer par un tableau en 2d';
 
 -- --------------------------------------------------------
 
---
--- Structure de la table `liste_taches`
---
-
-CREATE TABLE IF NOT EXISTS `liste_taches` (
-  `ID_Liste_Taches` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
-  `ID_Simulation` int(11) NOT NULL COMMENT 'Clé de la simulation',
-  PRIMARY KEY (`ID_Liste_Taches`),
-  UNIQUE KEY `ID_Liste_Taches` (`ID_Liste_Taches`),
-  KEY `ID_Simulation` (`ID_Simulation`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Liste des tâches d''une simulation';
 
 -- --------------------------------------------------------
 
@@ -88,27 +81,11 @@ CREATE TABLE IF NOT EXISTS `liste_taches` (
 --
 
 CREATE TABLE IF NOT EXISTS `liste_taches` (
-  `ID_Liste_Taches` int(11) NOT NULL COMMENT 'Clé de la liste de tâches',
-  `ID_Tache` int(11) NOT NULL COMMENT 'Clé de la liste de tâches',
+  `ID_Liste_Taches` int(11) AUTO_INCREMENT NOT NULL,
+  `Nom_Liste_Taches` varchar(100),
    PRIMARY KEY (`ID_Liste_Taches`),
   KEY `ID_Liste_Taches` (`ID_Liste_Taches`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Liste des tâches d''un robot';
-
--- --------------------------------------------------------
-
---
--- Structure de la table `mappe`
---
-
-CREATE TABLE IF NOT EXISTS `mappe` (
-  `ID_Mappe` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
-  `Longueur` int(11) NOT NULL COMMENT 'Longeur de la Mappe (nb de lignes du tableau)',
-  `Largeur` int(11) NOT NULL COMMENT 'Largeur de la Mappe (nb de colonnes du tableau)',
-  `ID_Entrepot` int(11) NOT NULL COMMENT 'Clé de l''entrepôt',
-  PRIMARY KEY (`ID_Mappe`),
-  UNIQUE KEY `ID_Mappe` (`ID_Mappe`),
-  KEY `ID_Entrepot` (`ID_Entrepot`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Mappe décrivant un entrepôt';
 
 -- --------------------------------------------------------
 
@@ -117,12 +94,15 @@ CREATE TABLE IF NOT EXISTS `mappe` (
 --
 
 CREATE TABLE IF NOT EXISTS `robot` (
-  `ID_Robot` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
-  `Longueur` int(11) NOT NULL COMMENT 'Longueur d''un robot',
-  `Largeur` int(11) NOT NULL COMMENT 'Largeur d''un robot',
-  `Capacite` int(11) NOT NULL COMMENT 'Capacité de transport d''un robot',
-  `Vitesse` float NOT NULL COMMENT 'Vitesse de déplacement d''un robot',
-  `ID_Equipe` int(11) NOT NULL COMMENT 'Clé étrangère de l ID equipe',
+  `ID_Robot` int(11) NOT NULL AUTO_INCREMENT ,
+  `Nom_Robot` varchar(50) ,
+  `Longueur_Robot` double ,
+  `Largeur_Robot` double  ,
+  `Vitesse_Robot` double  ,
+  `Longueur_Capacite_De_Charge_Robot` double  ,
+  `Largeur_Capactite_De_Charge_Robot` double  ,
+  `Poids_Capacite_De_Charge_Robot` double  ,
+  `ID_Equipe` int ,
   PRIMARY KEY (`ID_Robot`),
   UNIQUE KEY `ID_Robot` (`ID_Robot`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Robot';
@@ -135,9 +115,10 @@ CREATE TABLE IF NOT EXISTS `robot` (
 
 CREATE TABLE IF NOT EXISTS `simulation` (
   `ID_Simulation` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
+  `Nom_Simulation` varchar(100) ,
   `ID_Entrepot` int(11) NOT NULL COMMENT 'Clé de l''entrepôt',
   `ID_Equipe` int(11) NOT NULL COMMENT 'Clé de l''équipe',
-  `ID_Liste_Taches` int(11) NOT NULL COMMENT 'Clé de l''équipe',
+  `ID_Liste_Taches` int(11) NOT NULL COMMENT 'Clé de la liste de tache',
   PRIMARY KEY (`ID_Simulation`),
   UNIQUE KEY `ID_Simulation` (`ID_Simulation`),
   KEY `ID_Entrepot` (`ID_Entrepot`)
@@ -151,13 +132,15 @@ CREATE TABLE IF NOT EXISTS `simulation` (
 
 CREATE TABLE IF NOT EXISTS `tache` (
   `ID_Tache` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé de la table',
-  `Statut` int(11) NOT NULL COMMENT 'Statut de la tâche',
-  `ID_Cargaison` int(11) NOT NULL COMMENT 'Clé de la cargaison',
-  `ID_Armoire` int(11) NOT NULL COMMENT 'Clé de l''armoire',
+  `Poids_Tache` double NOT NULL ,
+  `Depart_X` int(11) NOT NULL ,
+  `Depart_Y` int(11) NOT NULL ,
+  `Arrive_X` int(11) NOT NULL ,
+  `Arrive_Y` int(11) NOT NULL ,
+  `ID_Liste_Taches` int(11) NOT NULL ,
+  `ID_Robot` int(11) NOT NULL ,
   PRIMARY KEY (`ID_Tache`),
-  UNIQUE KEY `ID_Tache` (`ID_Tache`),
-  KEY `ID_Cargaison` (`ID_Cargaison`),
-  KEY `ID_Armoire` (`ID_Armoire`)
+  UNIQUE KEY `ID_Tache` (`ID_Tache`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tâche avec une cargaison et une armoire';
 
 -- --------------------------------------------------------
@@ -171,10 +154,10 @@ CREATE TABLE IF NOT EXISTS `tile` (
   `X` int(11) NOT NULL COMMENT 'Position en abcisse de la Tile sur la Mappe',
   `Y` int(11) NOT NULL COMMENT 'Position en ordonnée de la Tile sur la Mappe',
   `ID_Type` int(11) NOT NULL COMMENT 'Type de Tile (0=vide,1=Armoire,Id=Id objet)',
-  `ID_Mappe` int(11) NOT NULL COMMENT 'Clé de la Mappe',
+  `ID_Entrepot` int(11) NOT NULL COMMENT 'Clé de la Mappe',
   PRIMARY KEY (`ID_Tile`),
   UNIQUE KEY `ID_Tile` (`ID_Tile`),
-  KEY `ID_Mappe` (`ID_Mappe`)
+  KEY `ID_Entrepot` (`ID_Entrepot`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tile de la Mappe';
 
 -- --------------------------------------------------------
@@ -196,34 +179,12 @@ CREATE TABLE IF NOT EXISTS `equipe` (
 --
 
 --
--- Contraintes pour la table `armoire`
+-- Contraintes pour la table `tache`
 --
-ALTER TABLE `armoire`
-  ADD CONSTRAINT `armoire_ibfk_1` FOREIGN KEY (`ID_Entrepot`) REFERENCES `entrepot` (`ID_Entrepot`);
+ALTER TABLE `tache`
+  ADD CONSTRAINT `tache_ibfk_1` FOREIGN KEY (`ID_Liste_Taches`) REFERENCES `liste_taches` (`ID_Liste_Taches`),
+  ADD CONSTRAINT `tache_ibfk_2` FOREIGN KEY (`ID_Robot`) REFERENCES `robot` (`ID_Robot`);
 
---
--- Contraintes pour la table `cargaison`
---
-ALTER TABLE `cargaison`
-  ADD CONSTRAINT `cargaison_ibfk_1` FOREIGN KEY (`ID_Armoire`) REFERENCES `armoire` (`ID_Armoire`);
-
---
--- Contraintes pour la table `liste_taches`
---
-ALTER TABLE `liste_taches`
-  ADD CONSTRAINT `liste_taches_ibfk_1` FOREIGN KEY (`ID_Simulation`) REFERENCES `simulation` (`ID_Simulation`);
-
---
--- Contraintes pour la table `liste_taches_robot`
---
-ALTER TABLE `liste_taches`
-  ADD CONSTRAINT `liste_taches_ibfk_1` FOREIGN KEY (`ID_Tache`) REFERENCES `tache` (`ID_Tache`),
-
---
--- Contraintes pour la table `mappe`
---
-ALTER TABLE `mappe`
-  ADD CONSTRAINT `mappe_ibfk_1` FOREIGN KEY (`ID_Entrepot`) REFERENCES `entrepot` (`ID_Entrepot`);
 
 --
 -- Contraintes pour la table `simulation`
@@ -233,30 +194,17 @@ ALTER TABLE `simulation`
   ADD CONSTRAINT `simulation_ibfk_2` FOREIGN KEY (`ID_Equipe`) REFERENCES `equipe` (`ID_Equipe`),
   ADD CONSTRAINT `simulation_ibfk_3` FOREIGN KEY (`ID_Liste_Taches`) REFERENCES `liste_taches` (`ID_Liste_Taches`);
 
-
-  
-  
-    `ID_Entrepot` int(11) NOT NULL COMMENT 'Clé de l''entrepôt',
-  `ID_Equipe` int(11) NOT NULL COMMENT 'Clé de l''équipe',
-  `ID_Liste_Taches` int(11) NOT NULL COMMENT 'Clé de l''équipe',
---
--- Contraintes pour la table `tache`
---
-ALTER TABLE `tache`
-  ADD CONSTRAINT `tache_ibfk_2` FOREIGN KEY (`ID_Armoire`) REFERENCES `armoire` (`ID_Armoire`),
-  ADD CONSTRAINT `tache_ibfk_1` FOREIGN KEY (`ID_Cargaison`) REFERENCES `cargaison` (`ID_Cargaison`);
-
 --
 -- Contraintes pour la table `tile`
 --
 ALTER TABLE `tile`
-  ADD CONSTRAINT `tile_ibfk_1` FOREIGN KEY (`ID_Mappe`) REFERENCES `mappe` (`ID_Mappe`);
+  ADD CONSTRAINT `tile_ibfk_1` FOREIGN KEY (`ID_Entrepot`) REFERENCES `entrepot` (`ID_Entrepot`);
   
 --
 -- Contraintes pour la table `robot`
 --
 ALTER TABLE `robot`
-  ADD CONSTRAINT `robot_ibfk_1` FOREIGN KEY (`ID_EQUIPE`) REFERENCES `equipe` (`ID_Equipe`);
+  ADD CONSTRAINT `robot_ibfk_1` FOREIGN KEY (`ID_Equipe`) REFERENCES `equipe` (`ID_Equipe`);
   
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
