@@ -49,3 +49,8 @@ void Robot::move(Entrepot &e, int x, int y){
         e.AddRobot(*this);
     }
 }
+
+void Robot::addTache(Tache _tache)
+{
+    listeTaches.append(_tache);
+}

@@ -111,7 +111,7 @@ void FenetrePrincipale::definirSimulation(Simulation *_simulation)
     pauseSimulation->setEnabled(true);
     GestionDB * db = GestionDB::getInstance();
     try{
-        db->Select("SELECT Id_Entrepot, ID_Equipe FROM simulation WHERE ID_Simulation=" + QString::number(simulation->IdSimulation));
+        db->Select("SELECT Id_Entrepot, ID_Equipe, ID_Liste_Taches FROM simulation WHERE ID_Simulation=" + QString::number(simulation->IdSimulation));
     }catch(exception e){
         qDebug()<<e.what();
     }
@@ -119,6 +119,8 @@ void FenetrePrincipale::definirSimulation(Simulation *_simulation)
     simulation->ChargerDepot(iddep);
     int ID_Equipe = db->getResultat(1).toInt();
     simulation->ChargerEquipe(ID_Equipe);
+    int ID_Liste_Taches = db->getResultat(2).toInt();
+    simulation->ChargerListeTaches(ID_Liste_Taches);
 
     simulation->mapScene = lamap;
     lamap->setDepot(simulation->getEntrepot());

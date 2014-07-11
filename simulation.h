@@ -21,7 +21,7 @@ public:
     Tile getZoneDepartLibre();
 
     void ChargerDepot(int);
-    void ChargerEquipe(int);
+    bool ChargerEquipe(int);
     void ChargerListeTaches(int);
     Entrepot* getEntrepot();
 
@@ -30,7 +30,7 @@ public:
 
 private :
     Entrepot * entrepot;
-    QList<Robot> listeRobots;
+    QMap<int, Robot> listeRobots;
     QList<Tile> listeZonesDepart;
 };
 
