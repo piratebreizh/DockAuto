@@ -16,6 +16,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) : QMainWindow(parent)
 
     createBarreDeLancement();
     createMap();
+    verficationConnexionBaseDeDonnee();
 }
 
 /**
@@ -32,8 +33,13 @@ void FenetrePrincipale::createBarreDeLancement()
 {
     barreLancement = new QGridLayout;
 
+    messageControl = new QLabel();
+    messageControl->hide();
+
+
     gestionDesEquipe = new QPushButton(tr("&Gestion des équipes"));
     gestionDesEquipe->setFocusPolicy(Qt::NoFocus);
+
     nouvelleSimulation = new QPushButton(tr("&Simulation"));
     nouvelleSimulation->setFocusPolicy(Qt::NoFocus);
     gestionDesDepots = new QPushButton(tr("&Gestion des dépôts"));
@@ -44,6 +50,7 @@ void FenetrePrincipale::createBarreDeLancement()
     pauseSimulation->setFocusPolicy(Qt::NoFocus);
     pauseSimulation->setEnabled(false);
 
+    barreLancement->addWidget(messageControl);
     barreLancement->addWidget(nouvelleSimulation);
     barreLancement->addWidget(gestionDesEquipe);
     barreLancement->addWidget(gestionDesDepots);
@@ -126,4 +133,21 @@ void FenetrePrincipale::definirSimulation(Simulation *_simulation)
     lamap->setDepot(simulation->getEntrepot());
     lamap->lectureSeule = true;
     lamap->AfficherMap();
+}
+
+
+
+void FenetrePrincipale::verficationConnexionBaseDeDonnee(){
+    GestionDB * db = GestionDB::getInstance();
+    if(!db->baseConnecter()){
+        messageControl->setText("Aucune connexion à la base de données \n Contacter votre administrateur informatique");
+        messageControl->setStyleSheet("QLabel { color : red; }");
+        messageControl->show();
+
+        nouvelleSimulation->setEnabled(false);
+        gestionDesDepots->setEnabled(false);
+        gestionDesEquipe->setEnabled(false);
+        demarrerSimulation->setEnabled(false);
+        pauseSimulation->setEnabled(false);
+    }
 }

@@ -37,6 +37,8 @@ public:
     void selectMutliLigne(const QString &);
     void afficherResultatSelectMultiple();
     int getNbResultat();
+    bool baseConnecter();
+
 
     QList< QList<QVariant> > resultatSelectMultiLignes;
     vector<QVariant> ResultatRequete;

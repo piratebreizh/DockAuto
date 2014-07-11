@@ -38,6 +38,7 @@ public:
     FenetrePrincipale(QWidget *parent = 0);
     void definirSimulation(Simulation * _simulation);
     void createMap();
+    void verficationConnexionBaseDeDonnee();
 
 public slots:
 
@@ -84,6 +85,8 @@ private:
     ViewGestionEquipe * viewGestionEquipe;
     ViewCreationDepot * viewCreationDepot;
     ViewMenuSimulation * viewMenuSimulation;
+
+    QLabel * messageControl;
 };
 
 

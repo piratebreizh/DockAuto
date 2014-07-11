@@ -154,3 +154,13 @@ int GestionDB::getNbResultat()
 {
     return NbResultatRequete;
 }
+
+
+bool GestionDB::baseConnecter(){
+    if (db.open()){
+        return true;
+    }else{
+        return false;
+    }
+
+}
