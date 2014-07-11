@@ -78,7 +78,8 @@ void FenetrePrincipale::lancementViewMenuSimulation()
 
 void FenetrePrincipale::lancerSimulation()
 {
-    simulation->LancerSimulation();
+    boolean resultat = simulation->LancerSimulation();
+    qDebug() << "resultat simulation : " << resultat;
 }
 
 
@@ -110,12 +111,15 @@ void FenetrePrincipale::definirSimulation(Simulation *_simulation)
     pauseSimulation->setEnabled(true);
     GestionDB * db = GestionDB::getInstance();
     try{
-        db->Select("SELECT Id_Entrepot FROM simulation WHERE ID_Simulation=" + QString::number(simulation->IdSimulation));
+        db->Select("SELECT Id_Entrepot, ID_Equipe FROM simulation WHERE ID_Simulation=" + QString::number(simulation->IdSimulation));
     }catch(exception e){
         qDebug()<<e.what();
     }
     iddep = db->getResultat(0).toInt();
     simulation->ChargerDepot(iddep);
+    int ID_Equipe = db->getResultat(1).toInt();
+    simulation->ChargerEquipe(ID_Equipe);
+
     simulation->mapScene = lamap;
     lamap->setDepot(simulation->getEntrepot());
     lamap->lectureSeule = true;

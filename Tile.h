@@ -8,6 +8,7 @@ class Tile
 public:
     Tile();
     Tile(int,int);
+    void setCoordonnees(Tile);
     int getX();
     int getY();
     void setX(int);

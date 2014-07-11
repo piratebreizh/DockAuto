@@ -1,4 +1,5 @@
 #include "Entrepot.h"
+#include "MapScene.h"
 #include <QString>
 
 using namespace std;
@@ -24,7 +25,7 @@ void Entrepot::AddArmoire(Armoire &arm){
 }
 
 void Entrepot::AddRobot(Robot &rob){
-    if(tab[rob.getX()][rob.getY()]==0)
+    if(tab[rob.getX()][rob.getY()]==MapScene::VIDE || tab[rob.getX()][rob.getY()]==MapScene::ZONEDEP)
         tab[rob.getX()][rob.getY()]=rob.getId();
 }
 
@@ -43,7 +44,7 @@ void Entrepot::RedefTab(int _lon, int _lar){
     {
         for (int j = 0; j < LARGEUR; j++)
         {
-            tab[i][j]=-1;
+            tab[i][j]=MapScene::MUR;
         }
     }
 
@@ -51,7 +52,7 @@ void Entrepot::RedefTab(int _lon, int _lar){
     {
         for (int j = _lar+1; j < LARGEUR; j++)
         {
-            tab[i][j]=-1;
+            tab[i][j]=MapScene::MUR;
         }
     }
 }

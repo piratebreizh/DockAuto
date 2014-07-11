@@ -14,22 +14,24 @@ public:
     Simulation();
     QString * nomSimulation;
     int IdSimulation;
+    MapScene * mapScene;
 
-    void LancerSimulation();
+    bool LancerSimulation();
+
+    Tile getZoneDepartLibre();
 
     void ChargerDepot(int);
     void ChargerEquipe(int);
     void ChargerListeTaches(int);
     Entrepot* getEntrepot();
 
-    MapScene * mapScene;
 
     void RaffraichirMap();
 
 private :
     Entrepot * entrepot;
-    QList<Robot> * listeRobots;
-    QList<Tile> * listeZonesDepart;
+    QList<Robot> listeRobots;
+    QList<Tile> listeZonesDepart;
 };
 
 #endif // SIMULATION_H

@@ -12,6 +12,12 @@ Tile::Tile(int x, int y)
     this->y=y;
 }
 
+void Tile::setCoordonnees(Tile t)
+{
+    this->x=t.getX();
+    this->y=t.getY();
+}
+
 void Tile::setX(int x)
 {
     this->x=x;
