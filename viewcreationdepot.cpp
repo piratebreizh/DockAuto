@@ -172,6 +172,7 @@ bool ViewCreationDepot::initialisationDeLaMap(){
  */
 void ViewCreationDepot::SauvegardeMapDb(){
     lamap->SaveDepotDb();
+    this->close();
 }
 
 /**

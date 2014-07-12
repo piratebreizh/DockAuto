@@ -53,6 +53,7 @@ void GestionDB::Requete(const QString &req){
 void GestionDB::Select(const QString &sel){
     db.open();
     QSqlQuery query(db);
+    ResultatRequete.clear();
     if(query.exec(sel) && query.size()>0)
     {
         NbResultatRequete=query.record().count();

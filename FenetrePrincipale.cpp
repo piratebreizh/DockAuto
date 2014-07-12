@@ -196,6 +196,7 @@ void FenetrePrincipale::createMap(){
     map=new QGridLayout();
     scene = new QGraphicsScene();
     lamap = new MapScene(scene);
+    lamap->lectureSeule = true;
     //Map
     vue = new QGraphicsView(lamap);
     vue->setMinimumSize(600,600);
@@ -212,20 +213,22 @@ void FenetrePrincipale::createMap(){
  * */
 void FenetrePrincipale::definirSimulation(Simulation *_simulation){
     int iddep;
+    lamap->clear();
     simulation = _simulation;
     demarrerSimulation->setEnabled(true);
     pauseSimulation->setEnabled(true);
     GestionDB * db = GestionDB::getInstance();
+    qDebug()<<simulation->IdSimulation;
     try{
         db->Select("SELECT Id_Entrepot FROM simulation WHERE ID_Simulation=" + QString::number(simulation->IdSimulation));
     }catch(exception e){
         qDebug()<<e.what();
     }
     iddep = db->getResultat(0).toInt();
+    qDebug()<<iddep;
     simulation->ChargerDepot(iddep);
-    simulation->getEntrepot()->AfficheMap();
+    //simulation->getEntrepot()->AfficheMap();
     lamap->setDepot(simulation->getEntrepot());
-    lamap->getEntrepot()->AfficheMap();
-    lamap->lectureSeule = true;
+    //lamap->getEntrepot()->AfficheMap();
     lamap->AfficherMap();
 }
