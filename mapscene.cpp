@@ -17,10 +17,6 @@ MapScene::MapScene(QObject* parent)
     lectureSeule = false;
 }
 
-MapScene::~MapScene(){
-    delete e;
-}
-
 void MapScene::setInfoDepot(int lon, int larg, QString nom){
 
     e->setLargeur(larg);
@@ -84,6 +80,7 @@ void MapScene::AfficherMap()
 {
   QGraphicsItem *item;
   QPixmap image;
+
   //Gestion de l'affichage
   for (int i = 0; i < LONGUEUR; i++)
     {
@@ -142,12 +139,12 @@ void MapScene::AfficherMap()
  */
 void MapScene::SaveDepotDb(){
     GestionDB * db = GestionDB::getInstance();
-
     db->Requete("INSERT INTO entrepot (Nom_Entrepot,Longueur_Entrepot,Largeur_Entrepot) VALUES ('" + e->getNom() +
                "'," + QString::number(e->getLargeur()) + "," + QString::number(e->getLongueur()) + ")");
     db->Select("SELECT ID_Entrepot FROM entrepot ORDER BY ID_Entrepot DESC");
     e->setId(db->getResultat(0).toInt());
-    cout<<e->getId();
+
+
     //sauvegarde en base
     for (int i = 0; i < LONGUEUR; i++)
       {

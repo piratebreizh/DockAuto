@@ -113,25 +113,17 @@ void FenetrePrincipale::createMap()
 void FenetrePrincipale::definirSimulation(Simulation *_simulation)
 {
     int iddep;
-    lamap->clear();
     simulation = _simulation;
     demarrerSimulation->setEnabled(true);
     pauseSimulation->setEnabled(true);
     GestionDB * db = GestionDB::getInstance();
-    qDebug()<<simulation->IdSimulation;
     try{
         db->Select("SELECT Id_Entrepot, ID_Equipe, ID_Liste_Taches FROM simulation WHERE ID_Simulation=" + QString::number(simulation->IdSimulation));
     }catch(exception e){
         qDebug()<<e.what();
     }
     iddep = db->getResultat(0).toInt();
-    qDebug()<<iddep;
     simulation->ChargerDepot(iddep);
-<<<<<<< HEAD
-    //simulation->getEntrepot()->AfficheMap();
-    lamap->setDepot(simulation->getEntrepot());
-    //lamap->getEntrepot()->AfficheMap();
-=======
     int ID_Equipe = db->getResultat(1).toInt();
     simulation->ChargerEquipe(ID_Equipe);
     int ID_Liste_Taches = db->getResultat(2).toInt();
@@ -140,7 +132,6 @@ void FenetrePrincipale::definirSimulation(Simulation *_simulation)
     simulation->mapScene = lamap;
     lamap->setDepot(simulation->getEntrepot());
     lamap->lectureSeule = true;
->>>>>>> 055e8fde840c61d4e55e623c4590ae34ed7c2cd7
     lamap->AfficherMap();
 }
 

@@ -16,7 +16,6 @@ class MapScene : public QGraphicsScene
 public:
     MapScene();
     MapScene(QObject* parent);
-    ~MapScene();
     void setInfoDepot(int lon, int larg, QString nom);
     void SaveDepotDb();
     Entrepot* getEntrepot();
