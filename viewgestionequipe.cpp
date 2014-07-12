@@ -8,7 +8,6 @@ ViewGestionEquipe::ViewGestionEquipe(QWidget *parent) : QDialog(parent)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(parent);
 
-
     QGroupBox *groupeBox = new QGroupBox;
     tableRobot = new QList <Robot>;
     resultView = new QTableView();
@@ -36,9 +35,8 @@ ViewGestionEquipe::ViewGestionEquipe(QWidget *parent) : QDialog(parent)
     this->setLayout(mainLayout);
 }
 
-void ViewGestionEquipe::creationTableauRobot(){
-
-
+void ViewGestionEquipe::creationTableauRobot()
+{
     model= new QStandardItemModel();
 
     QStringList list;
@@ -54,12 +52,12 @@ void ViewGestionEquipe::creationTableauRobot(){
 
     resultView->setModel(model);
 
-
     resultView->verticalHeader()->hide();
     resultView->horizontalHeader()->setStretchLastSection(true);
     resultView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     resultView->show();
-    ajouterRobot = new QPushButton(tr("Ajouter un robot"));
+
+    ajouterRobot = new QPushButton(tr("Ajouter un robot"));    
     QWidget::connect(ajouterRobot, SIGNAL(clicked()), this, SLOT(appelAjoutRobot()));
 
     layoutSencondaire->addRow(new QLabel(tr("Liste des robots")));
@@ -68,12 +66,13 @@ void ViewGestionEquipe::creationTableauRobot(){
 
 }
 
-
-void ViewGestionEquipe::enregistrerEquipe(){
+void ViewGestionEquipe::enregistrerEquipe()
+{
     sauvegarde = new QPushButton(tr("Sauvegarder"));
     annuler = new QPushButton(tr("Retour"));
     connect(annuler, SIGNAL(clicked()), this, SLOT(deleteViewAjoutRobot()));
     connect(sauvegarde, SIGNAL(clicked()), this, SLOT(declanchementSauvegardeCompleteEquipe()));
+
     QGridLayout *layoutBottom = new QGridLayout();
     layoutBottom->addWidget(sauvegarde,0,0);
     layoutBottom->addWidget(annuler,0,1);
@@ -81,36 +80,37 @@ void ViewGestionEquipe::enregistrerEquipe(){
 }
 
 
-void ViewGestionEquipe::appelAjoutRobot(){
+void ViewGestionEquipe::appelAjoutRobot()
+{
     robotTemp = Robot();
     creationRobot = new ViewCreationRobot(this);
     creationRobot->exec();
 }
 
 
-void ViewGestionEquipe::deleteViewAjoutRobot(){
+void ViewGestionEquipe::deleteViewAjoutRobot()
+{
 
-    /* A REVOIR CAR SI ON ANNULE DIRECTEMENT SA PLANTE
+    /* A REVOIR CAR SI ON ANNULE DIRECTEMENT CA PLANTE
          creationRobot->deleteLater();
     */
     this->close();
 }
 
 
-void ViewGestionEquipe::ajouterRobotDansList(){
-
+void ViewGestionEquipe::ajouterRobotDansList()
+{
     tableRobot->append(this->robotTemp);
     QList <QStandardItem*> listItem;
 
-
-    if(!this->robotTemp.nomRobot.empty() &&
+    if(!this->robotTemp.nomRobot.isEmpty() &&
             this->robotTemp.largeurRobot != 0 &&
             this->robotTemp.longueurRobot != 0 &&
             this->robotTemp.vitesseRobot != 0 &&
             this->robotTemp.largeurCapactiteDeCharge != 0 &&
             this->robotTemp.longueurCapaciteDeCharge != 0 &&
             this->robotTemp.poidsCapaciteDeCharge != 0){
-        listItem.append(new QStandardItem (QString::fromUtf8(this->robotTemp.nomRobot.c_str())));
+        listItem.append(new QStandardItem (this->robotTemp.nomRobot));
         listItem.append(new QStandardItem (QString::number(this->robotTemp.largeurRobot)));
         listItem.append(new QStandardItem (QString::number(this->robotTemp.longueurRobot)));
         listItem.append(new QStandardItem (QString::number(this->robotTemp.vitesseRobot)));
@@ -120,65 +120,61 @@ void ViewGestionEquipe::ajouterRobotDansList(){
 
         model->appendRow(listItem);
     }
-
-
 }
 
-
-
 /**
- * Vide tous les champs à l'initialisation de la fenetre création équipe
-**/
-
+ * @brief Vide tous les champs à l'initialisation de la fenetre création équipe
+ */
 void ViewGestionEquipe::resetTousLesChamps(){
 
     this->model = new QStandardItemModel();
     this->resultView->setModel(model);
     this->resultView->show();
-
 }
 
-
 /**
- * Enregistrement de toutes l'équipe robot y compris dans la base de données
- * */
-void ViewGestionEquipe::declanchementSauvegardeCompleteEquipe(){
-
-    if(messageConfimationCretionEquipe()){
-        sauvegardEquipeEnBase();
-        sauvegardListeRobotEnBase();
+ * @brief Enregistrement de toutes l'équipe robot y compris dans la base de données
+ */
+void ViewGestionEquipe::declanchementSauvegardeCompleteEquipe()
+{
+    if(messageConfimationCreationEquipe()){
+        sauvegardeEquipeEnBase();
+        sauvegardeListeRobotsEnBase();
         reinitialisationChamps();
     }
 }
 
-
 /**
- * Construction de l'équipe grâce à tout les parramétres de l'IHM
- * */
-void ViewGestionEquipe::recuperationAttributEquipe(){
+ * @brief Construction de l'équipe grâce à tout les parramétres de l'IHM
+ */
+void ViewGestionEquipe::recuperationAttributEquipe()
+{
     equipe = new Equipe();
-    equipe->nomEquipe = champNomEquipe->text().toStdString();
+    equipe->nomEquipe = champNomEquipe->text();
 }
 
- /**
-   *Récupere le dernier ID d'équipe pour la création d'une nouvelle équipe
-   * */
-int ViewGestionEquipe::dernierIDEquipeEnBase(){
+/**
+ * @brief Récupere le dernier ID d'équipe pour la création d'une nouvelle équipe
+ * @return Dernier ID Equipe créé
+ */
+int ViewGestionEquipe::dernierIDEquipeEnBase()
+{
     GestionDB * db = GestionDB::getInstance();
     db->selectMutliLigne("SELECT MAX(ID_Equipe) FROM equipe;");
     return db->resultatSelectMultiLignes.at(0).at(0).toInt();
 }
 
-
 /**
-  Sauvegarde en base d'une nouvelle équipe
-**/
-bool ViewGestionEquipe::sauvegardEquipeEnBase(){
+ * @brief Sauvegarde en base d'une nouvelle équipe
+ * @return true si succès
+ */
+bool ViewGestionEquipe::sauvegardeEquipeEnBase()
+{
     recuperationAttributEquipe();
     GestionDB * db = GestionDB::getInstance();
     QString requeteInsert = ("INSERT INTO EQUIPE (Nom_Equipe) VALUES (");
     requeteInsert.append(" '");
-    requeteInsert.append(QString::fromStdString(equipe->nomEquipe));
+    requeteInsert.append(equipe->nomEquipe);
     requeteInsert.append("');");
 
     db->Requete(requeteInsert);
@@ -187,11 +183,11 @@ bool ViewGestionEquipe::sauvegardEquipeEnBase(){
 }
 
 /**
-  Sauvegarde en base d'une nouvelle liste de robot
-**/
-bool ViewGestionEquipe::sauvegardListeRobotEnBase(){
-
-
+ * @brief Sauvegarde en base d'une nouvelle liste de robot
+ * @return true si succès
+ */
+bool ViewGestionEquipe::sauvegardeListeRobotsEnBase()
+{
     equipe->idEquipe = dernierIDEquipeEnBase();
     bool firstVirgule = true;
     if(tableRobot->size()>0){
@@ -202,21 +198,21 @@ bool ViewGestionEquipe::sauvegardListeRobotEnBase(){
             }
             Robot robotTemp = tableRobot->at(i);
             requeteSQLInsert.append("'");
-            requeteSQLInsert.append(QString::fromUtf8(robotTemp.nomRobot.c_str()));
+            requeteSQLInsert.append(robotTemp.nomRobot);
             requeteSQLInsert.append("',");
             requeteSQLInsert.append(QString::number(robotTemp.longueurRobot));
             requeteSQLInsert.append( ",");
-            requeteSQLInsert .append(QString::number( robotTemp.largeurRobot));
-            requeteSQLInsert .append(",");
-            requeteSQLInsert .append(QString::number(robotTemp.vitesseRobot));
-            requeteSQLInsert .append( ",");
-            requeteSQLInsert .append(QString::number( robotTemp.longueurCapaciteDeCharge));
-            requeteSQLInsert .append(",");
-            requeteSQLInsert .append(QString::number( robotTemp.largeurCapactiteDeCharge));
-            requeteSQLInsert .append(",");
-            requeteSQLInsert .append(QString::number( robotTemp.poidsCapaciteDeCharge));
-            requeteSQLInsert .append(",");
-            requeteSQLInsert .append(QString::number( equipe->idEquipe));
+            requeteSQLInsert.append(QString::number( robotTemp.largeurRobot));
+            requeteSQLInsert.append(",");
+            requeteSQLInsert.append(QString::number(robotTemp.vitesseRobot));
+            requeteSQLInsert.append( ",");
+            requeteSQLInsert.append(QString::number( robotTemp.longueurCapaciteDeCharge));
+            requeteSQLInsert.append(",");
+            requeteSQLInsert.append(QString::number( robotTemp.largeurCapactiteDeCharge));
+            requeteSQLInsert.append(",");
+            requeteSQLInsert.append(QString::number( robotTemp.poidsCapaciteDeCharge));
+            requeteSQLInsert.append(",");
+            requeteSQLInsert.append(QString::number( equipe->idEquipe));
             firstVirgule = false;
         }
         requeteSQLInsert.append("); ");
@@ -227,17 +223,18 @@ bool ViewGestionEquipe::sauvegardListeRobotEnBase(){
 }
 
 
-void ViewGestionEquipe::reinitialisationChamps(){
+void ViewGestionEquipe::reinitialisationChamps()
+{
     champNomEquipe->setText("");
     equipe = new Equipe();
     tableRobot->clear();
     resetTousLesChamps();
 }
 
-bool ViewGestionEquipe::messageConfimationCretionEquipe(){
-
+bool ViewGestionEquipe::messageConfimationCreationEquipe()
+{
     if(!champNomEquipe->text().isEmpty() && tableRobot->size() > 0){
-        labelConfirmation->setText("La nouvelle équpe vient d'être enregistrée");
+        labelConfirmation->setText("La nouvelle équipe vient d'être enregistrée");
         labelConfirmation->setStyleSheet("QLabel { color : green; }");
         labelConfirmation->show();
         return true ;
@@ -248,10 +245,3 @@ bool ViewGestionEquipe::messageConfimationCretionEquipe(){
      }
     return false;
 }
-
-
-
-
-
-
-

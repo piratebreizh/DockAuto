@@ -6,9 +6,7 @@
 #include <QDebug>
 #include <QSettings>
 
-
 using namespace std;
-
 
 GestionDB *GestionDB::_singleton = NULL;
 
@@ -25,33 +23,35 @@ GestionDB::GestionDB()
       db.setUserName(UserName);
       db.setPassword(Password);
       db.setDatabaseName(DatabaseName);
-
 }
 
 /**
- * @brief GestionDB::Requete
+ * @brief Permet d'effectuer une requête INSERT, UPDATE, ALTER, ...
+ *      Pour les selections, utilisé la fonction Select
  * @param req
- * Permet d'effectuer une requete INSERT, UPDATE, ALTER, ...
- * Pour les selections, utilisé la fonction Select
+ *
  */
-void GestionDB::Requete(const QString &req){
+void GestionDB::Requete(const QString &req)
+{
     db.open();
     QSqlQuery query(db);
     if(!query.exec(req)){
-       cout<<"Erreur lors de l'execution de la requete " << query.lastError().text().toStdString()<<endl;
+       cout<<"Erreur lors de l'exécution de la requête : " << query.lastError().text().toStdString()<<endl;
     }
 
     db.close();
 }
 
 /**
- * @brief GestionDB::Select
+ * @brief Permet de récupérer les résultats pour la requête envoyée en paramètre
+ *      et le stocke dans ResultatRequete
  * @param sel
- * Permet de récupérer les résultats pour la requête envoyé en paramètre
- * et le stocke dans ResultatRequete
+ *
  */
-void GestionDB::Select(const QString &sel){
+void GestionDB::Select(const QString &sel)
+{
     db.open();
+    ResultatRequete.clear();
     QSqlQuery query(db);
     ResultatRequete.clear();
     if(query.exec(sel) && query.size()>0)
@@ -73,11 +73,10 @@ void GestionDB::Select(const QString &sel){
 }
 
 /**
- * @brief GestionDB::SelectFirst
- * Récupère la première valeur de la requête
+ * @brief Récupère la première valeur de la requête
  */
-
-void GestionDB::SelectFirst(const QString &){
+void GestionDB::SelectFirst(const QString &)
+{
     db.open();
     QSqlQuery query(db);
     if(query.size()>0)
@@ -88,15 +87,16 @@ void GestionDB::SelectFirst(const QString &){
 }
 
 /**
- * @brief GestionDB::AfficheResultatsSelect
- * Affiche les resultat de la requête dans la console
+ * @brief Affiche les resultat de la requête dans la console
  */
-void GestionDB::AfficheResultatsSelect(){
+void GestionDB::AfficheResultatsSelect()
+{
     for(int i=0;i<NbResultatRequete;i++)
         cout<<ResultatRequete[i].toString().toStdString()<<endl;
 }
 
-QString GestionDB::getResultat(unsigned int i){
+QString GestionDB::getResultat(unsigned int i)
+{
     if(ResultatRequete.size()>=i){
         return ResultatRequete[i].toString();
     }else{
@@ -104,37 +104,34 @@ QString GestionDB::getResultat(unsigned int i){
     }
 }
 
-GestionDB::~GestionDB(){
+GestionDB::~GestionDB()
+{
     NbResultatRequete=0;
     ResultatRequete.clear();
+    resultatSelectMultiLignes.clear();
     db.close();
 }
 
 /**
- * @brief GestionDB::SelectWithQsqlQuery
+ * @brief Retourne un QSqlQuery d'un select avec plusieurs lignes
  * @param sel
  * @return QSqlQuery
- * retourn un QSqlQuery d'un select avec plusieurs lignes
  */
 void GestionDB::selectMutliLigne(const QString &sel){
     db.open();
     resultatSelectMultiLignes.clear();
     QSqlQuery query(db);
-    resultatSelectMultiLignes.clear();
     if(query.exec(sel) && query.size()>0)
     {
-
         NbResultatRequete=query.record().count();
         while(query.next())
         {
             QList <QVariant> ligne;
             for(int x=0; x < NbResultatRequete; ++x)
             {
-
                 ligne.append(QVariant (query.value(x)));
             }
           resultatSelectMultiLignes.append(ligne);
-
         }
     }
     else{
@@ -144,8 +141,8 @@ void GestionDB::selectMutliLigne(const QString &sel){
     db.close();
 }
 
-
-void GestionDB::afficherResultatSelectMultiple(){
+void GestionDB::afficherResultatSelectMultiple()
+{
     for(int i = 0 ; i<resultatSelectMultiLignes.size();i++){
         QList <QVariant> qlistTemp = resultatSelectMultiLignes.at(i);
         for(int y=0; y<qlistTemp.size();y++){
@@ -154,17 +151,17 @@ void GestionDB::afficherResultatSelectMultiple(){
     }
 }
 
-int GestionDB::getNbResultat(){
+int GestionDB::getNbResultat()
+{
     return NbResultatRequete;
 }
 
 
+bool GestionDB::baseConnecter(){
+    if (db.open()){
+        return true;
+    }else{
+        return false;
+    }
 
-
-
-
-
-
-
-
-
+}

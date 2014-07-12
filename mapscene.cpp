@@ -124,7 +124,7 @@ void MapScene::AfficherMap()
               item->setPos(i*LONGUEURPIX, j*LARGEURPIX);
             }
           //Robot
-          if (e->tab[i][j] > MapScene::ZONEDEP)
+          if (e->tab[i][j] > MapScene::VIDE)
             {
               image.load(":/res/images/rob.png", 0, Qt::AutoColor);
               item = this->addPixmap(image);
@@ -156,12 +156,12 @@ void MapScene::SaveDepotDb(){
             //Armoire
             if (e->tab[i][j] == MapScene::ARMOIREVIDE)
               {
-                db->Requete("INSERT INTO tile (X,Y,ID_Type,ID_Entrepot) VALUES (" + QString::number(i) + "," + QString::number(j) + ",1," + QString::number(e->getId()) + ")");
+                db->Requete("INSERT INTO tile (X,Y,ID_Type,ID_Entrepot) VALUES (" + QString::number(i) + "," + QString::number(j) + ","+ QString::number(MapScene::ARMOIREVIDE) +"," + QString::number(e->getId()) + ")");
               }
             //Zone dep
             if (e->tab[i][j] == MapScene::ZONEDEP)
               {
-                db->Requete("INSERT INTO tile (X,Y,ID_Type,ID_Entrepot) VALUES (" + QString::number(i) + "," + QString::number(j) + ",3," + QString::number(e->getId()) + ")");
+                db->Requete("INSERT INTO tile (X,Y,ID_Type,ID_Entrepot) VALUES (" + QString::number(i) + "," + QString::number(j) + ","+ QString::number(MapScene::ZONEDEP) +"," + QString::number(e->getId()) + ")");
               }
         }
     }

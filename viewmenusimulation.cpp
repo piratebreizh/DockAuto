@@ -5,17 +5,18 @@
 ViewMenuSimulation::ViewMenuSimulation(FenetrePrincipale * _fenetrePrincipal)
 {
     fenetrePrincipale = &*_fenetrePrincipal;
-    initialisationComposantFenetreMenuSimulation();
+    initialisationComposantsFenetreMenuSimulation();
     controleEquipeExist();
     controleDepotExist();
     controleSimulationExist();
-    verificationlabelConfirmation();
+    verificationLabelConfirmation();
     definitionMainLayout();
     definitionLayoutMenuChoixSauvegardeCharger();
 }
 
 
-void ViewMenuSimulation::initialisationComposantFenetreMenuSimulation(){
+void ViewMenuSimulation::initialisationComposantsFenetreMenuSimulation()
+{
     mainLayout = new QVBoxLayout(this);
     layoutMenuChoixSauvegardCharger = new QGridLayout();
     LayoutEquipe = new QGridLayout();
@@ -48,7 +49,6 @@ void ViewMenuSimulation::initialisationComposantFenetreMenuSimulation(){
     labelConfirmationTache = new QLabel();
     confirmationTache = false;
 
-
     labelConfirmationEnregistremetnSimulation = new QLabel();
     labelConfirmationEnregistremetnSimulation->hide();
     sauvegarderSimulation = new QPushButton("Sauvegarder simulation");
@@ -57,22 +57,19 @@ void ViewMenuSimulation::initialisationComposantFenetreMenuSimulation(){
 
     listeEquipe = new  QList<Equipe>;
     listeDepot = new QList<Entrepot>;
-
     simulation = new Simulation();
 
     messageControleDesDonneesExistante = new QString();
 
     listeDeroulanteChoixSimulationCharger = new QComboBox();
     definirSimulation = new QPushButton("Définir");
-    labelSimulationChargerDefinit = new QLabel();
+    labelSimulationChargeeDefinie = new QLabel();
     LayoutSimulation = new QGridLayout();
-    definirCommeSimualtionCharger = new QPushButton("Définir comme simulatin courante");
-
+    definirCommeSimulationChargee = new QPushButton("Définir comme simulation courante");
 }
 
-void ViewMenuSimulation::definitionMainLayout(){
-
-
+void ViewMenuSimulation::definitionMainLayout()
+{
     layoutMenuChoixSauvegardCharger->addWidget(nouvelleSimulation);
     layoutMenuChoixSauvegardCharger->addWidget(chargerSimulation);
 
@@ -96,8 +93,8 @@ void ViewMenuSimulation::definitionMainLayout(){
 
     LayoutSimulation->addWidget(listeDeroulanteChoixSimulationCharger,1,0,1,2);
     LayoutSimulation->addWidget(definirSimulation,2,0);
-    LayoutSimulation->addWidget(labelSimulationChargerDefinit,2,1);
-    LayoutSimulation->addWidget(definirCommeSimualtionCharger,3,0,1,2);
+    LayoutSimulation->addWidget(labelSimulationChargeeDefinie,2,1);
+    LayoutSimulation->addWidget(definirCommeSimulationChargee,3,0,1,2);
 
 
     LayoutSauvegarderAnnuler->addWidget(sauvegarderSimulation);
@@ -114,11 +111,7 @@ void ViewMenuSimulation::definitionMainLayout(){
     QWidget::connect(definirCommeSimulation,SIGNAL(clicked()),this,SLOT(cliqueDefinirSimulation()));
     QWidget::connect(pushRetour,SIGNAL(clicked()),this,SLOT(close()));
     QWidget::connect(definirSimulation,SIGNAL(clicked()),this,SLOT(pushBoutonDefinirSimulationCharger()));
-    QWidget::connect(definirCommeSimualtionCharger,SIGNAL(clicked()),this,SLOT(cliqueDefinirSimulation()));
-
-
-
-
+    QWidget::connect(definirCommeSimulationChargee,SIGNAL(clicked()),this,SLOT(cliqueDefinirSimulation()));
 
     mainLayout->addLayout(layoutMenuChoixSauvegardCharger);
     mainLayout->addLayout(layoutNomSimulation);
@@ -131,8 +124,8 @@ void ViewMenuSimulation::definitionMainLayout(){
     this->setLayout(mainLayout);
 }
 
-
- void ViewMenuSimulation::definitionLayoutMenuChoixSauvegardeCharger(){
+ void ViewMenuSimulation::definitionLayoutMenuChoixSauvegardeCharger()
+ {
     labelNomSimulation->hide();
     champNomSimulation->hide();
 
@@ -155,14 +148,14 @@ void ViewMenuSimulation::definitionMainLayout(){
 
     listeDeroulanteChoixSimulationCharger->hide();
     definirSimulation->hide();
-    labelSimulationChargerDefinit->hide();
+    labelSimulationChargeeDefinie->hide();
 
-    definirCommeSimualtionCharger->hide();
+    definirCommeSimulationChargee->hide();
 }
 
 
-void ViewMenuSimulation::layoutNouvelleSimulation(){
-
+void ViewMenuSimulation::layoutNouvelleSimulation()
+{
     messageControleDesDonneesExistante->clear();
     nouvelleSimulation->hide();
     chargerSimulation->hide();
@@ -187,31 +180,29 @@ void ViewMenuSimulation::layoutNouvelleSimulation(){
     definirCommeSimulation->show();
     pushBloquerChoixEquipe->show();
 
-
     initialisationDeLaListeDeroulanteDepot();
     initialisationDeLaListeDeroulanteEquipe();
 }
 
 
-void ViewMenuSimulation::verificationlabelConfirmation(){
-
-
+void ViewMenuSimulation::verificationLabelConfirmation()
+{
     if(confirmationDepot){
-        labelConfirmationDepot->setText("Dépôt selectionné");
+        labelConfirmationDepot->setText("Dépôt sélectionné");
         labelConfirmationDepot->setStyleSheet("QLabel { color : green; }");
         pushBloquerChoixEquipe->setEnabled(true);
     }else{
-        labelConfirmationDepot->setText("Aucune dépôt selectionné");
+        labelConfirmationDepot->setText("Aucun dépôt sélectionné");
         labelConfirmationDepot->setStyleSheet("QLabel { color : red; }");
         pushBloquerChoixEquipe->setEnabled(false);
     }
 
     if(confirmationEquipe){
-        labelConfirmationEquipe->setText("Equipe selectionnée");
+        labelConfirmationEquipe->setText("Equipe sélectionnée");
         labelConfirmationEquipe->setStyleSheet("QLabel { color : green; }");
         boutonDefinirTache->setEnabled(true);
     }else{
-        labelConfirmationEquipe->setText("Aucune équipe selectionnée");
+        labelConfirmationEquipe->setText("Aucune équipe sélectionnée");
         labelConfirmationEquipe->setStyleSheet("QLabel { color : red; }");
         boutonDefinirTache->setEnabled(false);
     }
@@ -221,46 +212,41 @@ void ViewMenuSimulation::verificationlabelConfirmation(){
         labelConfirmationTache->setStyleSheet("QLabel { color : green; }");
         sauvegarderSimulation->setEnabled(true);
     }else{
-        labelConfirmationTache->setText("Aucune list de tâche");
+        labelConfirmationTache->setText("Aucune liste de tâches");
         labelConfirmationTache->setStyleSheet("QLabel { color : red; }");
         sauvegarderSimulation->setEnabled(false);
     }
-
 }
 
-
-void ViewMenuSimulation::executionViewMenuListeDesTaches(){
-
+void ViewMenuSimulation::executionViewMenuListeDesTaches()
+{
     viewMenuListeDesTaches = new ViewMenuListeDesTaches(this);
     viewMenuListeDesTaches->exec();
 }
 
 
 /**
- * @brief ViewMenuSimulation::initialisationDeLaListeDeroulanteEquipe
- * Initialise toutes les équipe dans la liste déroulante pour le choix de l'équipe
+ * @brief Initialise toutes les équipes dans la liste déroulante pour le choix de l'équipe
  */
-void ViewMenuSimulation::initialisationDeLaListeDeroulanteEquipe(){
-
-
+void ViewMenuSimulation::initialisationDeLaListeDeroulanteEquipe()
+{
     chargeToutesLesEquipesDeLaBase();
 
     if(listeEquipe->size()>0){
         //qDebug() << listeEquipe->size();
         for (int i = 0; i<listeEquipe->size();i++) {
             Equipe equipeTemp  = listeEquipe->at(i);
-            listeDeroulanteChoixEquipe->addItem(equipeTemp.nomEquipe2,equipeTemp.idEquipe);
+            listeDeroulanteChoixEquipe->addItem(equipeTemp.nomEquipe,equipeTemp.idEquipe);
         }
     }
 }
 
 
 /**
-  * @brief ViewMenuSimulation::chargeToutesLesEquipesDeLaBase
-  * recupertion de toutes les équipe de la base de données
-  * */
-void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase(){
-
+  * @brief Récuperation de toutes les équipes de la base de données
+  */
+void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase()
+{
     GestionDB * db = GestionDB::getInstance();
     try{
         db->selectMutliLigne("SELECT ID_Equipe, Nom_Equipe FROM equipe ;");
@@ -273,7 +259,7 @@ void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase(){
         if(qlistTemp.size()==2){
             Equipe equipeTemp ;
             equipeTemp.idEquipe = qlistTemp.at(0).toInt();
-            equipeTemp.nomEquipe2 = qlistTemp.at(1).toString();
+            equipeTemp.nomEquipe = qlistTemp.at(1).toString();
             listeEquipe->append(equipeTemp);
         }
     }
@@ -281,33 +267,30 @@ void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase(){
 }
 
 /**
- * @brief ViewMenuSimulation::bloquerSelectionEquipe
- * Permet de valider une équipe selectionné dans la liste déroulante et d'initilaser l'équipe selectionné
+ * @brief Permet de valider une équipe selectionné dans la liste déroulante
+ *      et d'initilaser l'équipe selectionné
  */
-void ViewMenuSimulation::bloquerSelectionEquipe(){
-
-    // A COMPLETER RAJOUTER ICI DU CODE POUR VOIRS SI IL Y A PLUS OU MOINS DE ZONE DE DEPART QUE DE ROBOT DANS L EQUIPE
+void ViewMenuSimulation::bloquerSelectionEquipe()
+{
+    //TODO : RAJOUTER ICI DU CODE POUR VOIRS SI IL Y A PLUS OU MOINS DE ZONE DE DEPART QUE DE ROBOT DANS L EQUIPE
     confirmationEquipe = true;
-   /* qDebug() << listeDeroulanteChoixEquipe->currentText();
-    qDebug() << listeDeroulanteChoixEquipe->currentData().toInt();*/
 
+    /*
+    qDebug() << listeDeroulanteChoixEquipe->currentText();
+    qDebug() << listeDeroulanteChoixEquipe->currentData().toInt();
+    */
 
     equipeSelectionne = new Equipe( listeDeroulanteChoixEquipe->currentData().toInt(),listeDeroulanteChoixEquipe->currentText() );
-    verificationlabelConfirmation();
+    verificationLabelConfirmation();
 }
 
 
-
-
-
 /**
- * @brief ViewMenuSimulation::initialisationDeLaListeDeroulanteDepot
- * Initialise tous les dépôt dans la liste déroulante pour le choix du dépôt
+ * @brief Initialise tous les dépôts dans la liste déroulante pour le choix du dépôt
  */
-void ViewMenuSimulation::initialisationDeLaListeDeroulanteDepot(){
-
-    chargeToutesLesDepotsDeLaBase();
-
+void ViewMenuSimulation::initialisationDeLaListeDeroulanteDepot()
+{
+    chargeTousLesDepotsDeLaBase();
 
     if(listeDepot->size()>0){
         for (int i = 0; i<listeDepot->size();i++) {
@@ -317,13 +300,11 @@ void ViewMenuSimulation::initialisationDeLaListeDeroulanteDepot(){
     }
 }
 
-
 /**
-  * @brief ViewMenuSimulation::chargeTousLesDepotDeLaBase
-  * recupertion de tous les dépôt de la base de données
-  * */
-void ViewMenuSimulation::chargeToutesLesDepotsDeLaBase(){
-
+  * @brief Récuperation de tous les dépôts de la base de données
+  */
+void ViewMenuSimulation::chargeTousLesDepotsDeLaBase()
+{
     GestionDB * db = GestionDB::getInstance();
     try{
         db->selectMutliLigne("SELECT ID_Entrepot, Nom_Entrepot FROM entrepot");
@@ -340,28 +321,30 @@ void ViewMenuSimulation::chargeToutesLesDepotsDeLaBase(){
             listeDepot->append(entrepotTemp);
         }
     }
-
 }
 
 /**
- * @brief ViewMenuSimulation::bloquerSelectionDepot
- * Permet de valider un depot selectionné dans la liste déroulante et d'initilaser le depot selectionné
+ * @brief Permet de valider un dépôt sélectionné dans la liste déroulante
+ *      et d'initialiser le dépôt sélectionné
  */
-void ViewMenuSimulation::bloquerSelectionDepot(){
+void ViewMenuSimulation::bloquerSelectionDepot()
+{
     confirmationDepot = true;
     depotSelectionne = new Entrepot(listeDeroulanteChoixDepot->currentData().toInt(),listeDeroulanteChoixDepot->currentText());
-    verificationlabelConfirmation();
+    verificationLabelConfirmation();
 }
 
-
-
-void ViewMenuSimulation::setConfirmationTache(bool _tache){
+void ViewMenuSimulation::setConfirmationTache(bool _tache)
+{
     this->confirmationTache = _tache;
 }
 
-
-void ViewMenuSimulation::cliqueSauvegarderSimulation(){
-    if(confirmationTache && confirmationEquipe && confirmationDepot && (champNomSimulation->text().size() != 0)){
+void ViewMenuSimulation::cliqueSauvegarderSimulation()
+{
+    if(confirmationTache
+            && confirmationEquipe
+            && confirmationDepot
+            && (champNomSimulation->text().size() != 0)){
         sauvegardeEnBaseDeLaSimulation();
         labelConfirmationEnregistremetnSimulation->setText("La nouvelle simulation a été sauvegardée");
         labelConfirmationEnregistremetnSimulation->setStyleSheet("QLabel { color : green; }");
@@ -375,8 +358,8 @@ void ViewMenuSimulation::cliqueSauvegarderSimulation(){
     }
 }
 
-void ViewMenuSimulation::sauvegardeEnBaseDeLaSimulation(){
-
+void ViewMenuSimulation::sauvegardeEnBaseDeLaSimulation()
+{
     QString requeteInsert("INSERT INTO SIMULATION ( Nom_Simulation, ID_Entrepot, ID_Equipe, ID_Liste_Taches) VALUES ('");
     requeteInsert.append(this->champNomSimulation->text());
     requeteInsert.append("',");
@@ -386,33 +369,34 @@ void ViewMenuSimulation::sauvegardeEnBaseDeLaSimulation(){
     requeteInsert.append(",");
     requeteInsert.append(QString::number(this->viewMenuListeDesTaches->listeTache->IDListeTache));
     requeteInsert.append(");");
+
     GestionDB * db = GestionDB::getInstance();
-    qDebug()<<requeteInsert;
     db->Requete(requeteInsert);
 }
 
-void ViewMenuSimulation::initialisationDelaSimulation(){
+void ViewMenuSimulation::initialisationDelaSimulation()
+{
     simulation->IdSimulation = derniereIDSimulation();
     simulation->nomSimulation = new QString(champNomSimulation->text());
 }
 
-void ViewMenuSimulation::cliqueDefinirSimulation(){
+void ViewMenuSimulation::cliqueDefinirSimulation()
+{
     fenetrePrincipale->definirSimulation(simulation);
-    labelConfirmationEnregistremetnSimulation->setText("Simulation définit");
+    labelConfirmationEnregistremetnSimulation->setText("Simulation définie");
     labelConfirmationEnregistremetnSimulation->setStyleSheet("QLabel { color : orange; }");
     labelConfirmationEnregistremetnSimulation->show();
 }
 
-
-int ViewMenuSimulation::derniereIDSimulation(){
+int ViewMenuSimulation::derniereIDSimulation()
+{
     GestionDB * db = GestionDB::getInstance();
     db->selectMutliLigne("SELECT MAX(ID_Simulation) FROM simulation;");
     return  db->resultatSelectMultiLignes.at(0).at(0).toInt();
 }
 
-
-
-void ViewMenuSimulation::controleDepotExist(){
+void ViewMenuSimulation::controleDepotExist()
+{
     GestionDB * db = GestionDB::getInstance();
     db->selectMutliLigne("SELECT count(ID_Entrepot) FROM entrepot;");
     if(db->resultatSelectMultiLignes.at(0).at(0).toInt() == 0){
@@ -424,7 +408,8 @@ void ViewMenuSimulation::controleDepotExist(){
     }
 }
 
-void ViewMenuSimulation::controleEquipeExist(){
+void ViewMenuSimulation::controleEquipeExist()
+{
     GestionDB * db = GestionDB::getInstance();
     db->selectMutliLigne("SELECT count(ID_Equipe) FROM equipe;");
     int res1 = db->resultatSelectMultiLignes.at(0).at(0).toInt();
@@ -439,7 +424,8 @@ void ViewMenuSimulation::controleEquipeExist(){
     }
 }
 
-void ViewMenuSimulation::controleSimulationExist(){
+void ViewMenuSimulation::controleSimulationExist()
+{
     GestionDB * db = GestionDB::getInstance();
     db->selectMutliLigne("SELECT count(*) FROM simulation;");
     if(db->resultatSelectMultiLignes.at(0).at(0).toInt() == 0){
@@ -451,26 +437,25 @@ void ViewMenuSimulation::controleSimulationExist(){
     }
 }
 
-
-void ViewMenuSimulation::layoutChargerSimulation(){
-
+void ViewMenuSimulation::layoutChargerSimulation()
+{
     messageControleDesDonneesExistante->clear();
     nouvelleSimulation->hide();
     chargerSimulation->hide();
 
-    labelSimulationChargerDefinit->setText("Aucune simulation définit");
-    labelSimulationChargerDefinit->setStyleSheet("QLabel { color : red; }");
+    labelSimulationChargeeDefinie->setText("Aucune simulation définie");
+    labelSimulationChargeeDefinie->setStyleSheet("QLabel { color : red; }");
 
     listeDeroulanteChoixSimulationCharger->show();
     definirSimulation->show();
-    labelSimulationChargerDefinit->show();
-    definirCommeSimualtionCharger->show();
+    labelSimulationChargeeDefinie->show();
+    definirCommeSimulationChargee->show();
     chargerListeSimulationDepuisLaBase();
     //cliqueDefinirSimulation();
 }
 
-
-void ViewMenuSimulation::chargerListeSimulationDepuisLaBase(){
+void ViewMenuSimulation::chargerListeSimulationDepuisLaBase()
+{
     GestionDB * db = GestionDB::getInstance();
     try{
         db->selectMutliLigne("SELECT ID_Simulation, Nom_Simulation FROM simulation");
@@ -485,32 +470,12 @@ void ViewMenuSimulation::chargerListeSimulationDepuisLaBase(){
     }
 }
 
-
-
-void ViewMenuSimulation::pushBoutonDefinirSimulationCharger(){
-    labelSimulationChargerDefinit->setText("Simulation selectionnée");
-    labelSimulationChargerDefinit->setStyleSheet("QLabel { color : green; }");
+void ViewMenuSimulation::pushBoutonDefinirSimulationCharger()
+{
+    labelSimulationChargeeDefinie->setText("Simulation sélectionnée");
+    labelSimulationChargeeDefinie->setStyleSheet("QLabel { color : green; }");
 
     simulation = new Simulation();
     simulation->IdSimulation = listeDeroulanteChoixSimulationCharger->currentData().toInt();
     simulation->nomSimulation = new QString (listeDeroulanteChoixSimulationCharger->currentText());
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

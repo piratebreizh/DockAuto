@@ -36,9 +36,9 @@ public:
     enum TilesNumbers{
         MUR = -1,
         VIDE = 0,
-        ARMOIREVIDE = 1,
-        ARMOIREPLEINE = 2,
-        ZONEDEP = 3
+        ARMOIREVIDE = -3,
+        ARMOIREPLEINE = -4,
+        ZONEDEP = -5
     };
 
 private:

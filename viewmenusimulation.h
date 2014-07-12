@@ -24,20 +24,20 @@ class ViewMenuSimulation : public QDialog
     Q_OBJECT
 
 public:
+
     ViewMenuSimulation(FenetrePrincipale * _fenetrePrincipal);
-    void initialisationComposantFenetreMenuSimulation();
+    void initialisationComposantsFenetreMenuSimulation();
     FenetrePrincipale * fenetrePrincipale;
     Equipe * equipeSelectionne;
     Entrepot * depotSelectionne;
     ViewMenuListeDesTaches * viewMenuListeDesTaches;
     Simulation * simulation;
     void setConfirmationTache(bool _tache);
-    void verificationlabelConfirmation();
+    void verificationLabelConfirmation();
     void initialisationDelaSimulation();
 
-
-
 public slots:
+
     void layoutNouvelleSimulation();
     void executionViewMenuListeDesTaches();
     void bloquerSelectionEquipe();
@@ -47,17 +47,14 @@ public slots:
     void layoutChargerSimulation();
     void pushBoutonDefinirSimulationCharger();
 
-
 private:
 
     QVBoxLayout *mainLayout;
 
     QGridLayout *layoutMenuChoixSauvegardCharger;
 
-
     QPushButton * nouvelleSimulation;
     QPushButton * chargerSimulation;
-
 
     QGridLayout *layoutNomSimulation;
     QLabel * labelNomSimulation;
@@ -77,14 +74,11 @@ private:
     QLabel * labelConfirmationEquipe;
     QComboBox * listeDeroulanteChoixEquipe;
 
-
-
     QGridLayout * LayoutTache;
     QLabel * labelTache;
     bool confirmationTache;
     QLabel * labelConfirmationTache;
     QPushButton * boutonDefinirTache;
-
 
     QLabel * labelConfirmationEnregistremetnSimulation;
     QGridLayout * LayoutSauvegarderAnnuler;
@@ -94,14 +88,11 @@ private:
 
     QString * messageControleDesDonneesExistante;
 
-
     QGridLayout * LayoutSimulation;
     QComboBox * listeDeroulanteChoixSimulationCharger;
     QPushButton * definirSimulation;
-    QLabel * labelSimulationChargerDefinit;
-    QPushButton * definirCommeSimualtionCharger;
-
-
+    QLabel * labelSimulationChargeeDefinie;
+    QPushButton * definirCommeSimulationChargee;
 
     void definitionMainLayout();
     void definitionLayoutMenuChoixSauvegardeCharger();
@@ -109,7 +100,7 @@ private:
     void chargeToutesLesEquipesDeLaBase();
 
     void initialisationDeLaListeDeroulanteDepot();
-    void chargeToutesLesDepotsDeLaBase();
+    void chargeTousLesDepotsDeLaBase();
 
     void sauvegardeEnBaseDeLaSimulation();
     int derniereIDSimulation();

@@ -18,20 +18,26 @@ class MapScene;
 class ViewCreationDepot : public QDialog
 {
     Q_OBJECT
+
 public:
+
     ViewCreationDepot();
-    void initialisationConposantFenetreIdentificationDepot();
+    void initialisationComposantFenetreIdentificationDepot();
     void definitionMainLayout();
     void masquerLayout2();
     bool initialisationDeLaMap();
-    bool controleTousChampsRempli();
+    bool controleChamps();
     void mousePressEvent();
 
 public slots:
+
     void lancementFenetreCreationMap();
     void SauvegardeMapDb();
 
 private :
+
+    void positionneFenetre();
+
     MapScene *lamap;
     QGraphicsView *vue;
 
@@ -50,7 +56,7 @@ private :
     QLineEdit * champLargeurDepot;
     QLineEdit * champLongueurDepot;
 
-    QPushButton *sauvegardeEtEditerMap;
+    QPushButton *sauvegarderEtEditerMap;
     QPushButton *annuler;
 
 

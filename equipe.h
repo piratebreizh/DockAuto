@@ -15,12 +15,10 @@ public:
     Equipe();
     Equipe(int,string);
     Equipe(int,QString);
-    void AddEquipe(Robot &);
+    void AddRobot(Robot &);
     void RemoveEquipe(Robot&);
-    void AfficheEquipe();
     int idEquipe;
-    string nomEquipe;
-    QString nomEquipe2;
+    QString nomEquipe;
 
 
 private:

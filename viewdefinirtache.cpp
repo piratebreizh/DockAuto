@@ -3,18 +3,16 @@
 
 ViewDefinirTache::ViewDefinirTache(ViewMenuListeDesTaches * _menuListeDesTaches)
 {
+    positionneFenetre();
     menuListeDesTaches =  &*_menuListeDesTaches;
     initialisationComposant();
     definitonLayout();
 }
 
-
-
-
-void ViewDefinirTache::initialisationComposant(){
+void ViewDefinirTache::initialisationComposant()
+{
     mainLayout = new QGridLayout();
     layoutMenuDroiteSelection = new QGridLayout();
-
 
     messageConfirmationAjout = new QLabel();
     messageConfirmationAjout->hide();
@@ -39,23 +37,24 @@ void ViewDefinirTache::initialisationComposant(){
     pushDefinirArrive->setEnabled(false);
     estDefiniArrive =false;
 
-
     sauvegarder = new QPushButton("Ajouter la tâche");
     sauvegarder->setEnabled(false);
     annuler = new QPushButton("Retour");
 
 
+    this->menuListeDesTaches->viewMenuSimulation->simulation->ChargerDepot(this->menuListeDesTaches->viewMenuSimulation->depotSelectionne->getId());
     map=new QGridLayout();
     scene = new QGraphicsScene();
     lamap = new MapScene(scene);
+    lamap->setDepot(this->menuListeDesTaches->viewMenuSimulation->simulation->getEntrepot());
+    //lamap->lectureSeule = true;
     lamap->AfficherMap();
     lamap->entrerEnModeDefinitionTache(this);
 
-
     //Map
     vue = new QGraphicsView(lamap);
-    vue->setMinimumSize(600,600);
-    vue->setMaximumSize(600,600);
+    vue->setMinimumSize(LONGUEUR*LONGUEURPIX+5,LONGUEUR*LONGUEURPIX+5);
+    vue->setMaximumSize(LONGUEUR*LONGUEURPIX+5,LONGUEUR*LONGUEURPIX+5);
 
     QWidget::connect(pushDefinirDepart, SIGNAL(clicked()), this, SLOT(cliqueAjouterDepart()));
     QWidget::connect(pushDefinirArrive, SIGNAL(clicked()), this, SLOT(cliqueAjouterArrive()));
@@ -63,11 +62,11 @@ void ViewDefinirTache::initialisationComposant(){
     QWidget::connect(sauvegarder, SIGNAL(clicked()), menuListeDesTaches, SLOT(ajouterTacheDansListe()));
     QWidget::connect(annuler, SIGNAL(clicked()), this, SLOT(close()));
 
-    chargerListeDeroulanteDesRobot();
+    chargerListeDeroulanteDesRobots();
 }
 
-
-void ViewDefinirTache::definitonLayout(){
+void ViewDefinirTache::definitonLayout()
+{
     layoutMenuDroiteSelection->addWidget(messageConfirmationAjout,0,0,1,2);
 
     layoutMenuDroiteSelection->addWidget(labelRobot,1,0);
@@ -79,7 +78,6 @@ void ViewDefinirTache::definitonLayout(){
     layoutMenuDroiteSelection->addWidget(labelDepart,3,0);
     layoutMenuDroiteSelection->addWidget(champDepart,3,1);
     layoutMenuDroiteSelection->addWidget(pushDefinirDepart,3,1);
-
 
     layoutMenuDroiteSelection->addWidget(labelArrive,4,0);
     layoutMenuDroiteSelection->addWidget(champArrive,4,1);
@@ -96,9 +94,8 @@ void ViewDefinirTache::definitonLayout(){
     this->setLayout(mainLayout);
 }
 
-
-
-void ViewDefinirTache::switchBoutonLabelDefinir(){
+void ViewDefinirTache::switchBoutonLabelDefinir()
+{
     if(estDefinitDepart){
         pushDefinirDepart->hide();
         champDepart->show();
@@ -123,34 +120,28 @@ void ViewDefinirTache::switchBoutonLabelDefinir(){
 }
 
 
-
 /**
- * @brief ViewDefinirTache::chargerListeDeroulanteDesRobot
- * Charge toutes les robot présent dans l'équipe définit dans l'IHM ViewMenuSimulation
+ * @brief Charge toutes les robot présent dans l'équipe définit dans l'IHM ViewMenuSimulation
  */
-void ViewDefinirTache::chargerListeDeroulanteDesRobot(){
-
-
+void ViewDefinirTache::chargerListeDeroulanteDesRobots()
+{
     int ID_Equipe = menuListeDesTaches->viewMenuSimulation->equipeSelectionne->idEquipe;
-    // A DECOMENTER
-    chargerListeRobotEnBase(ID_Equipe);
-    //qDebug() << ID_Equipe;
 
+    chargerListeRobotEnBase(ID_Equipe);
 
     if(listeRobot->size()>0){
-        qDebug() << listeRobot->size();
         for (int i = 0; i<listeRobot->size();i++) {
             Robot robotTemp  = listeRobot->at(i);
-            listeDeroulanteRobot->addItem(robotTemp.nomRobot2,robotTemp.getId());        }
+            listeDeroulanteRobot->addItem(robotTemp.nomRobot,robotTemp.getId());
+        }
     }
 }
 
 /**
- * @brief ViewDefinirTache::chargerListeRobotEnBase
- *  Charge à partir d'une ID_EQUIPE la liste des robots
+ * @brief Charge à partir d'une ID_EQUIPE la liste des robots
  */
-void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe){
-
+void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe)
+{
     listeRobot = new QList<Robot>;
 
     GestionDB * db = GestionDB::getInstance();
@@ -158,7 +149,6 @@ void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe){
         QString requetteSelect = "SELECT ID_Robot, Nom_Robot FROM robot WHERE ID_Equipe = ";
         requetteSelect.append(QString::number(ID_Equipe));
         requetteSelect.append(";");
-        qDebug()<<requetteSelect;
         db->selectMutliLigne(requetteSelect);
     }catch(exception e){
         qDebug()<<e.what();
@@ -169,19 +159,18 @@ void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe){
         if(qlistTemp.size() == 2){
             Robot robotTemp ;
             robotTemp.setId(qlistTemp.at(0).toInt());
-            robotTemp.nomRobot2=qlistTemp.at(1).toString();
+            robotTemp.nomRobot=qlistTemp.at(1).toString();
             listeRobot->append(robotTemp);
         }
     }
 }
 
-
 /**
- * @brief ViewDefinirTache::ajouterNouvelleTacheALaListeDeTache
- * se déclenche lors du click sur le bouton sauvegarder 'ajouter tache' pour l'inserrer dans la liste des tâches
+ * @brief Se déclenche lors du click sur le bouton sauvegarder 'ajouter tache'
+ *      pour l'insérer dans la liste des tâches
  */
-void ViewDefinirTache::ajouterNouvelleTacheALaListeDeTache(){
-
+void ViewDefinirTache::ajouterNouvelleTacheALaListeDeTache()
+{
     Tache tacheTemp (champPoids->text().replace(',','.').toDouble(),champDepart->text().toInt(),champDepart->text().toInt(),champArrive->text().toInt(),champArrive->text().toInt());
 
     menuListeDesTaches->nouveauRobotTemp->setId(listeDeroulanteRobot->currentData().toInt());
@@ -194,18 +183,19 @@ void ViewDefinirTache::ajouterNouvelleTacheALaListeDeTache(){
     menuListeDesTaches->nouvelleTacheTemp->depart->setY(departY);
 
     // A MODIFER
-    menuListeDesTaches->nouvelleTacheTemp->arrive->setX(arriveX);
-    menuListeDesTaches->nouvelleTacheTemp->arrive->setY(arriveY);
+    menuListeDesTaches->nouvelleTacheTemp->arrivee->setX(arriveX);
+    menuListeDesTaches->nouvelleTacheTemp->arrivee->setY(arriveY);
 
-    menuListeDesTaches->listeTache->ajoutNouvelleTacheDansListe(tacheTemp);
+    menuListeDesTaches->listeTache->ajoutTache(menuListeDesTaches->nouvelleTacheTemp);
 
     messageConfirmationAjout->show();
-    messageConfirmationAjout->setText("La nouvelle tâche a été rajouté");
+    messageConfirmationAjout->setText("La nouvelle tâche a été ajoutée");
     messageConfirmationAjout->setStyleSheet("QLabel { color : green; }");
     viderTousLesChamps();
 }
 
-void ViewDefinirTache::viderTousLesChamps(){
+void ViewDefinirTache::viderTousLesChamps()
+{
     estDefinitDepart = false;
     estDefiniArrive = false;
     champDepart->setText("");
@@ -213,26 +203,25 @@ void ViewDefinirTache::viderTousLesChamps(){
     switchBoutonLabelDefinir();
 }
 
-
-void ViewDefinirTache::cliqueAjouterDepart(){
-
+void ViewDefinirTache::cliqueAjouterDepart()
+{
     estDefinitDepart = true;
     lamap->flagEditerDepart = true;
     lamap->flagEditerArriver = false;
-
-    //estDefinitDepart=true;
-    //champDepart->setText("22");
 }
 
 void ViewDefinirTache::cliqueAjouterArrive(){
     estDefiniArrive = true;
     lamap->flagEditerDepart = false;
     lamap->flagEditerArriver = true;
-    //champArrive->setText("33");
-    //switchBoutonLabelDefinir();
 }
 
-
-
-
-
+/**
+ * @brief Positionne la fenêtre au centre de l'écran
+ */
+void ViewDefinirTache::positionneFenetre()
+{
+    const QRect screen = QApplication::desktop()->screenGeometry();
+    const QPoint delta = QPoint(0,100);
+    this->move( screen.center() - this->rect().center() - delta);
+}

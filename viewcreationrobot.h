@@ -27,11 +27,13 @@ class ViewGestionEquipe;
 class ViewCreationRobot : public QDialog
 {
     Q_OBJECT
+
 public:
+
     ViewCreationRobot(ViewGestionEquipe * _gestionEquipe);
 
-
 public slots:
+
     void s_clicked();
 
 private:
@@ -57,8 +59,7 @@ private:
 
     ViewGestionEquipe * gestionEquipe;
 
-
-  void  videTousLesChamps();
+    void  videTousLesChamps();
 
 };
 

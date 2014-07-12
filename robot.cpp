@@ -1,6 +1,7 @@
 #include "Robot.h"
 #include <string>
 #include "Entrepot.h"
+#include "MapScene.h"
 
 using namespace std;
 
@@ -12,22 +13,17 @@ Robot::Robot()
     this->setY(0);
 }
 
-Robot::Robot(int _id, string _nom){
-    idRobot=_id;
-    nomRobot=_nom;
-}
-
 Robot::Robot(int _id, QString _nom){
     idRobot=_id;
-    nomRobot2 = _nom;
+    nomRobot = _nom;
 }
 
-string Robot::getNom(){
+QString Robot::getNom(){
     return nomRobot;
 }
 
 void Robot::setNom(string nom){
-    nomRobot=nom;
+    nomRobot=QString::fromStdString(nom);
 }
 
 int Robot::getId(){
@@ -39,18 +35,52 @@ void Robot::setId(int id){
 }
 
 /**
- * @brief Robot::move
+ * @brief Deplacement du robot si l'emplacement est libre
  * @param e
  * @param x
  * @param y
- * Deplacement du robot si l'emplacement est libre
  */
-void Robot::move(Entrepot &e, int x, int y){
-    //if(e!=NULL && e.tab[x][y]==0){
-    if(e.tab[x][y]==0){
+void Robot::move(Entrepot &e, int x, int y)
+{
+    if(e.isTileDisponible(x,y)){
         e.RemoveRobot(*this);
         this->setX(x);
         this->setY(y);
         e.AddRobot(*this);
     }
+}
+
+int Robot::moveToObjectif(Entrepot &e, Tile objectif)
+{
+    int moveToX = this->getX();
+    int moveToY = this->getY();
+    int dx = objectif.getX() - this->getX();
+    int dy = objectif.getY() - this->getY();
+
+    if(dx>0){
+        moveToX++;
+    }else if(dx<0){
+        moveToX--;
+    }else{
+        if(dy>0){
+            moveToY++;
+        }else if(dy<0){
+            moveToY--;
+        }
+    }
+    this->move(e, moveToX, moveToY);
+
+    if((abs(dx) == 0 && abs(dy) ==1) || (abs(dx) == 1 && abs(dy) ==0)){
+        if(e.tab[objectif.getX()][objectif.getY()] == MapScene::ARMOIREPLEINE)
+        {
+            e.tab[objectif.getX()][objectif.getY()] = MapScene::ARMOIREVIDE;
+            return MapScene::ARMOIREVIDE;
+        }
+        else if(e.tab[objectif.getX()][objectif.getY()] == MapScene::ARMOIREVIDE)
+        {
+            e.tab[objectif.getX()][objectif.getY()] = MapScene::ARMOIREPLEINE;
+            return MapScene::ARMOIREPLEINE;
+        }
+    }
+    return MapScene::VIDE;
 }

@@ -21,7 +21,9 @@ class Listetache;
 class ViewMenuListeDesTaches: public QDialog
 {
     Q_OBJECT
+
 public:
+
     ViewMenuListeDesTaches(ViewMenuSimulation * _viewMenuSimulation);
     void initialisationComposant();
     void definitonLayout();
@@ -31,8 +33,8 @@ public:
     Robot * nouveauRobotTemp;
     Listetache * listeTache;
 
-
 public slots :
+
     void executerViewDefinirTache();
     void ajouterTacheDansListe();
     void CliqueSauvegarder();

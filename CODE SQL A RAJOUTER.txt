@@ -1,6 +1,0 @@
-
-
-viewdefinirtache - void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe)
-viewdefinirtache - void ViewDefinirTache::chargerListeDeroulanteDesRobot()
-
-

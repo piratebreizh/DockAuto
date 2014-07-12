@@ -18,7 +18,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     fenetreprincipale.cpp \
     viewgestionequipe.cpp \
     robot.cpp \
@@ -39,7 +38,7 @@ SOURCES += main.cpp\
     simulation.cpp \
     viewdefinirtache.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     fenetreprincipale.h \
     viewgestionequipe.h \
     robot.h \
@@ -60,7 +59,7 @@ HEADERS  += mainwindow.h \
     simulation.h \
     viewdefinirtache.h
 
-FORMS    += mainwindow.ui
+FORMS    +=
 
 RESOURCES += \
     ressources.qrc

@@ -4,24 +4,25 @@
 #include <tache.h>
 #include <qstring.h>
 
+class Tache;
+
 class Listetache
 {
 public:
     Listetache();
+    QList<Tache*> * getListeDesTaches();
 
-    void setListDesTaches(QList<Tache> listeDesTache);
-    QList<Tache> * getListDesTaches();
+    void ajoutTache(Tache*);
+    Tache * getTacheNonEffectuee();
 
-    void ajoutNouvelleTacheDansListe(Tache _tache);
-
-    void setNomListeTache(QString nomListeTache);
-    QString getNomListeTache();
+    void setNomListeTaches(QString);
+    QString getNomListeTaches();
 
     int IDListeTache;
 
 private :
-    QList<Tache> * listDesTache;
-    QString * nomListeTache;
+    QList<Tache*> * listDesTaches;
+    QString * nomListeTaches;
 };
 
 #endif // LISTETACHE_H
