@@ -1,6 +1,7 @@
 #include "Robot.h"
 #include <string>
 #include "Entrepot.h"
+#include "MapScene.h"
 
 using namespace std;
 
@@ -49,7 +50,7 @@ void Robot::move(Entrepot &e, int x, int y)
     }
 }
 
-void Robot::moveToObjectif(Entrepot &e, Tile objectif)
+int Robot::moveToObjectif(Entrepot &e, Tile objectif)
 {
     int moveToX = this->getX();
     int moveToY = this->getY();
@@ -68,4 +69,18 @@ void Robot::moveToObjectif(Entrepot &e, Tile objectif)
         }
     }
     this->move(e, moveToX, moveToY);
+
+    if((abs(dx) == 0 && abs(dy) ==1) || (abs(dx) == 1 && abs(dy) ==0)){
+        if(e.tab[objectif.getX()][objectif.getY()] == MapScene::ARMOIREPLEINE)
+        {
+            e.tab[objectif.getX()][objectif.getY()] = MapScene::ARMOIREVIDE;
+            return MapScene::ARMOIREVIDE;
+        }
+        else if(e.tab[objectif.getX()][objectif.getY()] == MapScene::ARMOIREVIDE)
+        {
+            e.tab[objectif.getX()][objectif.getY()] = MapScene::ARMOIREPLEINE;
+            return MapScene::ARMOIREPLEINE;
+        }
+    }
+    return MapScene::VIDE;
 }

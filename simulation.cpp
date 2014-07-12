@@ -19,6 +19,11 @@ bool Simulation::LancerSimulation()
     for (it = listeRobots.begin(); it != listeRobots.end(); ++it){
         Robot * robotTmp = it.value();
         qDebug() << "Robot " << robotTmp->getId() << " (" << robotTmp->getX()<< "," << robotTmp->getY() << ")";
+        for(int t=0 ; t < robotTmp->listeTaches.getListeDesTaches()->size() ; t++){
+            Tache * tacheTmp = robotTmp->listeTaches.getListeDesTaches()->at(t);
+            qDebug() << "TacheRbt " << "Départ : " << tacheTmp->depart->getX() << " " << tacheTmp->depart->getY()
+                     << "Arrivée : " << tacheTmp->arrivee->getX() << " " << tacheTmp->arrivee->getY() ;
+        }
     }
     qDebug() << "Liste des taches au début";
     for(int t=0 ; t < taches.getListeDesTaches()->size() ; t++){
@@ -31,12 +36,17 @@ bool Simulation::LancerSimulation()
     /*****************************************/
 
 
+    int i=0;
     Tache * tache = taches.getTacheNonEffectuee();
     while(tache!=NULL){
-        qDebug() << "Tache " << "Départ : " << tache->depart->getX() << ", " << tache->depart->getY()
-                 << "Arrivée : " << tache->arrivee->getX() << ", " << tache->arrivee->getY()
-                 << "statut : " << tache->statut;
-
+        qDebug() << "-----------"<< i++ << "-----------";
+        for(int t=0 ; t < taches.getListeDesTaches()->size() ; t++){
+            Tache * tacheTmp = taches.getListeDesTaches()->at(t);
+            qDebug() << "Tache " << "Départ : " << tacheTmp->depart->getX() << ", " << tacheTmp->depart->getY()
+                     << "Arrivée : " << tacheTmp->arrivee->getX() << ", " << tacheTmp->arrivee->getY()
+                     << "statut : " << tacheTmp->statut;
+        }
+        qDebug() << "--------------------------";
         QMap<int, Robot*>::iterator it;
         for (it = listeRobots.begin(); it != listeRobots.end(); ++it){
             Robot * robotTmp = it.value();
@@ -48,7 +58,18 @@ bool Simulation::LancerSimulation()
                 }else if(t->statut == Tache::CARGAISON_RECUP){
                     objectif = t->arrivee;
                 }
-                robotTmp->moveToObjectif(*entrepot, *objectif);
+                int objType = robotTmp->moveToObjectif(*entrepot, *objectif);
+                qDebug() << " objectif type : " << objType;
+                switch (objType) {
+                    case MapScene::ARMOIREVIDE:
+                        t->statut = Tache::CARGAISON_RECUP;
+                        break;
+                    case MapScene::ARMOIREPLEINE:
+                        t->statut = Tache::EFFECTUEE;
+                        break;
+                    default:
+                        break;
+                }
                 //t->statut = Tache::EFFECTUEE;
             }
             RaffraichirMap();
@@ -58,11 +79,6 @@ bool Simulation::LancerSimulation()
     }
 
 /*
-        for(int t=0 ; t < robotTmp.listeTaches.size() ; t++){
-            Tache tacheTmp = robotTmp.listeTaches.at(t);
-            qDebug() << "Tache " << "Départ : " << tacheTmp.depart->getX() << " " << tacheTmp.depart->getY()
-                     << "Arrivée : " << tacheTmp.arrive->getX() << " " << tacheTmp.arrive->getY() ;
-        }
 
     //Placement des robots sur l'entrepot
     for(int i=0; i < listeRobots.size() ; i++) {
@@ -115,7 +131,7 @@ Tile Simulation::getZoneDepartLibre()
  */
 void Simulation::RaffraichirMap()
 {
-    QThread::msleep(100);
+    QThread::msleep(20);
     mapScene->setDepot(entrepot);
     mapScene->AfficherMap();
     mapScene->update();
