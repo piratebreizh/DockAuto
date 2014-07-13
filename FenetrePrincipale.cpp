@@ -1,6 +1,6 @@
 #include "FenetrePrincipale.h"
 #include <QtWidgets>
-#include "ui_mainwindow.h"
+//#include "ui_mainwindow.h"
 
 #include "simulation.h"
 

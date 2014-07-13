@@ -19,11 +19,11 @@ MapScene::MapScene(QObject* parent)
 
 void MapScene::setInfoDepot(int lon, int larg, QString nom){
 
-    e->setLargeur(larg);
-    e->setLongueur(lon);
+    e->setLargeur(larg-1);
+    e->setLongueur(lon-1);
     e->setNom(nom);
     //définition limites de la map
-    e->RedefTab(lon,larg);
+    e->RedefTab(lon-1,larg-1);
 }
 
 Entrepot* MapScene::getEntrepot(){
@@ -33,8 +33,8 @@ Entrepot* MapScene::getEntrepot(){
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
 
     if(!lectureSeule){
-        int x =(int)(ev->scenePos().x()/LONGUEURPIX);
-        int y =(int)(ev->scenePos().y()/LARGEURPIX);
+        int x =(int)(ev->scenePos().x()/LARGEURPIX);
+        int y =(int)(ev->scenePos().y()/LONGUEURPIX);
 
 
         if(flagEditionTache){
@@ -47,7 +47,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
                 viewDefinirTache->departX = x;
                 viewDefinirTache->departY = y;
                 flagEditerDepart = false;
-            }else if(flagEditerArriver){
+            }else if(flagEditerArriver && e->tab[x][y]==ARMOIREVIDE){
                 viewDefinirTache->champArrive->setText(affichage);
                 viewDefinirTache->champArrive->show();
                 viewDefinirTache->switchBoutonLabelDefinir();
@@ -71,9 +71,9 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
                     e->tab[x][y]=VIDE;
                     break;
             }
-            this->AfficherMap();
         }
     }
+    this->AfficherMap();
 }
 
 void MapScene::AfficherMap()
@@ -82,9 +82,9 @@ void MapScene::AfficherMap()
   QPixmap image;
 
   //Gestion de l'affichage
-  for (int i = 0; i < LONGUEUR; i++)
+  for (int i = 0; i < LARGEUR; i++)
     {
-      for (int j = 0; j < LARGEUR; j++)
+      for (int j = 0; j < LONGUEUR; j++)
         {
           //Mur
           if (e->tab[i][j] == MapScene::MUR)
@@ -146,9 +146,9 @@ void MapScene::SaveDepotDb(){
 
 
     //sauvegarde en base
-    for (int i = 0; i < LONGUEUR; i++)
+    for (int i = 0; i < LARGEUR; i++)
       {
-        for (int j = 0; j < LARGEUR; j++)
+        for (int j = 0; j < LONGUEUR; j++)
           {
             //Armoire
             if (e->tab[i][j] == MapScene::ARMOIREVIDE)
@@ -173,7 +173,7 @@ void MapScene::SaveDepotDb(){
 void MapScene::setDepot(Entrepot *_e){
     e=new Entrepot();
     e->copieEntrepot(_e);
-    e->RedefTab(e->getLongueur(),e->getLargeur());
+    //e->RedefTab(e->getLongueur(),e->getLargeur());
 }
 
 

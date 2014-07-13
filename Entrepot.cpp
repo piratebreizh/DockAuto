@@ -40,17 +40,17 @@ void Entrepot::RemoveRobot(Robot &rob){
 }
 
 void Entrepot::RedefTab(int _lon, int _lar){
-    for (int i = _lon+1; i < LONGUEUR; i++)
+    for (int i = 0; i < LARGEUR; i++)
     {
-        for (int j = 0; j < LARGEUR; j++)
+        for (int j = _lar+1; j < LONGUEUR; j++)
         {
             tab[i][j]=MapScene::MUR;
         }
     }
 
-    for (int i = 0; i < LONGUEUR; i++)
+    for (int i = _lon+1; i < LARGEUR; i++)
     {
-        for (int j = _lar+1; j < LARGEUR; j++)
+        for (int j = 0; j < LONGUEUR; j++)
         {
             tab[i][j]=MapScene::MUR;
         }
@@ -93,14 +93,16 @@ void Entrepot::copieEntrepot(Entrepot *_e){
     nom=_e->getNom();
     largeur=_e->getLargeur();
     longueur=_e->getLongueur();
-    RedefTab(longueur,largeur);
-    for (int i = 0; i < longueur; i++)
+    for (int i = 0; i < largeur; i++)
     {
-        for (int j = 0; j < largeur; j++)
+        for (int j = 0; j < longueur; j++)
         {
-            tab[i][j]=_e->tab[i][j];
+            this->tab[i][j]=_e->tab[i][j];
         }
     }
+
+    RedefTab(longueur,largeur);
+
 }
 
 bool Entrepot::isTileDisponible(int X, int Y)

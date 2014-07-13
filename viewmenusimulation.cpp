@@ -386,6 +386,7 @@ void ViewMenuSimulation::cliqueDefinirSimulation()
     labelConfirmationEnregistremetnSimulation->setText("Simulation définie");
     labelConfirmationEnregistremetnSimulation->setStyleSheet("QLabel { color : orange; }");
     labelConfirmationEnregistremetnSimulation->show();
+    this->close();
 }
 
 int ViewMenuSimulation::derniereIDSimulation()
