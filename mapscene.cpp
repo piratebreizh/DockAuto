@@ -39,7 +39,12 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
 
         if(flagEditionTache){
             QString affichage("X : " + QString::number(x) + "       Y : " + QString::number(y));
-            if(flagEditerDepart){
+            if (e->tab[x][y]!=ARMOIREVIDE){
+                viewDefinirTache->messageConfirmationAjout->setText("Le case doit être une armoire \nRecliquer sur une case de type armoire sur la mappe");
+                viewDefinirTache->messageConfirmationAjout->setStyleSheet("QLabel { color : red; }");
+                viewDefinirTache->messageConfirmationAjout->show();
+            }
+            if(flagEditerDepart && e->tab[x][y]==ARMOIREVIDE){
                 viewDefinirTache->champDepart->setText(affichage);
                 viewDefinirTache->champDepart->show();
                 viewDefinirTache->pushDefinirArrive->setEnabled(true);

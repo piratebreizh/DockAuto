@@ -86,6 +86,26 @@ void ViewDefinirTache::definitonLayout()
     layoutMenuDroiteSelection->addWidget(sauvegarder,5,0);
     layoutMenuDroiteSelection->addWidget(annuler,5,1);
 
+
+    QLabel * labelImageArmoire = new QLabel();
+    QLabel  * labelImageZoneDep = new QLabel();
+    QLabel * labelImageMur = new QLabel();
+
+    labelImageArmoire->setPixmap(QPixmap(":/res/images/arm.png", 0, Qt::AutoColor));
+    labelImageZoneDep->setPixmap(QPixmap(":/res/images/dep.png", 0, Qt::AutoColor));
+    labelImageMur->setPixmap(QPixmap(":/res/images/mur.png", 0, Qt::AutoColor));
+
+    layoutMenuDroiteSelection->addWidget(new QLabel("Mur"),6,0);
+    layoutMenuDroiteSelection->addWidget(labelImageMur,6,1);
+
+    layoutMenuDroiteSelection->addWidget(new QLabel("Armoire"),7,0);
+    layoutMenuDroiteSelection->addWidget(labelImageArmoire,7,1);
+
+    layoutMenuDroiteSelection->addWidget(new QLabel("Zone de départ"),8,0);
+    layoutMenuDroiteSelection->addWidget(labelImageZoneDep,8,1);
+
+
+
     map->addWidget(vue);
 
     mainLayout->addLayout(map,0,0,20,1);
