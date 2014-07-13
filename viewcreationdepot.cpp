@@ -21,8 +21,8 @@ void ViewCreationDepot::initialisationComposantFenetreIdentificationDepot()
     layout3PourBoutonSauvegarderAnnuler = new QGridLayout();
 
     labelNomDepot = new QLabel("Nom du dépôt");
-    labelLongueurDepot = new QLabel("Largeur (en nombre de cases)");
-    labelLargeurDepot = new QLabel("Longueur (en nombre de cases)");
+    labelLongueurDepot = new QLabel("Hauteur (en nombre de cases)");
+    labelLargeurDepot = new QLabel("Largeur (en nombre de cases)");
     labelMessageErreur = new QLabel();
     labelMessageErreur->hide();
 

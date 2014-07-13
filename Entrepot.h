@@ -39,8 +39,6 @@ public:
     bool isTileDisponible(int,int);
 
     void RedefTab(int, int);
-    void copieEntrepot(Entrepot *);
-
 
 private:
     map<int,Armoire> lesArmoires;
