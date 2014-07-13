@@ -171,7 +171,7 @@ void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe)
  */
 void ViewDefinirTache::ajouterNouvelleTacheALaListeDeTache()
 {
-    Tache tacheTemp (champPoids->text().replace(',','.').toDouble(),champDepart->text().toInt(),champDepart->text().toInt(),champArrive->text().toInt(),champArrive->text().toInt());
+    menuListeDesTaches->nouvelleTacheTemp = new Tache();
 
     menuListeDesTaches->nouveauRobotTemp->setId(listeDeroulanteRobot->currentData().toInt());
     menuListeDesTaches->nouveauRobotTemp->setNom(listeDeroulanteRobot->currentText().toStdString());
