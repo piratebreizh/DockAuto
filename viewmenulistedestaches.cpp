@@ -151,7 +151,7 @@ void ViewMenuListeDesTaches::enregistrementDansLaTableTache()
             insertDansTache .append(",");
             insertDansTache.append(QString::number(this->listeTache->IDListeTache));
             insertDansTache .append(",");
-            insertDansTache.append(QString::number(this->nouveauRobotTemp->getId()));
+            insertDansTache.append(QString::number(tacheTemp.idRobot));
             firstVirgule = false;
         }
         insertDansTache.append("); ");

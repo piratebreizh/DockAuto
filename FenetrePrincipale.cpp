@@ -50,12 +50,34 @@ void FenetrePrincipale::createBarreDeLancement()
     pauseSimulation->setFocusPolicy(Qt::NoFocus);
     pauseSimulation->setEnabled(false);
 
-    barreLancement->addWidget(messageControl);
-    barreLancement->addWidget(nouvelleSimulation);
-    barreLancement->addWidget(gestionDesEquipe);
-    barreLancement->addWidget(gestionDesDepots);
-    barreLancement->addWidget(demarrerSimulation);
-    barreLancement->addWidget(pauseSimulation);
+
+    QLabel * labelImageArmoire = new QLabel();
+    QLabel  * labelImageZoneDep = new QLabel();
+    QLabel * labelImageMur = new QLabel();
+    QLabel * labelImageRobot = new QLabel();
+
+    labelImageArmoire->setPixmap(QPixmap(":/res/images/arm.png", 0, Qt::AutoColor));
+    labelImageZoneDep->setPixmap(QPixmap(":/res/images/dep.png", 0, Qt::AutoColor));
+    labelImageMur->setPixmap(QPixmap(":/res/images/mur.png", 0, Qt::AutoColor));
+    labelImageRobot->setPixmap(QPixmap(":/res/images/rob.png", 0, Qt::AutoColor));
+
+
+
+    barreLancement->addWidget(messageControl,0,0,1,2);
+    barreLancement->addWidget(nouvelleSimulation,1,0,1,2);
+    barreLancement->addWidget(gestionDesEquipe,2,0,1,2);
+    barreLancement->addWidget(gestionDesDepots,3,0,1,2);
+    barreLancement->addWidget(demarrerSimulation,4,0,1,2);
+    barreLancement->addWidget(pauseSimulation,5,0,1,2);
+    barreLancement->addWidget(new QLabel("Mur"),6,0,1,1);
+    barreLancement->addWidget(labelImageMur,6,1,1,1);
+    barreLancement->addWidget(new QLabel("Armoire"),7,0,1,1);
+    barreLancement->addWidget(labelImageArmoire,7,1,1,1);
+    barreLancement->addWidget(new QLabel("Zone de départ"),8,0,1,1);
+    barreLancement->addWidget(labelImageZoneDep,8,1,1,1);
+    barreLancement->addWidget(new QLabel("Robot"),9,0,1,1);
+    barreLancement->addWidget(labelImageRobot,9,1,1,1);
+    barreLancement->setSpacing(30);
 
     QWidget::connect(gestionDesEquipe, SIGNAL(clicked()), this, SLOT(lancementViewCreationEquipe()));
     QWidget::connect(gestionDesDepots, SIGNAL(clicked()), this, SLOT(lancementViewCreationDepot()));

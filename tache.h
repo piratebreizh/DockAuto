@@ -1,6 +1,10 @@
 #ifndef TACHE_H
 #define TACHE_H
+//#include <robot.h>
 #include <Tile.h>
+
+//class Robot;
+class Tile;
 
 class Tache
 {
@@ -14,6 +18,8 @@ public:
 
     double getPoids();
     void setPoids(double);
+
+    int idRobot;
 
     enum Status{
         A_EFFECTUER = -1,

@@ -192,17 +192,20 @@ void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe)
 void ViewDefinirTache::ajouterNouvelleTacheALaListeDeTache()
 {
     menuListeDesTaches->nouvelleTacheTemp = new Tache();
+    Robot * robotTemp = new Robot();
 
-    menuListeDesTaches->nouveauRobotTemp->setId(listeDeroulanteRobot->currentData().toInt());
-    menuListeDesTaches->nouveauRobotTemp->setNom(listeDeroulanteRobot->currentText().toStdString());
+    robotTemp->setId(listeDeroulanteRobot->currentData().toInt());
+    robotTemp->setNom(listeDeroulanteRobot->currentText().toStdString());
+
+    menuListeDesTaches->nouvelleTacheTemp->idRobot =listeDeroulanteRobot->currentData().toInt();
+
+    menuListeDesTaches->nouveauRobotTemp = robotTemp;
 
     menuListeDesTaches->nouvelleTacheTemp->setPoids(champPoids->text().replace(',','.').toDouble());
 
-    // A MODIFIER
     menuListeDesTaches->nouvelleTacheTemp->depart->setX(departX);
     menuListeDesTaches->nouvelleTacheTemp->depart->setY(departY);
 
-    // A MODIFER
     menuListeDesTaches->nouvelleTacheTemp->arrivee->setX(arriveX);
     menuListeDesTaches->nouvelleTacheTemp->arrivee->setY(arriveY);
 
