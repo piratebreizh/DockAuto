@@ -147,7 +147,7 @@ void Simulation::ChargerDepot(int id)
 {
     QList <QVariant> qlistTemp;
     GestionDB * db = GestionDB::getInstance();
-    db->selectMutliLigne("SELECT X,Y,ID_Type FROM tile WHERE ID_Entrepot=" + QString::number(id));
+    db->selectMultiLignes("SELECT X,Y,ID_Type FROM tile WHERE ID_Entrepot=" + QString::number(id));
     for(int i = 0 ; i<db->resultatSelectMultiLignes.size();i++){
         qlistTemp = db->resultatSelectMultiLignes.at(i);
         int posX = qlistTemp.at(0).toInt();
@@ -157,7 +157,7 @@ void Simulation::ChargerDepot(int id)
             listeZonesDepart.append(Tile(posX,posY));
         entrepot->tab[posX][posY]=type;
     }
-    db->selectMutliLigne("SELECT Nom_Entrepot,Longueur_Entrepot,Largeur_entrepot FROM entrepot WHERE ID_Entrepot=" + QString::number(id));
+    db->selectMultiLignes("SELECT Nom_Entrepot,Longueur_Entrepot,Largeur_entrepot FROM entrepot WHERE ID_Entrepot=" + QString::number(id));
     for(int i = 0 ; i<db->resultatSelectMultiLignes.size();i++){
         qlistTemp = db->resultatSelectMultiLignes.at(i);
         entrepot->setNom(qlistTemp.at(0).toString());
@@ -178,7 +178,7 @@ bool Simulation::ChargerEquipe(int ID_Equipe)
         requeteSelect.append(" FROM robot WHERE ID_Equipe = ");
         requeteSelect.append(QString::number(ID_Equipe));
         requeteSelect.append(";");
-        db->selectMutliLigne(requeteSelect);
+        db->selectMultiLignes(requeteSelect);
     }catch(exception e){
         qDebug()<<e.what();
     }
@@ -214,7 +214,7 @@ void Simulation::ChargerListeTaches(int ID_Liste_Taches)
         requeteSelect.append(" FROM tache WHERE ID_Liste_Taches = ");
         requeteSelect.append(QString::number(ID_Liste_Taches));
         requeteSelect.append(";");
-        db->selectMutliLigne(requeteSelect);
+        db->selectMultiLignes(requeteSelect);
     }catch(exception e){
         qDebug()<<e.what();
     }

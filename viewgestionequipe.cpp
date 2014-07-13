@@ -160,7 +160,7 @@ void ViewGestionEquipe::recuperationAttributEquipe()
 int ViewGestionEquipe::dernierIDEquipeEnBase()
 {
     GestionDB * db = GestionDB::getInstance();
-    db->selectMutliLigne("SELECT MAX(ID_Equipe) FROM equipe;");
+    db->selectMultiLignes("SELECT MAX(ID_Equipe) FROM equipe;");
     return db->resultatSelectMultiLignes.at(0).at(0).toInt();
 }
 

@@ -93,14 +93,13 @@ void Entrepot::copieEntrepot(Entrepot *_e){
     nom=_e->getNom();
     largeur=_e->getLargeur();
     longueur=_e->getLongueur();
-    for (int i = 0; i < largeur; i++)
+    for (int i = 0; i < LARGEUR; i++)
     {
-        for (int j = 0; j < longueur; j++)
+        for (int j = 0; j < LONGUEUR; j++)
         {
             this->tab[i][j]=_e->tab[i][j];
         }
     }
-
     RedefTab(longueur,largeur);
 
 }

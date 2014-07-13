@@ -116,7 +116,7 @@ GestionDB::~GestionDB()
  * @param sel
  * @return QSqlQuery
  */
-void GestionDB::selectMutliLigne(const QString &sel){
+void GestionDB::selectMultiLignes(const QString &sel){
     db.open();
     resultatSelectMultiLignes.clear();
     QSqlQuery query(db);

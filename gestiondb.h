@@ -34,7 +34,7 @@ public:
     void SelectFirst(const QString&);
     void AfficheResultatsSelect();
     QString getResultat(unsigned int);
-    void selectMutliLigne(const QString &);
+    void selectMultiLignes(const QString &);
     void afficherResultatSelectMultiple();
     int getNbResultat();
     bool baseConnecter();

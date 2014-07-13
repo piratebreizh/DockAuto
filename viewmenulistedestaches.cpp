@@ -121,7 +121,7 @@ void ViewMenuListeDesTaches::enregistrementDansLaTableListetache()
 void ViewMenuListeDesTaches::initialisationIDListeTache()
 {
     GestionDB * db = GestionDB::getInstance();
-    db->selectMutliLigne("SELECT MAX(ID_Liste_Taches) FROM liste_taches ;");
+    db->selectMultiLignes("SELECT MAX(ID_Liste_Taches) FROM liste_taches ;");
     this->listeTache->IDListeTache  = db->resultatSelectMultiLignes.at(0).at(0).toInt();
 }
 

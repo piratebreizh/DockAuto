@@ -249,7 +249,7 @@ void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase()
 {
     GestionDB * db = GestionDB::getInstance();
     try{
-        db->selectMutliLigne("SELECT ID_Equipe, Nom_Equipe FROM equipe ;");
+        db->selectMultiLignes("SELECT ID_Equipe, Nom_Equipe FROM equipe ;");
     }catch(exception e){
         qDebug()<<e.what();
     }
@@ -307,7 +307,7 @@ void ViewMenuSimulation::chargeTousLesDepotsDeLaBase()
 {
     GestionDB * db = GestionDB::getInstance();
     try{
-        db->selectMutliLigne("SELECT ID_Entrepot, Nom_Entrepot FROM entrepot");
+        db->selectMultiLignes("SELECT ID_Entrepot, Nom_Entrepot FROM entrepot");
     }catch(exception e){
         qDebug()<<e.what();
     }
@@ -392,14 +392,14 @@ void ViewMenuSimulation::cliqueDefinirSimulation()
 int ViewMenuSimulation::derniereIDSimulation()
 {
     GestionDB * db = GestionDB::getInstance();
-    db->selectMutliLigne("SELECT MAX(ID_Simulation) FROM simulation;");
+    db->selectMultiLignes("SELECT MAX(ID_Simulation) FROM simulation;");
     return  db->resultatSelectMultiLignes.at(0).at(0).toInt();
 }
 
 void ViewMenuSimulation::controleDepotExist()
 {
     GestionDB * db = GestionDB::getInstance();
-    db->selectMutliLigne("SELECT count(ID_Entrepot) FROM entrepot;");
+    db->selectMultiLignes("SELECT count(ID_Entrepot) FROM entrepot;");
     if(db->resultatSelectMultiLignes.at(0).at(0).toInt() == 0){
         messageControleDesDonneesExistante->append("La création d'une nouvelle simulation nécessite au moins un dépôt existant \n");
         labelConfirmationEnregistremetnSimulation->setText(*messageControleDesDonneesExistante);
@@ -412,10 +412,10 @@ void ViewMenuSimulation::controleDepotExist()
 void ViewMenuSimulation::controleEquipeExist()
 {
     GestionDB * db = GestionDB::getInstance();
-    db->selectMutliLigne("SELECT count(ID_Equipe) FROM equipe;");
+    db->selectMultiLignes("SELECT count(ID_Equipe) FROM equipe;");
     int res1 = db->resultatSelectMultiLignes.at(0).at(0).toInt();
 
-    db->selectMutliLigne("SELECT count(ID_Robot) FROM robot;");
+    db->selectMultiLignes("SELECT count(ID_Robot) FROM robot;");
     if(res1 == 0 || db->resultatSelectMultiLignes.at(0).at(0).toInt() == 0){
             messageControleDesDonneesExistante->append("La création d'une nouvelle simulation nécessite au moins une équipe existante \n");
             labelConfirmationEnregistremetnSimulation->setText(*messageControleDesDonneesExistante);
@@ -428,7 +428,7 @@ void ViewMenuSimulation::controleEquipeExist()
 void ViewMenuSimulation::controleSimulationExist()
 {
     GestionDB * db = GestionDB::getInstance();
-    db->selectMutliLigne("SELECT count(*) FROM simulation;");
+    db->selectMultiLignes("SELECT count(*) FROM simulation;");
     if(db->resultatSelectMultiLignes.at(0).at(0).toInt() == 0){
         messageControleDesDonneesExistante->append("Aucune simulation enregistré");
         labelConfirmationEnregistremetnSimulation->setText(*messageControleDesDonneesExistante);
@@ -459,7 +459,7 @@ void ViewMenuSimulation::chargerListeSimulationDepuisLaBase()
 {
     GestionDB * db = GestionDB::getInstance();
     try{
-        db->selectMutliLigne("SELECT ID_Simulation, Nom_Simulation FROM simulation");
+        db->selectMultiLignes("SELECT ID_Simulation, Nom_Simulation FROM simulation");
     }catch(exception e){
         qDebug()<<e.what();
     }
