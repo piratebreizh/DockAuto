@@ -11,7 +11,19 @@ Entrepot::Entrepot(){
 Entrepot::~Entrepot(){
 
 }
-
+Entrepot::Entrepot(Entrepot *_e){
+    nom=_e->getNom();
+    largeur=_e->getLargeur();
+    longueur=_e->getLongueur();
+    for (int i = 0; i < LARGEUR; i++)
+    {
+        for (int j = 0; j < LONGUEUR; j++)
+        {
+            this->tab[i][j]=_e->tab[i][j];
+        }
+    }
+    RedefTab(largeur,longueur);
+}
 
 Entrepot::Entrepot(int _id,QString _nom){
     this->id =_id;
@@ -42,13 +54,13 @@ void Entrepot::RemoveRobot(Robot &rob){
 void Entrepot::RedefTab(int _lon, int _lar){
     for (int i = 0; i < LARGEUR; i++)
     {
-        for (int j = _lar+1; j < LONGUEUR; j++)
+        for (int j = _lon+1; j < LONGUEUR; j++)
         {
             tab[i][j]=MapScene::MUR;
         }
     }
 
-    for (int i = _lon+1; i < LARGEUR; i++)
+    for (int i = _lar+1; i < LARGEUR; i++)
     {
         for (int j = 0; j < LONGUEUR; j++)
         {
@@ -87,21 +99,6 @@ void Entrepot::setId(int _id){
 
 int Entrepot::getId(){
     return id;
-}
-
-void Entrepot::copieEntrepot(Entrepot *_e){
-    nom=_e->getNom();
-    largeur=_e->getLargeur();
-    longueur=_e->getLongueur();
-    for (int i = 0; i < LARGEUR; i++)
-    {
-        for (int j = 0; j < LONGUEUR; j++)
-        {
-            this->tab[i][j]=_e->tab[i][j];
-        }
-    }
-    RedefTab(longueur,largeur);
-
 }
 
 bool Entrepot::isTileDisponible(int X, int Y)

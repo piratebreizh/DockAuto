@@ -176,9 +176,7 @@ void MapScene::SaveDepotDb(){
  * redéfini le dépot
  */
 void MapScene::setDepot(Entrepot *_e){
-    e=new Entrepot();
-    e->copieEntrepot(_e);
-    //e->RedefTab(e->getLongueur(),e->getLargeur());
+    e=new Entrepot(_e);
 }
 
 
