@@ -1,6 +1,6 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
-#define NB_BOUCLES_MAX 100
+#define NB_BOUCLES_MAX 10000
 #include "Entrepot.h"
 #include "Robot.h"
 #include "Listetache.h"
