@@ -23,7 +23,7 @@ public:
     void setId(int);
 
     void move(Entrepot&, int,int);
-    int moveToObjectif(Entrepot&, Tile);
+    int moveToObjectif(Entrepot *, Tile);
 
     int idRobot;
     QString nomRobot;

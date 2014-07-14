@@ -36,7 +36,9 @@ SOURCES += main.cpp\
     tache.cpp \
     listetache.cpp \
     simulation.cpp \
-    viewdefinirtache.cpp
+    viewdefinirtache.cpp \
+    recherchecheminastar.cpp \
+    noeud.cpp
 
 HEADERS  += \
     fenetreprincipale.h \
@@ -57,7 +59,9 @@ HEADERS  += \
     tache.h \
     listetache.h \
     simulation.h \
-    viewdefinirtache.h
+    viewdefinirtache.h \
+    recherchecheminastar.h \
+    noeud.h
 
 FORMS    +=
 

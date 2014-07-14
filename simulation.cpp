@@ -58,7 +58,7 @@ bool Simulation::LancerSimulation()
                 }else if(t->statut == Tache::CARGAISON_RECUP){
                     objectif = t->arrivee;
                 }
-                int objType = robotTmp->moveToObjectif(*entrepot, *objectif);
+                int objType = robotTmp->moveToObjectif(entrepot, *objectif);
                 qDebug() << " objectif type : " << objType;
                 switch (objType) {
                     case MapScene::ARMOIREVIDE:
@@ -131,7 +131,7 @@ Tile Simulation::getZoneDepartLibre()
  */
 void Simulation::RaffraichirMap()
 {
-    QThread::msleep(20);
+   // QThread::usleep(100);
     mapScene->setDepot(entrepot);
     mapScene->AfficherMap();
     mapScene->update();

@@ -1,7 +1,9 @@
 #include <QApplication>
-
 #include <FenetrePrincipale.h>
 
+
+// A nettoyer lors du rendu
+//*************************
 #include "Map.h"
 #include "Armoire.h"
 #include "Entrepot.h"
@@ -11,11 +13,13 @@
 #include "gestiondb.h"
 #include <QString>
 #include "simulation.h"
+//*************************
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
+
     QApplication app(argc, argv);
 
     FenetrePrincipale premierVue;
@@ -23,7 +27,6 @@ int main(int argc, char *argv[])
     premierVue.show();
 
     return app.exec();
-
 
     //TEST SIMULATION
     //Simulation *s;

@@ -2,6 +2,7 @@
 #include <string>
 #include "Entrepot.h"
 #include "MapScene.h"
+#include "recherchecheminastar.h"
 
 using namespace std;
 
@@ -50,13 +51,32 @@ void Robot::move(Entrepot &e, int x, int y)
     }
 }
 
-int Robot::moveToObjectif(Entrepot &e, Tile objectif)
+int Robot::moveToObjectif(Entrepot *e, Tile objectif)
 {
+
     int moveToX = this->getX();
     int moveToY = this->getY();
+
     int dx = objectif.getX() - this->getX();
     int dy = objectif.getY() - this->getY();
 
+    RechercheCheminAStar recherche = RechercheCheminAStar(e);
+
+    QString route = recherche.calculChemin(this->getX(), this->getY(), objectif.getX(), objectif.getY());
+    qDebug() << "route trouvé pour robot " << this->getId() << " : " << route;
+    if(route.length()>0)
+    {
+        int j;
+        QChar c;
+        c =route.at(0);
+        j=c.digitValue();
+        cout << recherche.dx[j] << " " << recherche.dy[j] << endl;
+
+        moveToX += recherche.dx[j];
+        moveToY += recherche.dy[j];
+    }
+
+/*
     if(dx>0){
         moveToX++;
     }else if(dx<0){
@@ -68,17 +88,18 @@ int Robot::moveToObjectif(Entrepot &e, Tile objectif)
             moveToY--;
         }
     }
-    this->move(e, moveToX, moveToY);
+    */
+    this->move(*e, moveToX, moveToY);
 
     if((abs(dx) == 0 && abs(dy) ==1) || (abs(dx) == 1 && abs(dy) ==0)){
-        if(e.tab[objectif.getX()][objectif.getY()] == MapScene::ARMOIREPLEINE)
+        if(e->tab[objectif.getX()][objectif.getY()] == MapScene::ARMOIREPLEINE)
         {
-            e.tab[objectif.getX()][objectif.getY()] = MapScene::ARMOIREVIDE;
+            e->tab[objectif.getX()][objectif.getY()] = MapScene::ARMOIREVIDE;
             return MapScene::ARMOIREVIDE;
         }
-        else if(e.tab[objectif.getX()][objectif.getY()] == MapScene::ARMOIREVIDE)
+        else if(e->tab[objectif.getX()][objectif.getY()] == MapScene::ARMOIREVIDE)
         {
-            e.tab[objectif.getX()][objectif.getY()] = MapScene::ARMOIREPLEINE;
+            e->tab[objectif.getX()][objectif.getY()] = MapScene::ARMOIREPLEINE;
             return MapScene::ARMOIREPLEINE;
         }
     }
