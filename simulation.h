@@ -29,6 +29,8 @@ public:
 
     void RaffraichirMap();
 
+    float stopSimulation;
+
 private :
     Entrepot * entrepot;
     QMap<int, Robot*> listeRobots;

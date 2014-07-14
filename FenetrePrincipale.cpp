@@ -83,6 +83,7 @@ void FenetrePrincipale::createBarreDeLancement()
     QWidget::connect(gestionDesDepots, SIGNAL(clicked()), this, SLOT(lancementViewCreationDepot()));
     QWidget::connect(nouvelleSimulation, SIGNAL(clicked()), this, SLOT(lancementViewMenuSimulation()));
     QWidget::connect(demarrerSimulation, SIGNAL(clicked()), this, SLOT(lancerSimulation()));
+    QWidget::connect(pauseSimulation, SIGNAL(clicked()), this, SLOT(arretSimulation()));
 
     mainLayout->addLayout(barreLancement);
 }
@@ -128,12 +129,12 @@ void FenetrePrincipale::createMap()
 }
 
 /*
- * A VOUS DE CODER A PARTIR DE LA
  * Cette fonction est appelé lors de la définition d'une simulation dans l'interface Simulation (viewMenuSimulation)
  * Que ce soit une ancienne simulation ou une nouvelle
  * */
 void FenetrePrincipale::definirSimulation(Simulation *_simulation)
 {
+
     int iddep;
     simulation = _simulation;
     demarrerSimulation->setEnabled(true);
@@ -150,6 +151,8 @@ void FenetrePrincipale::definirSimulation(Simulation *_simulation)
     simulation->ChargerEquipe(ID_Equipe);
     int ID_Liste_Taches = db->getResultat(2).toInt();
     simulation->ChargerListeTaches(ID_Liste_Taches);
+
+    simulation->stopSimulation=false;
 
     simulation->mapScene = lamap;
     lamap->setDepot(simulation->getEntrepot());
@@ -172,4 +175,11 @@ void FenetrePrincipale::verficationConnexionBaseDeDonnee(){
         demarrerSimulation->setEnabled(false);
         pauseSimulation->setEnabled(false);
     }
+}
+
+
+void FenetrePrincipale::arretSimulation(){
+    simulation->stopSimulation = true;
+    this->demarrerSimulation->setEnabled(false);
+    this->pauseSimulation->setEnabled(false);
 }

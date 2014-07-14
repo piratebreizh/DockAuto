@@ -38,7 +38,7 @@ bool Simulation::LancerSimulation()
 
     int i=0;
     Tache * tache = taches.getTacheNonEffectuee();
-    while(tache!=NULL){
+    while(tache!=NULL && !stopSimulation){
         qDebug() << "-----------"<< i++ << "-----------";
         for(int t=0 ; t < taches.getListeDesTaches()->size() ; t++){
             Tache * tacheTmp = taches.getListeDesTaches()->at(t);
