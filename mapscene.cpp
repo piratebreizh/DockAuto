@@ -82,6 +82,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
 
 void MapScene::AfficherMap()
 {
+    this->clear();
   QGraphicsItem *item;
   QPixmap image;
 
