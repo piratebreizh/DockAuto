@@ -22,7 +22,6 @@ Entrepot::Entrepot(Entrepot *_e){
             this->tab[i][j]=_e->tab[i][j];
         }
     }
-    RedefTab(largeur,longueur);
 }
 
 Entrepot::Entrepot(int _id,QString _nom){

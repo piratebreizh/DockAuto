@@ -33,11 +33,7 @@ void RechercheCheminAStar::redefGraphe()
     {
         for(int x=0 ; x<30 ; x++)
         {
-            if(y<haut && x<larg){
-                graphe_noeuds_fermes[x][y] = 0;
-            }else{
-                graphe_noeuds_fermes[x][y] = 1;
-            }
+            graphe_noeuds_fermes[x][y] = 0;
             graphe_noeud_ouverts[x][y] = 0;
         }
     }
@@ -61,7 +57,7 @@ QString RechercheCheminAStar::calculChemin( const int & xDepart, const int & yDe
     n0 = new Noeud(xDepart, yDepart, 0, 0);
     n0->majPriorite(xArrivee, yArrivee);
     noeuds_a_visiter[index_NAV].push(*n0);
-    graphe_noeud_ouverts[x][y] = n0->getPriorite();
+    graphe_noeud_ouverts[xDepart][yDepart] = n0->getPriorite();
 
     // Tant qu'il y a des noeuds à visiter
     while(!noeuds_a_visiter[index_NAV].empty())
@@ -111,12 +107,15 @@ QString RechercheCheminAStar::calculChemin( const int & xDepart, const int & yDe
             xEnfant=x+dx[i];
             yEnfant=y+dy[i];
 
+            bool nEnfantEgalDepart = xEnfant == xDepart && yEnfant == yDepart;
             bool nEnfantEgalArrivee = xEnfant == xArrivee && yEnfant == yArrivee;
 
             //Si le noeud enfant peut être visité
-            if(!(xEnfant<0 || xEnfant>larg-1
-                 || yEnfant<0 || yEnfant>haut-1
-                 || !(entrepot->tab[xEnfant][yEnfant]==MapScene::VIDE || nEnfantEgalArrivee)
+            if(!(xEnfant<0 || xEnfant>LARGEUR
+                 || yEnfant<0 || yEnfant>LONGUEUR
+                 || !(entrepot->tab[xEnfant][yEnfant]==MapScene::VIDE
+                      || nEnfantEgalArrivee || nEnfantEgalDepart)
+                 || entrepot->tab[xEnfant][yEnfant]==MapScene::MUR
                  || graphe_noeuds_fermes[xEnfant][yEnfant]==1))
             {
                 // Création du noeud enfant
@@ -177,18 +176,6 @@ QString RechercheCheminAStar::calculChemin( const int & xDepart, const int & yDe
         }
         delete n0;
     }
-
-    //On met à 0 les graphes
-    QString re  ="";
-    for(int x=0 ; x<30 ; x++)
-    {
-        for(int y=0 ; y<30 ; y++)
-        {
-            re.append(QString::number(graphe_noeuds_fermes[x][y]) + " ");
-        }
-        re.append("\n");
-    }
-    qDebug() << re;
 
     return "";
 }

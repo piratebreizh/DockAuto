@@ -72,8 +72,8 @@ bool Simulation::LancerSimulation()
                 }
                 //t->statut = Tache::EFFECTUEE;
             }
-            RaffraichirMap();
         }
+        RaffraichirMap();
 
         tache = taches.getTacheNonEffectuee();
     }
