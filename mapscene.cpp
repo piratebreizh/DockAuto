@@ -64,8 +64,6 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
                 case MUR:
                     break;
                 case VIDE:
-                    //Armoire a;
-                    //e.AddArmoire(a);
                     e->tab[x][y]=ARMOIREVIDE;
                     break;
                 case ARMOIREVIDE:
@@ -76,8 +74,25 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
                     break;
             }
         }
+        this->AfficherMap();
     }
-    this->AfficherMap();
+}
+void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent *ev)
+{
+    if(ev->buttons() == Qt::LeftButton){
+        int x =(int)(ev->scenePos().x()/LARGEURPIX);
+        int y =(int)(ev->scenePos().y()/LONGUEURPIX);
+        switch (e->tab[x][y]){
+            case MUR:
+                break;
+            case VIDE:
+                e->tab[x][y]=ARMOIREVIDE;
+                break;
+            default:
+                break;
+        }
+        this->AfficherMap();
+    }
 }
 
 void MapScene::AfficherMap()

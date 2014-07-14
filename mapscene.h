@@ -20,6 +20,7 @@ public:
     void SaveDepotDb();
     Entrepot* getEntrepot();
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *);
     void AfficherMap();
     void setDepot(Entrepot *e);
 
