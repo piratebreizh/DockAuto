@@ -5,11 +5,7 @@ using namespace std;
 
 Map::Map()
 {
-    /*for(int i=0;i<LONGUEUR;i++){
-        for(int j=0;j<LARGEUR;j++){
-            tab[i][j]=2 ;
-        }
-    }*/
+
 }
 
 

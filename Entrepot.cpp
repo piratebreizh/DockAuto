@@ -30,19 +30,9 @@ Entrepot::Entrepot(int _id,QString _nom){
 }
 
 
-void Entrepot::AddArmoire(Armoire &arm){
-    if(tab[arm.getX()][arm.getY()]==0)
-        tab[arm.getX()][arm.getY()]=1;
-}
-
 void Entrepot::AddRobot(Robot &rob){
     if(isTileDisponible(rob.getX(), rob.getY()))
         tab[rob.getX()][rob.getY()]=rob.getId();
-}
-
-void Entrepot::RemoveArmoire(Armoire &arm){
-    if(tab[arm.getX()][arm.getY()]==1)
-        tab[arm.getX()][arm.getY()]=0;
 }
 
 void Entrepot::RemoveRobot(Robot &rob){

@@ -1,6 +1,5 @@
 #include "mapscene.h"
 #include "gestiondb.h"
-#include "armoire.h"
 #include "QGraphicsItem"
 #include<QGraphicsSceneMouseEvent>
 #include<QGraphicsView>
@@ -40,7 +39,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *ev){
         if(flagEditionTache){
             QString affichage("X : " + QString::number(x) + "       Y : " + QString::number(y));
             if (e->tab[x][y]!=ARMOIREVIDE){
-                viewDefinirTache->messageConfirmationAjout->setText("Le case doit être une armoire \nRecliquer sur une case de type armoire sur la mappe");
+                viewDefinirTache->messageConfirmationAjout->setText("La case doit être une armoire \nRecliquer sur une case de type armoire sur la mappe");
                 viewDefinirTache->messageConfirmationAjout->setStyleSheet("QLabel { color : red; }");
                 viewDefinirTache->messageConfirmationAjout->show();
             }

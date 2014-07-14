@@ -24,7 +24,6 @@ SOURCES += main.cpp\
     equipe.cpp \
     viewcreationrobot.cpp \
     Tile.cpp \
-    Armoire.cpp \
     Cargaison.cpp \
     Entrepot.cpp \
     Map.cpp \
@@ -47,7 +46,6 @@ HEADERS  += \
     equipe.h \
     viewcreationrobot.h \
     Tile.h \
-    Armoire.h \
     Cargaison.h \
     Entrepot.h \
     Map.h \
