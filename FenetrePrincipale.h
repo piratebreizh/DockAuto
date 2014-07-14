@@ -47,6 +47,7 @@ public slots:
     void lancementViewMenuSimulation();
 
     void lancerSimulation();
+    void arretSimulation();
 
 private:
 

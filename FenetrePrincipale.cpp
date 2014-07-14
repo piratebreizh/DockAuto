@@ -1,6 +1,6 @@
 #include "FenetrePrincipale.h"
 #include <QtWidgets>
-//#include "ui_mainwindow.h"
+#include <QMessageBox>
 
 #include "simulation.h"
 
@@ -109,6 +109,15 @@ void FenetrePrincipale::lancementViewMenuSimulation()
 void FenetrePrincipale::lancerSimulation()
 {
     boolean resultat = simulation->LancerSimulation();
+
+    QMessageBox msgBox;
+    if(resultat==true){
+        msgBox.setText("La simulation s'est bien déroulée ! ");
+    }else{
+        msgBox.setText("La simulation a échouée !");
+    }
+    msgBox.exec();
+
     qDebug() << "resultat simulation : " << resultat;
 }
 
@@ -160,9 +169,8 @@ void FenetrePrincipale::definirSimulation(Simulation *_simulation)
     lamap->AfficherMap();
 }
 
-
-
-void FenetrePrincipale::verficationConnexionBaseDeDonnee(){
+void FenetrePrincipale::verficationConnexionBaseDeDonnee()
+{
     GestionDB * db = GestionDB::getInstance();
     if(!db->baseConnecter()){
         messageControl->setText("Aucune connexion à la base de données \n Contacter votre administrateur informatique");
@@ -177,8 +185,8 @@ void FenetrePrincipale::verficationConnexionBaseDeDonnee(){
     }
 }
 
-
-void FenetrePrincipale::arretSimulation(){
+void FenetrePrincipale::arretSimulation()
+{
     simulation->stopSimulation = true;
     this->demarrerSimulation->setEnabled(false);
     this->pauseSimulation->setEnabled(false);

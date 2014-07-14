@@ -5,7 +5,6 @@
 Simulation::Simulation()
 {
     entrepot = new Entrepot();
-
 }
 
 /**
@@ -36,10 +35,12 @@ bool Simulation::LancerSimulation()
     /*****************************************/
 
 
-    int i=0;
+    int nb_boucles=0;
     Tache * tache = taches.getTacheNonEffectuee();
     while(tache!=NULL && !stopSimulation){
-        qDebug() << "-----------"<< i++ << "-----------";
+        nb_boucles++;
+
+        qDebug() << "-----------"<< nb_boucles << "-----------";
         for(int t=0 ; t < taches.getListeDesTaches()->size() ; t++){
             Tache * tacheTmp = taches.getListeDesTaches()->at(t);
             qDebug() << "Tache " << "Départ : " << tacheTmp->depart->getX() << ", " << tacheTmp->depart->getY()
@@ -47,6 +48,7 @@ bool Simulation::LancerSimulation()
                      << "statut : " << tacheTmp->statut;
         }
         qDebug() << "--------------------------";
+
         QMap<int, Robot*>::iterator it;
         for (it = listeRobots.begin(); it != listeRobots.end(); ++it){
             Robot * robotTmp = it.value();
@@ -70,7 +72,6 @@ bool Simulation::LancerSimulation()
                     default:
                         break;
                 }
-                //t->statut = Tache::EFFECTUEE;
             }
         }
         RaffraichirMap();
@@ -78,41 +79,9 @@ bool Simulation::LancerSimulation()
         tache = taches.getTacheNonEffectuee();
     }
 
-/*
-
-    //Placement des robots sur l'entrepot
-    for(int i=0; i < listeRobots.size() ; i++) {
-        Robot robotTmp = listeRobots.at(i);
-        entrepot->AddRobot(robotTmp);
-    }
-*/
     RaffraichirMap();
 
-
-/*
-    robot.setId(10);
-    robot.setX(2);
-    robot.setY(2);
-    entrepot->AddRobot(robot);
-
-    for(int i =0 ; i<5; i++){
-        robot.move(*entrepot,robot.getX()+1,robot.getY());
-        RaffraichirMap();
-    }
-*/
-
-    /*
-     * TantQue taches->getTacheNonEffectuee()!=null
-     *      Pour chaque robot
-     *          getTacheNonEffectuee()
-     *          vitesse =0;
-     *          avancerVersObjectif(); vitesse++; //tant que vitesseMax non ateinte
-     *      FinPour
-     * FinTantQue
-     *
-     * */
-
-    return true;
+    return tache==NULL;
 }
 
 Tile Simulation::getZoneDepartLibre()
