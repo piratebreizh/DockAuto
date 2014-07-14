@@ -164,6 +164,7 @@ void Simulation::ChargerDepot(int id)
         entrepot->setLongueur(qlistTemp.at(1).toInt());
         entrepot->setLargeur(qlistTemp.at(2).toInt());
     }
+    entrepot->RedefTab(entrepot->getLargeur(), entrepot->getLongueur());
 
     qDebug()<< "Nb Zones départ : " << listeZonesDepart.size();
 }
