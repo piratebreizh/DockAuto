@@ -1,5 +1,6 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
+#define NB_BOUCLES_MAX 100
 #include "Entrepot.h"
 #include "Robot.h"
 #include "Listetache.h"
@@ -17,7 +18,7 @@ public:
     int IdSimulation;
     MapScene * mapScene;
 
-    bool LancerSimulation();
+    bool LancerSimulation(bool);
 
     Tile getZoneDepartLibre();
 

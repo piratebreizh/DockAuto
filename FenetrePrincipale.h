@@ -38,7 +38,7 @@ public:
     FenetrePrincipale(QWidget *parent = 0);
     void definirSimulation(Simulation * _simulation);
     void createMap();
-    void verficationConnexionBaseDeDonnee();
+    void verificationConnexionBaseDeDonnees();
 
 public slots:
 
@@ -53,6 +53,7 @@ private:
 
     void positionne();
     void createBarreDeLancement();
+    void resetSimulation();
 
     enum { NumGridRows = 3, NumButtons = 5 };
 

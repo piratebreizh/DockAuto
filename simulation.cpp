@@ -11,7 +11,7 @@ Simulation::Simulation()
  * @brief Lancement de la simulation
  * @return true En cas de succès de la simulation
  */
-bool Simulation::LancerSimulation()
+bool Simulation::LancerSimulation(bool avecAffichage)
 {
     /***********AFFICHAGE DEBUG**************/
     QMap<int, Robot*>::iterator it;
@@ -35,9 +35,10 @@ bool Simulation::LancerSimulation()
     /*****************************************/
 
 
+
     int nb_boucles=0;
     Tache * tache = taches.getTacheNonEffectuee();
-    while(tache!=NULL && !stopSimulation){
+    while(tache!=NULL && !stopSimulation && nb_boucles<NB_BOUCLES_MAX){
         nb_boucles++;
 
         qDebug() << "-----------"<< nb_boucles << "-----------";
@@ -74,12 +75,14 @@ bool Simulation::LancerSimulation()
                 }
             }
         }
-        RaffraichirMap();
+
+        if(avecAffichage)
+            RaffraichirMap();
 
         tache = taches.getTacheNonEffectuee();
     }
-
-    RaffraichirMap();
+    if(avecAffichage)
+        RaffraichirMap();
 
     return tache==NULL;
 }
@@ -100,7 +103,7 @@ Tile Simulation::getZoneDepartLibre()
  */
 void Simulation::RaffraichirMap()
 {
-   // QThread::usleep(100);
+    //QThread::msleep(500);
     mapScene->setDepot(entrepot);
     mapScene->AfficherMap();
     mapScene->update();

@@ -16,7 +16,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) : QMainWindow(parent)
 
     createBarreDeLancement();
     createMap();
-    verficationConnexionBaseDeDonnee();
+    verificationConnexionBaseDeDonnees();
 }
 
 /**
@@ -108,15 +108,33 @@ void FenetrePrincipale::lancementViewMenuSimulation()
 
 void FenetrePrincipale::lancerSimulation()
 {
-    boolean resultat = simulation->LancerSimulation();
-
     QMessageBox msgBox;
-    if(resultat==true){
-        msgBox.setText("La simulation s'est bien déroulée ! ");
-    }else{
-        msgBox.setText("La simulation a échouée !");
+    bool lancerSimulationEnVrai = true;
+    boolean resultat = simulation->LancerSimulation(false);
+
+
+    if(resultat==false){
+        QMessageBox::StandardButton confirmLancement;
+        confirmLancement = QMessageBox::question(this,
+                                                 "Erreur simulation",
+                                                 "La simulation va échouer. Voulez-vous malgré tout la lancer ?",
+                                                 QMessageBox::Yes|QMessageBox::No);
+        if (confirmLancement == QMessageBox::Yes) {
+            lancerSimulationEnVrai = true;
+        } else {
+            lancerSimulationEnVrai = false;
+        }
     }
-    msgBox.exec();
+    if(lancerSimulationEnVrai){
+        resetSimulation();
+        resultat = simulation->LancerSimulation(true);
+        if(resultat==true){
+            msgBox.setText("La simulation s'est bien déroulée ! ");
+        }else{
+            msgBox.setText("La simulation a échouée !");
+        }
+        msgBox.exec();
+    }
 
     qDebug() << "resultat simulation : " << resultat;
 }
@@ -169,7 +187,7 @@ void FenetrePrincipale::definirSimulation(Simulation *_simulation)
     lamap->AfficherMap();
 }
 
-void FenetrePrincipale::verficationConnexionBaseDeDonnee()
+void FenetrePrincipale::verificationConnexionBaseDeDonnees()
 {
     GestionDB * db = GestionDB::getInstance();
     if(!db->baseConnecter()){
@@ -190,4 +208,12 @@ void FenetrePrincipale::arretSimulation()
     simulation->stopSimulation = true;
     this->demarrerSimulation->setEnabled(false);
     this->pauseSimulation->setEnabled(false);
+}
+
+void FenetrePrincipale::resetSimulation()
+{
+    Simulation * simReset = new Simulation();
+    simReset->IdSimulation = simulation->IdSimulation;
+    delete simulation;
+    definirSimulation(simReset);
 }
