@@ -98,6 +98,7 @@ void ViewMenuListeDesTaches::CliqueSauvegarder()
         confirmationEnregistrement->setText("La liste de tâches a été enregistrée");
         confirmationEnregistrement->setStyleSheet("QLabel { color : green; }");
         confirmationEnregistrement->show();
+        this->close();
     }else{
         confirmationEnregistrement->setText("Tous les champs doivent être remplis");
         confirmationEnregistrement->setStyleSheet("QLabel { color : red; }");
@@ -111,7 +112,6 @@ void ViewMenuListeDesTaches::enregistrementDansLaTableListetache()
     insertListeTable.append(this->champNomTacheListe->text());
     insertListeTable.append("');");
 
-    qDebug()<<insertListeTable;
     GestionDB * db = GestionDB::getInstance();
     db->Requete(insertListeTable);
 

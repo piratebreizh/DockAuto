@@ -29,9 +29,9 @@ RechercheCheminAStar::RechercheCheminAStar(Entrepot *e)
 void RechercheCheminAStar::redefGraphe()
 {
     //On met à 0 les graphes
-    for(int y=0 ; y<30 ; y++)
+    for(int y=0 ; y<LONGUEUR ; y++)
     {
-        for(int x=0 ; x<30 ; x++)
+        for(int x=0 ; x<LARGEUR ; x++)
         {
             graphe_noeuds_fermes[x][y] = 0;
             graphe_noeud_ouverts[x][y] = 0;
@@ -143,12 +143,6 @@ QString RechercheCheminAStar::calculChemin( const int & xDepart, const int & yDe
                     // On met à jour la direction prise à partir du noeud précédant
                     dir_map[xEnfant][yEnfant]=(i+nb_dir/2)%nb_dir;
 
-                    // replace the node
-                    // by emptying one pq to the other one
-                    // except the node to be replaced will be ignored
-                    // and the new node will be pushed in instead
-                    //
-                    //
                     while(!(noeuds_a_visiter[index_NAV].top().getxPos()==xEnfant
                             && noeuds_a_visiter[index_NAV].top().getyPos()==yEnfant))
                     {
@@ -157,7 +151,7 @@ QString RechercheCheminAStar::calculChemin( const int & xDepart, const int & yDe
                     }
                     noeuds_a_visiter[index_NAV].pop(); // on supprime le noeud enfant visité
 
-                    // On sélectionne la liste de Noeux à visiter la plus grande
+                    // On sélectionne la liste de Noeuds à visiter la plus grande
                     if(noeuds_a_visiter[index_NAV].size() > noeuds_a_visiter[1-index_NAV].size())
                         index_NAV=1-index_NAV;
 

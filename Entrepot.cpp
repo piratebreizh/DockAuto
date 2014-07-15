@@ -94,3 +94,15 @@ bool Entrepot::isTileDisponible(int X, int Y)
 {
     return tab[X][Y]==MapScene::VIDE || tab[X][Y]==MapScene::ZONEDEP;
 }
+
+int Entrepot::getNbZonesDepart()
+{
+    int nb_zp = 0;
+    for (int i = 0; i < LARGEUR; i++){
+        for (int j = 0; j < LONGUEUR; j++){
+            if (this->tab[i][j] == MapScene::ZONEDEP)
+                nb_zp++;
+        }
+    }
+    return nb_zp;
+}

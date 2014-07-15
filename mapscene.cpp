@@ -152,7 +152,6 @@ void MapScene::AfficherMap()
 }
 
 
-
 /**
  * @brief ViewCreationDepot::SaveDepotDb
  * Sauvegarde du depot dans la base de donnée
@@ -202,6 +201,10 @@ void MapScene::entrerEnModeDefinitionTache(ViewDefinirTache * viewDefinirTache){
 
 }
 
+int MapScene::getNbZonesDepart()
+{
+    return e->getNbZonesDepart();
+}
 
 
 

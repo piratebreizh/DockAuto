@@ -13,56 +13,24 @@ Simulation::Simulation()
  */
 bool Simulation::LancerSimulation(bool avecAffichage)
 {
-    /***********AFFICHAGE DEBUG**************/
-    QMap<int, Robot*>::iterator it;
-    for (it = listeRobots.begin(); it != listeRobots.end(); ++it){
-        Robot * robotTmp = it.value();
-        qDebug() << "Robot " << robotTmp->getId() << " (" << robotTmp->getX()<< "," << robotTmp->getY() << ")";
-        for(int t=0 ; t < robotTmp->listeTaches.getListeDesTaches()->size() ; t++){
-            Tache * tacheTmp = robotTmp->listeTaches.getListeDesTaches()->at(t);
-            qDebug() << "TacheRbt " << "Départ : " << tacheTmp->depart->getX() << " " << tacheTmp->depart->getY()
-                     << "Arrivée : " << tacheTmp->arrivee->getX() << " " << tacheTmp->arrivee->getY() ;
-        }
-    }
-    qDebug() << "Liste des taches au début";
-    for(int t=0 ; t < taches.getListeDesTaches()->size() ; t++){
-        Tache * tacheTmp = taches.getListeDesTaches()->at(t);
-        qDebug() << "Tache " << "Départ : " << tacheTmp->depart->getX() << ", " << tacheTmp->depart->getY()
-                 << "Arrivée : " << tacheTmp->arrivee->getX() << ", " << tacheTmp->arrivee->getY()
-                 << "statut : " << tacheTmp->statut;
-    }
-    qDebug() << "--------------------------";
-    /*****************************************/
-
-
-
     int nb_boucles=0;
     Tache * tache = taches.getTacheNonEffectuee();
     while(tache!=NULL && !stopSimulation && nb_boucles<NB_BOUCLES_MAX){
         nb_boucles++;
-
-        qDebug() << "-----------"<< nb_boucles << "-----------";
-        for(int t=0 ; t < taches.getListeDesTaches()->size() ; t++){
-            Tache * tacheTmp = taches.getListeDesTaches()->at(t);
-            qDebug() << "Tache " << "Départ : " << tacheTmp->depart->getX() << ", " << tacheTmp->depart->getY()
-                     << "Arrivée : " << tacheTmp->arrivee->getX() << ", " << tacheTmp->arrivee->getY()
-                     << "statut : " << tacheTmp->statut;
-        }
-        qDebug() << "--------------------------";
 
         QMap<int, Robot*>::iterator it;
         for (it = listeRobots.begin(); it != listeRobots.end(); ++it){
             Robot * robotTmp = it.value();
             Tache * t = robotTmp->listeTaches.getTacheNonEffectuee();
             if(t!=NULL){
-                Tile * objectif;
+                Tile * objectif = new Tile();
                 if(t->statut == Tache::A_EFFECTUER){
                     objectif = t->depart;
                 }else if(t->statut == Tache::CARGAISON_RECUP){
                     objectif = t->arrivee;
                 }
                 int objType = robotTmp->moveToObjectif(entrepot, *objectif);
-                qDebug() << " objectif type : " << objType;
+
                 switch (objType) {
                     case MapScene::ARMOIREVIDE:
                         t->statut = Tache::CARGAISON_RECUP;
@@ -103,7 +71,7 @@ Tile Simulation::getZoneDepartLibre()
  */
 void Simulation::RaffraichirMap()
 {
-    //QThread::msleep(500);
+    QThread::msleep(50);
     mapScene->setDepot(entrepot);
     mapScene->AfficherMap();
     mapScene->update();
@@ -137,8 +105,6 @@ void Simulation::ChargerDepot(int id)
         entrepot->setLargeur(qlistTemp.at(2).toInt());
     }
     entrepot->RedefTab(entrepot->getLargeur(), entrepot->getLongueur());
-
-    qDebug()<< "Nb Zones départ : " << listeZonesDepart.size();
 }
 
 bool Simulation::ChargerEquipe(int ID_Equipe)
@@ -155,8 +121,6 @@ bool Simulation::ChargerEquipe(int ID_Equipe)
     }catch(exception e){
         qDebug()<<e.what();
     }
-
-    qDebug()<< "Nb robots : " << db->resultatSelectMultiLignes.size();
 
     for(int i=0 ; i < db->resultatSelectMultiLignes.size() ; i++){
         QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);
@@ -191,7 +155,6 @@ void Simulation::ChargerListeTaches(int ID_Liste_Taches)
     }catch(exception e){
         qDebug()<<e.what();
     }
-    qDebug()<< "Nb taches : " << db->resultatSelectMultiLignes.size();
 
     for(int i=0 ; i < db->resultatSelectMultiLignes.size() ; i++){
         QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);

@@ -29,8 +29,9 @@ public:
     bool flagEditerDepart;
     bool flagEditerArriver;
     bool lectureSeule;
-    void coordonneeCliquer(int x,int y);
-    Tile retournTileSelectionnee();
+
+    int getNbZonesDepart();
+
     ViewDefinirTache * viewDefinirTache;
 
     enum TilesNumbers{

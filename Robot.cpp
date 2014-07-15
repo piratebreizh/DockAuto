@@ -53,7 +53,6 @@ void Robot::move(Entrepot &e, int x, int y)
 
 int Robot::moveToObjectif(Entrepot *e, Tile objectif)
 {
-
     int moveToX = this->getX();
     int moveToY = this->getY();
 
@@ -63,32 +62,17 @@ int Robot::moveToObjectif(Entrepot *e, Tile objectif)
     RechercheCheminAStar recherche = RechercheCheminAStar(e);
 
     QString route = recherche.calculChemin(this->getX(), this->getY(), objectif.getX(), objectif.getY());
-    qDebug() << "route trouvé pour robot " << this->getId() << " : " << route;
     if(route.length()>0)
     {
         int j;
         QChar c;
         c =route.at(0);
         j=c.digitValue();
-        cout << recherche.dx[j] << " " << recherche.dy[j] << endl;
 
         moveToX += recherche.dx[j];
         moveToY += recherche.dy[j];
     }
 
-/*
-    if(dx>0){
-        moveToX++;
-    }else if(dx<0){
-        moveToX--;
-    }else{
-        if(dy>0){
-            moveToY++;
-        }else if(dy<0){
-            moveToY--;
-        }
-    }
-    */
     this->move(*e, moveToX, moveToY);
 
     if((abs(dx) == 0 && abs(dy) ==1) || (abs(dx) == 1 && abs(dy) ==0)){

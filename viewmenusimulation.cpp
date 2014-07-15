@@ -233,7 +233,6 @@ void ViewMenuSimulation::initialisationDeLaListeDeroulanteEquipe()
     chargeToutesLesEquipesDeLaBase();
 
     if(listeEquipe->size()>0){
-        //qDebug() << listeEquipe->size();
         for (int i = 0; i<listeEquipe->size();i++) {
             Equipe equipeTemp  = listeEquipe->at(i);
             listeDeroulanteChoixEquipe->addItem(equipeTemp.nomEquipe,equipeTemp.idEquipe);
@@ -272,13 +271,7 @@ void ViewMenuSimulation::chargeToutesLesEquipesDeLaBase()
  */
 void ViewMenuSimulation::bloquerSelectionEquipe()
 {
-    //TODO : RAJOUTER ICI DU CODE POUR VOIRS SI IL Y A PLUS OU MOINS DE ZONE DE DEPART QUE DE ROBOT DANS L EQUIPE
     confirmationEquipe = true;
-
-    /*
-    qDebug() << listeDeroulanteChoixEquipe->currentText();
-    qDebug() << listeDeroulanteChoixEquipe->currentData().toInt();
-    */
 
     equipeSelectionne = new Equipe( listeDeroulanteChoixEquipe->currentData().toInt(),listeDeroulanteChoixEquipe->currentText() );
     verificationLabelConfirmation();

@@ -135,8 +135,6 @@ void FenetrePrincipale::lancerSimulation()
         }
         msgBox.exec();
     }
-
-    qDebug() << "resultat simulation : " << resultat;
 }
 
 

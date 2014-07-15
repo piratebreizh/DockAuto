@@ -33,6 +33,7 @@ public:
     void setNom(QString);
 
     bool isTileDisponible(int,int);
+    int getNbZonesDepart();
 
     void RedefTab(int, int);
 

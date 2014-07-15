@@ -5,6 +5,7 @@
 #include <QString>
 #include <QDebug>
 #include <QSettings>
+#include <QFile>
 
 using namespace std;
 
