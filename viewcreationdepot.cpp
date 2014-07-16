@@ -21,8 +21,8 @@ void ViewCreationDepot::initialisationComposantFenetreIdentificationDepot()
     layout3PourBoutonSauvegarderAnnuler = new QGridLayout();
 
     labelNomDepot = new QLabel("Nom du dépôt");
-    labelLongueurDepot = new QLabel("Largeur (en nombre de cases)");
-    labelLargeurDepot = new QLabel("Longueur (en nombre de cases)");
+    labelLongueurDepot = new QLabel("Hauteur (en nombre de cases)");
+    labelLargeurDepot = new QLabel("Largeur (en nombre de cases)");
     labelMessageErreur = new QLabel();
     labelMessageErreur->hide();
 
@@ -161,9 +161,15 @@ bool ViewCreationDepot::initialisationDeLaMap()
  */
 void ViewCreationDepot::SauvegardeMapDb()
 {
-    sauvegardeModifMap->setEnabled(false);
-    lamap->SaveDepotDb();
-    this->close();
+    if(lamap->getNbZonesDepart()==0){
+        this->labelMessageErreur->setText("Il doit y avoir au moins une zone de départ");
+        this->labelMessageErreur->setStyleSheet("QLabel { color : red; }");
+        this->labelMessageErreur->show();
+    }else{
+        sauvegardeModifMap->setEnabled(false);
+        lamap->SaveDepotDb();
+        this->close();
+    }
 }
 
 /**
@@ -182,8 +188,8 @@ bool ViewCreationDepot::controleChamps()
     }
     int largeur = this->champLargeurDepot->text().toInt();
     int longueur = this->champLongueurDepot->text().toInt();
-    if(largeur<5 || largeur>30 || longueur<5 || longueur>30){
-        this->labelMessageErreur->setText("Les dimensions doivent être comprise entre 5 et 30");
+    if(largeur<5 || largeur>29 || longueur<5 || longueur>29){
+        this->labelMessageErreur->setText("Les dimensions doivent être comprises entre 5 et 29");
         this->labelMessageErreur->setStyleSheet("QLabel { color : red; }");
         this->labelMessageErreur->show();
              return false;

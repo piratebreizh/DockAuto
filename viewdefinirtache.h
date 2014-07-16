@@ -43,10 +43,13 @@ public:
     QPushButton * sauvegarder;
     QPushButton * annuler;
 
+
     int departX;
     int departY;
     int arriveX;
     int arriveY;
+
+    QLabel * messageConfirmationAjout;
 
 public slots :
 
@@ -63,7 +66,6 @@ private :
     QLabel * labelRobot;
     QComboBox * listeDeroulanteRobot;
 
-    QLabel * messageConfirmationAjout;
 
     QLabel * labelPoids;
     QLineEdit * champPoids;

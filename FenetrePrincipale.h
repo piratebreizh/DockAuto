@@ -38,6 +38,7 @@ public:
     FenetrePrincipale(QWidget *parent = 0);
     void definirSimulation(Simulation * _simulation);
     void createMap();
+    void verificationConnexionBaseDeDonnees();
 
 public slots:
 
@@ -46,11 +47,13 @@ public slots:
     void lancementViewMenuSimulation();
 
     void lancerSimulation();
+    void arretSimulation();
 
 private:
 
     void positionne();
     void createBarreDeLancement();
+    void resetSimulation();
 
     enum { NumGridRows = 3, NumButtons = 5 };
 
@@ -84,6 +87,8 @@ private:
     ViewGestionEquipe * viewGestionEquipe;
     ViewCreationDepot * viewCreationDepot;
     ViewMenuSimulation * viewMenuSimulation;
+
+    QLabel * messageControl;
 };
 
 

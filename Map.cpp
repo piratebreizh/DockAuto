@@ -5,11 +5,7 @@ using namespace std;
 
 Map::Map()
 {
-    /*for(int i=0;i<LONGUEUR;i++){
-        for(int j=0;j<LARGEUR;j++){
-            tab[i][j]=2 ;
-        }
-    }*/
+
 }
 
 
@@ -21,8 +17,8 @@ Map::Map(int _ID, string _nom)
 
 
 void Map::AfficheMap(){
-    for(int i=0;i<LONGUEUR;i++){
-        for(int j=0;j<LARGEUR;j++){
+    for(int i=0;i<LARGEUR;i++){
+        for(int j=0;j<LONGUEUR;j++){
             cout<<tab[i][j]<<" " ;
         }
         cout<<endl;

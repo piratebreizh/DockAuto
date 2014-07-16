@@ -24,8 +24,6 @@ SOURCES += main.cpp\
     equipe.cpp \
     viewcreationrobot.cpp \
     Tile.cpp \
-    Armoire.cpp \
-    Cargaison.cpp \
     Entrepot.cpp \
     Map.cpp \
     gestiondb.cpp \
@@ -36,7 +34,9 @@ SOURCES += main.cpp\
     tache.cpp \
     listetache.cpp \
     simulation.cpp \
-    viewdefinirtache.cpp
+    viewdefinirtache.cpp \
+    recherchecheminastar.cpp \
+    noeud.cpp
 
 HEADERS  += \
     fenetreprincipale.h \
@@ -45,8 +45,6 @@ HEADERS  += \
     equipe.h \
     viewcreationrobot.h \
     Tile.h \
-    Armoire.h \
-    Cargaison.h \
     Entrepot.h \
     Map.h \
     gestiondb.h \
@@ -57,7 +55,9 @@ HEADERS  += \
     tache.h \
     listetache.h \
     simulation.h \
-    viewdefinirtache.h
+    viewdefinirtache.h \
+    recherchecheminastar.h \
+    noeud.h
 
 FORMS    +=
 

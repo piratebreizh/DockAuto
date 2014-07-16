@@ -20,6 +20,7 @@ public:
     void SaveDepotDb();
     Entrepot* getEntrepot();
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *);
     void AfficherMap();
     void setDepot(Entrepot *e);
 
@@ -28,8 +29,9 @@ public:
     bool flagEditerDepart;
     bool flagEditerArriver;
     bool lectureSeule;
-    void coordonneeCliquer(int x,int y);
-    Tile retournTileSelectionnee();
+
+    int getNbZonesDepart();
+
     ViewDefinirTache * viewDefinirTache;
 
     enum TilesNumbers{

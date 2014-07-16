@@ -78,9 +78,9 @@ void ViewMenuListeDesTaches::ajouterTacheDansListe()
     champDepart.append(" : ");
     champDepart.append(QString::number(this->nouvelleTacheTemp->depart->getY()));
 
-    QString champArrive(QString::number(this->nouvelleTacheTemp->arrive->getX()));
+    QString champArrive(QString::number(this->nouvelleTacheTemp->arrivee->getX()));
     champArrive.append(" : ");
-    champArrive.append(QString::number(this->nouvelleTacheTemp->arrive->getY()));
+    champArrive.append(QString::number(this->nouvelleTacheTemp->arrivee->getY()));
 
     listItem.append(new QStandardItem(champDepart));
     listItem.append(new QStandardItem(champArrive));
@@ -98,6 +98,7 @@ void ViewMenuListeDesTaches::CliqueSauvegarder()
         confirmationEnregistrement->setText("La liste de tâches a été enregistrée");
         confirmationEnregistrement->setStyleSheet("QLabel { color : green; }");
         confirmationEnregistrement->show();
+        this->close();
     }else{
         confirmationEnregistrement->setText("Tous les champs doivent être remplis");
         confirmationEnregistrement->setStyleSheet("QLabel { color : red; }");
@@ -111,7 +112,6 @@ void ViewMenuListeDesTaches::enregistrementDansLaTableListetache()
     insertListeTable.append(this->champNomTacheListe->text());
     insertListeTable.append("');");
 
-    qDebug()<<insertListeTable;
     GestionDB * db = GestionDB::getInstance();
     db->Requete(insertListeTable);
 
@@ -121,7 +121,7 @@ void ViewMenuListeDesTaches::enregistrementDansLaTableListetache()
 void ViewMenuListeDesTaches::initialisationIDListeTache()
 {
     GestionDB * db = GestionDB::getInstance();
-    db->selectMutliLigne("SELECT MAX(ID_Liste_Taches) FROM liste_taches ;");
+    db->selectMultiLignes("SELECT MAX(ID_Liste_Taches) FROM liste_taches ;");
     this->listeTache->IDListeTache  = db->resultatSelectMultiLignes.at(0).at(0).toInt();
 }
 
@@ -137,7 +137,7 @@ void ViewMenuListeDesTaches::enregistrementDansLaTableTache()
             if(!firstVirgule){
                 insertDansTache.append(" ),( ");
             }
-            Tache tacheTemp = listeTache->getListeDesTaches()->at(i);
+            Tache tacheTemp = *listeTache->getListeDesTaches()->at(i);
             insertDansTache.append("'");
             insertDansTache.append(QString::number(tacheTemp.getPoids()));
             insertDansTache.append("',");
@@ -145,13 +145,13 @@ void ViewMenuListeDesTaches::enregistrementDansLaTableTache()
             insertDansTache.append( ",");
             insertDansTache.append(QString::number(tacheTemp.depart->getY()));
             insertDansTache .append(",");
-            insertDansTache.append(QString::number(tacheTemp.arrive->getX()));
+            insertDansTache.append(QString::number(tacheTemp.arrivee->getX()));
             insertDansTache .append( ",");
-            insertDansTache.append(QString::number(tacheTemp.arrive->getY()));
+            insertDansTache.append(QString::number(tacheTemp.arrivee->getY()));
             insertDansTache .append(",");
             insertDansTache.append(QString::number(this->listeTache->IDListeTache));
             insertDansTache .append(",");
-            insertDansTache.append(QString::number(this->nouveauRobotTemp->getId()));
+            insertDansTache.append(QString::number(tacheTemp.idRobot));
             firstVirgule = false;
         }
         insertDansTache.append("); ");

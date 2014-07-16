@@ -32,6 +32,8 @@ public:
     Tache * nouvelleTacheTemp;
     Robot * nouveauRobotTemp;
     Listetache * listeTache;
+    QLabel * confirmationEnregistrement;
+
 
 public slots :
 
@@ -55,7 +57,6 @@ private :
     QPushButton * pushSauvegarder;
     QPushButton * pushAnnuler;
 
-    QLabel * confirmationEnregistrement;
 
     void enregistrementDansLaTableListetache();
     void initialisationIDListeTache();

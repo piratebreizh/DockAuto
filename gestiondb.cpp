@@ -5,6 +5,7 @@
 #include <QString>
 #include <QDebug>
 #include <QSettings>
+#include <QFile>
 
 using namespace std;
 
@@ -116,7 +117,7 @@ GestionDB::~GestionDB()
  * @param sel
  * @return QSqlQuery
  */
-void GestionDB::selectMutliLigne(const QString &sel){
+void GestionDB::selectMultiLignes(const QString &sel){
     db.open();
     resultatSelectMultiLignes.clear();
     QSqlQuery query(db);
@@ -153,4 +154,14 @@ void GestionDB::afficherResultatSelectMultiple()
 int GestionDB::getNbResultat()
 {
     return NbResultatRequete;
+}
+
+
+bool GestionDB::baseConnecter(){
+    if (db.open()){
+        return true;
+    }else{
+        return false;
+    }
+
 }

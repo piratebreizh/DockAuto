@@ -4,31 +4,30 @@
 #include "Tile.h"
 #include "Entrepot.h"
 #include <QtSql>
+#include "listetache.h"
 
 using namespace std;
 
 class Entrepot;
-class Tile;
+class Listetache;
 
 class Robot : public Tile
 {
 public:
     Robot();
     Robot(int,QString);
+
     QString getNom();
     void setNom(string);
     int getId();
     void setId(int);
+
     void move(Entrepot&, int,int);
-
-
+    int moveToObjectif(Entrepot *, Tile);
 
     int idRobot;
     QString nomRobot;
-
-    //PositnomRobota map
-    //int xPositionRobot;
-    //int yPositionRobot;
+    Listetache listeTaches;
 
     double vitesseRobot;
     double longueurRobot;

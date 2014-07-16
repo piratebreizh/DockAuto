@@ -1,6 +1,8 @@
 #include "Robot.h"
 #include <string>
 #include "Entrepot.h"
+#include "MapScene.h"
+#include "recherchecheminastar.h"
 
 using namespace std;
 
@@ -34,18 +36,56 @@ void Robot::setId(int id){
 }
 
 /**
- * @brief Robot::move
+ * @brief Deplacement du robot si l'emplacement est libre
  * @param e
  * @param x
  * @param y
- * Deplacement du robot si l'emplacement est libre
  */
-void Robot::move(Entrepot &e, int x, int y){
-    //if(e!=NULL && e.tab[x][y]==0){
-    if(e.tab[x][y]==0){
+void Robot::move(Entrepot &e, int x, int y)
+{
+    if(e.isTileDisponible(x,y)){
         e.RemoveRobot(*this);
         this->setX(x);
         this->setY(y);
         e.AddRobot(*this);
     }
+}
+
+int Robot::moveToObjectif(Entrepot *e, Tile objectif)
+{
+    int moveToX = this->getX();
+    int moveToY = this->getY();
+
+    int dx = objectif.getX() - this->getX();
+    int dy = objectif.getY() - this->getY();
+
+    RechercheCheminAStar recherche = RechercheCheminAStar(e);
+
+    QString route = recherche.calculChemin(this->getX(), this->getY(), objectif.getX(), objectif.getY());
+    if(route.length()>0)
+    {
+        int j;
+        QChar c;
+        c =route.at(0);
+        j=c.digitValue();
+
+        moveToX += recherche.dx[j];
+        moveToY += recherche.dy[j];
+    }
+
+    this->move(*e, moveToX, moveToY);
+
+    if((abs(dx) == 0 && abs(dy) ==1) || (abs(dx) == 1 && abs(dy) ==0)){
+        if(e->tab[objectif.getX()][objectif.getY()] == MapScene::ARMOIREPLEINE)
+        {
+            e->tab[objectif.getX()][objectif.getY()] = MapScene::ARMOIREVIDE;
+            return MapScene::ARMOIREVIDE;
+        }
+        else if(e->tab[objectif.getX()][objectif.getY()] == MapScene::ARMOIREVIDE)
+        {
+            e->tab[objectif.getX()][objectif.getY()] = MapScene::ARMOIREPLEINE;
+            return MapScene::ARMOIREPLEINE;
+        }
+    }
+    return MapScene::VIDE;
 }

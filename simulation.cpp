@@ -5,62 +5,54 @@
 Simulation::Simulation()
 {
     entrepot = new Entrepot();
-
 }
 
 /**
  * @brief Lancement de la simulation
  * @return true En cas de succès de la simulation
  */
-bool Simulation::LancerSimulation()
+bool Simulation::LancerSimulation(bool avecAffichage)
 {
+    int nb_boucles=0;
+    Tache * tache = taches.getTacheNonEffectuee();
+    while(tache!=NULL && !stopSimulation && nb_boucles<NB_BOUCLES_MAX){
+        nb_boucles++;
 
-    for(int i=0; i < listeRobots.size() ; i++) {
-        Robot robotTmp = listeRobots.at(i);
-        qDebug() << robotTmp.getId() << " (" << robotTmp.getX()<< "," << robotTmp.getY() << ")";
+        QMap<int, Robot*>::iterator it;
+        for (it = listeRobots.begin(); it != listeRobots.end(); ++it){
+            Robot * robotTmp = it.value();
+            Tache * t = robotTmp->listeTaches.getTacheNonEffectuee();
+            if(t!=NULL){
+                Tile * objectif = new Tile();
+                if(t->statut == Tache::A_EFFECTUER){
+                    objectif = t->depart;
+                }else if(t->statut == Tache::CARGAISON_RECUP){
+                    objectif = t->arrivee;
+                }
+                int objType = robotTmp->moveToObjectif(entrepot, *objectif);
+
+                switch (objType) {
+                    case MapScene::ARMOIREVIDE:
+                        t->statut = Tache::CARGAISON_RECUP;
+                        break;
+                    case MapScene::ARMOIREPLEINE:
+                        t->statut = Tache::EFFECTUEE;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        if(avecAffichage)
+            RaffraichirMap();
+
+        tache = taches.getTacheNonEffectuee();
     }
-
-
-    for(int i=0; i < listeZonesDepart.size() ; i++) {
-        Tile zoneDep = listeZonesDepart.at(i);
-        qDebug() << i << " ZoneDep (" << zoneDep.getX()<< "," << zoneDep.getY() << ")";
-    }
-
-
-    for(int i=0; i < listeRobots.size() ; i++) {
-        Tile zoneDepLibre = getZoneDepartLibre();
-        if(zoneDepLibre.getX() == -1)
-            return false;
-        Robot robotTmp = listeRobots.at(i);
-        robotTmp.setCoordonnees(zoneDepLibre);
-        entrepot->AddRobot(robotTmp);
-    }
-
-    RaffraichirMap();
-
-
-/*
-    robot.setId(10);
-    robot.setX(2);
-    robot.setY(2);
-    entrepot->AddRobot(robot);
-
-    for(int i =0 ; i<5; i++){
-        QThread::msleep(200);
-        robot.move(*entrepot,robot.getX()+1,robot.getY());
+    if(avecAffichage)
         RaffraichirMap();
-    }
-*/
 
-    //parcours de la liste des tâches
-    //for chaque tache
-        //effectue la tache (déplacement ou rangement)
-        //tu peux utiliser les fonctions dans robot pour les déplacer
-        //tu peux accéder au tableau par e.tab[][] (il est en public)
-        //les constantes LONGEUR et LARGEUR définisse la taille max du tableau
-    //fin for
-
-    return true;
+    return tache==NULL;
 }
 
 Tile Simulation::getZoneDepartLibre()
@@ -79,6 +71,7 @@ Tile Simulation::getZoneDepartLibre()
  */
 void Simulation::RaffraichirMap()
 {
+    QThread::msleep(50);
     mapScene->setDepot(entrepot);
     mapScene->AfficherMap();
     mapScene->update();
@@ -94,7 +87,7 @@ void Simulation::ChargerDepot(int id)
 {
     QList <QVariant> qlistTemp;
     GestionDB * db = GestionDB::getInstance();
-    db->selectMutliLigne("SELECT X,Y,ID_Type FROM tile WHERE ID_Entrepot=" + QString::number(id));
+    db->selectMultiLignes("SELECT X,Y,ID_Type FROM tile WHERE ID_Entrepot=" + QString::number(id));
     for(int i = 0 ; i<db->resultatSelectMultiLignes.size();i++){
         qlistTemp = db->resultatSelectMultiLignes.at(i);
         int posX = qlistTemp.at(0).toInt();
@@ -104,16 +97,17 @@ void Simulation::ChargerDepot(int id)
             listeZonesDepart.append(Tile(posX,posY));
         entrepot->tab[posX][posY]=type;
     }
-    db->selectMutliLigne("SELECT Nom_Entrepot,Longueur_Entrepot,Largeur_entrepot FROM entrepot WHERE ID_Entrepot=" + QString::number(id));
+    db->selectMultiLignes("SELECT Nom_Entrepot,Longueur_Entrepot,Largeur_entrepot FROM entrepot WHERE ID_Entrepot=" + QString::number(id));
     for(int i = 0 ; i<db->resultatSelectMultiLignes.size();i++){
         qlistTemp = db->resultatSelectMultiLignes.at(i);
         entrepot->setNom(qlistTemp.at(0).toString());
         entrepot->setLongueur(qlistTemp.at(1).toInt());
         entrepot->setLargeur(qlistTemp.at(2).toInt());
     }
+    entrepot->RedefTab(entrepot->getLargeur(), entrepot->getLongueur());
 }
 
-void Simulation::ChargerEquipe(int ID_Equipe)
+bool Simulation::ChargerEquipe(int ID_Equipe)
 {
     GestionDB * db = GestionDB::getInstance();
 
@@ -123,22 +117,61 @@ void Simulation::ChargerEquipe(int ID_Equipe)
         requeteSelect.append(" FROM robot WHERE ID_Equipe = ");
         requeteSelect.append(QString::number(ID_Equipe));
         requeteSelect.append(";");
-        db->selectMutliLigne(requeteSelect);
+        db->selectMultiLignes(requeteSelect);
     }catch(exception e){
         qDebug()<<e.what();
     }
 
-    qDebug()<< "Nb robots : " << db->resultatSelectMultiLignes.size();
-    for(int i=0;i<db->resultatSelectMultiLignes.size();i++){
+    for(int i=0 ; i < db->resultatSelectMultiLignes.size() ; i++){
         QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);
         if(qlistTemp.size() == 7){
-            Robot robotTemp ;
-            robotTemp.setId(qlistTemp.at(0).toInt());
+            Robot * robotTemp = new Robot();
+            robotTemp->setId(qlistTemp.at(0).toInt());
 
-            listeRobots.append(robotTemp);
+            //Placement du robot sur une Zone de Départ
+            Tile zoneDepLibre = getZoneDepartLibre();
+            if(zoneDepLibre.getX() == -1)
+                return false;
+            robotTemp->setCoordonnees(zoneDepLibre);
+            entrepot->AddRobot(*robotTemp);
+
+            listeRobots[robotTemp->getId()] = robotTemp;
         }
     }
 
+    return true;
+}
+
+void Simulation::ChargerListeTaches(int ID_Liste_Taches)
+{
+    GestionDB * db = GestionDB::getInstance();
+
+    try{
+        QString requeteSelect = "SELECT ID_Robot, Poids_Tache, Depart_X, Depart_Y, Arrive_X, Arrive_Y";
+        requeteSelect.append(" FROM tache WHERE ID_Liste_Taches = ");
+        requeteSelect.append(QString::number(ID_Liste_Taches));
+        requeteSelect.append(";");
+        db->selectMultiLignes(requeteSelect);
+    }catch(exception e){
+        qDebug()<<e.what();
+    }
+
+    for(int i=0 ; i < db->resultatSelectMultiLignes.size() ; i++){
+        QList <QVariant> qlistTemp  = db->resultatSelectMultiLignes.at(i);
+        if(qlistTemp.size() == 6){
+            int ID_Robot = qlistTemp.at(0).toInt();
+            double Poids_Tache = qlistTemp.at(2).toDouble();
+            int Depart_X = qlistTemp.at(2).toInt();
+            int Depart_Y = qlistTemp.at(3).toInt();
+            int Arrive_X = qlistTemp.at(4).toInt();
+            int Arrive_Y = qlistTemp.at(5).toInt();
+            Tache * tacheTmp = new Tache(Poids_Tache, Depart_X, Depart_Y, Arrive_X, Arrive_Y);
+            taches.ajoutTache(tacheTmp);
+            listeRobots[ID_Robot]->listeTaches.ajoutTache(tacheTmp);
+            //On remplit le départ
+            entrepot->tab[Depart_X][Depart_Y] = MapScene::ARMOIREPLEINE;
+        }
+    }
 }
 
 Entrepot* Simulation::getEntrepot(){

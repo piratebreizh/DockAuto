@@ -41,9 +41,13 @@ void ViewDefinirTache::initialisationComposant()
     sauvegarder->setEnabled(false);
     annuler = new QPushButton("Retour");
 
+
+    this->menuListeDesTaches->viewMenuSimulation->simulation->ChargerDepot(this->menuListeDesTaches->viewMenuSimulation->depotSelectionne->getId());
     map=new QGridLayout();
     scene = new QGraphicsScene();
     lamap = new MapScene(scene);
+    lamap->setDepot(this->menuListeDesTaches->viewMenuSimulation->simulation->getEntrepot());
+    //lamap->lectureSeule = true;
     lamap->AfficherMap();
     lamap->entrerEnModeDefinitionTache(this);
 
@@ -81,6 +85,26 @@ void ViewDefinirTache::definitonLayout()
 
     layoutMenuDroiteSelection->addWidget(sauvegarder,5,0);
     layoutMenuDroiteSelection->addWidget(annuler,5,1);
+
+
+    QLabel * labelImageArmoire = new QLabel();
+    QLabel  * labelImageZoneDep = new QLabel();
+    QLabel * labelImageMur = new QLabel();
+
+    labelImageArmoire->setPixmap(QPixmap(":/res/images/arm.png", 0, Qt::AutoColor));
+    labelImageZoneDep->setPixmap(QPixmap(":/res/images/dep.png", 0, Qt::AutoColor));
+    labelImageMur->setPixmap(QPixmap(":/res/images/mur.png", 0, Qt::AutoColor));
+
+    layoutMenuDroiteSelection->addWidget(new QLabel("Mur"),6,0);
+    layoutMenuDroiteSelection->addWidget(labelImageMur,6,1);
+
+    layoutMenuDroiteSelection->addWidget(new QLabel("Armoire"),7,0);
+    layoutMenuDroiteSelection->addWidget(labelImageArmoire,7,1);
+
+    layoutMenuDroiteSelection->addWidget(new QLabel("Zone de départ"),8,0);
+    layoutMenuDroiteSelection->addWidget(labelImageZoneDep,8,1);
+
+
 
     map->addWidget(vue);
 
@@ -142,10 +166,10 @@ void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe)
 
     GestionDB * db = GestionDB::getInstance();
     try{
-        QString requetteSelect = "SELECT ID_Robot, Nom_Robot FROM robot WHERE ID_Equipe = ";
-        requetteSelect.append(QString::number(ID_Equipe));
-        requetteSelect.append(";");
-        db->selectMutliLigne(requetteSelect);
+        QString requeteSelect = "SELECT ID_Robot, Nom_Robot FROM robot WHERE ID_Equipe = ";
+        requeteSelect.append(QString::number(ID_Equipe));
+        requeteSelect.append(";");
+        db->selectMultiLignes(requeteSelect);
     }catch(exception e){
         qDebug()<<e.what();
     }
@@ -167,22 +191,25 @@ void ViewDefinirTache::chargerListeRobotEnBase(int ID_Equipe)
  */
 void ViewDefinirTache::ajouterNouvelleTacheALaListeDeTache()
 {
-    Tache tacheTemp (champPoids->text().replace(',','.').toDouble(),champDepart->text().toInt(),champDepart->text().toInt(),champArrive->text().toInt(),champArrive->text().toInt());
+    menuListeDesTaches->nouvelleTacheTemp = new Tache();
+    Robot * robotTemp = new Robot();
 
-    menuListeDesTaches->nouveauRobotTemp->setId(listeDeroulanteRobot->currentData().toInt());
-    menuListeDesTaches->nouveauRobotTemp->setNom(listeDeroulanteRobot->currentText().toStdString());
+    robotTemp->setId(listeDeroulanteRobot->currentData().toInt());
+    robotTemp->setNom(listeDeroulanteRobot->currentText().toStdString());
+
+    menuListeDesTaches->nouvelleTacheTemp->idRobot =listeDeroulanteRobot->currentData().toInt();
+
+    menuListeDesTaches->nouveauRobotTemp = robotTemp;
 
     menuListeDesTaches->nouvelleTacheTemp->setPoids(champPoids->text().replace(',','.').toDouble());
 
-    // A MODIFIER
     menuListeDesTaches->nouvelleTacheTemp->depart->setX(departX);
     menuListeDesTaches->nouvelleTacheTemp->depart->setY(departY);
 
-    // A MODIFER
-    menuListeDesTaches->nouvelleTacheTemp->arrive->setX(arriveX);
-    menuListeDesTaches->nouvelleTacheTemp->arrive->setY(arriveY);
+    menuListeDesTaches->nouvelleTacheTemp->arrivee->setX(arriveX);
+    menuListeDesTaches->nouvelleTacheTemp->arrivee->setY(arriveY);
 
-    menuListeDesTaches->listeTache->ajoutNouvelleTacheDansListe(tacheTemp);
+    menuListeDesTaches->listeTache->ajoutTache(menuListeDesTaches->nouvelleTacheTemp);
 
     messageConfirmationAjout->show();
     messageConfirmationAjout->setText("La nouvelle tâche a été ajoutée");
